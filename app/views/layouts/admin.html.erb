@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin-ゴミ箱スポット</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <script src="https://kit.fontawesome.com/805b015b17.js" crossorigin="anonymous"></script>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body>
+   <header class="header mb-2">
+      <div class="container-fluid">
+        <div class="row pt-3">
+          <div class="col-1">
+            <div class="logo">
+              <h1>ゴミ箱スポット</h1>
+            </div>
+          </div>
+          <div class="col-8 offset-3">
+            <div class="row">
+              <% if admin_signed_in? %>
+                <div class="col-2">
+                  <div class="header-content">
+                    <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class:"btn btn-outline-dark" %>
+                  </div>
+                </div>
+
+                <% elsif %>
+                <div class="col-3">
+                  <div class="header-content">
+                    <%= link_to 'ログイン', new_admin_session_path, class:"btn btn-outline-dark" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="container-fluid">
+      <div class="row">
+        <%= yield %>
+      </div>
+    </main>
+    <footer></footer>
+</body>
+</html>
