@@ -6,7 +6,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/805b015b17.js" crossorigin="anonymous"></script>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
@@ -31,6 +32,11 @@
               <% elsif %>
                 <div class="col-3">
                   <div class="header-content">
+                    <%= link_to '新規登録', new_user_registration_path, class:"btn btn-outline-dark" %>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="header-content">
                     <%= link_to 'ログイン', new_user_session_path, class:"btn btn-outline-dark" %>
                   </div>
                 </div>
@@ -40,9 +46,14 @@
         </div>
       </div>
     </header>
-    <% flash.each do |message_type, message| %>
-      <div class="flash-message <%= message_type %>"><%= message %></div>
-    <% end %>
-    <%= yield %>
+
+    <main class="container-fluid">
+      <div class="row">
+        <% flash.each do |message_type, message| %>
+          <div class="flash-message <%= message_type %>"><%= message %></div>
+        <% end %>
+        <%= yield %>
+      </div>
+    </main>
   </body>
 </html>
