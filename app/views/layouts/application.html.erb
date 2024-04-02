@@ -53,10 +53,13 @@
     </header>
 
     <main class="container-fluid">
-      <div class="row">
+
+        <div class="col">
         <% flash.each do |message_type, message| %>
           <div class="flash-message <%= message_type %>"><%= message %></div>
         <% end %>
+        </div>
+        <div class="row">
         <%= yield %>
       </div>
     </main>

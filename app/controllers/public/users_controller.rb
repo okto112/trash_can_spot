@@ -1,5 +1,6 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :ensure_guest_user, only: [:edit]
 
   def show
     @user = User.find(current_user.id)
@@ -36,5 +37,12 @@ class Public::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :is_active )
+  end
+
+  def ensure_guest_user
+    @user = User.find(current_user.id)
+    if @user.guest_user?
+      redirect_to public_users_my_page_path , notice: "ゲストユーザーはユーザー情報を編集できません。"
+    end
   end
 end

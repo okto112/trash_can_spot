@@ -25,9 +25,11 @@
       </tbody>
     </table>
 
-    <div class="row">
-      <p><%= link_to '編集する', public_users_information_edit_path,class:"btn btn-success ml-3" %></p>
-    </div>
+    <% unless @user.guest_user? %>
+      <div class="row">
+        <p><%= link_to '編集する', public_users_information_edit_path,class:"btn btn-success ml-3" %></p>
+      </div>
+    <% end %>
 
     <div class="row">
       <p><%= link_to '登録したスポットを見る', class:"btn btn-primary btn-sm m-3" %></p>
