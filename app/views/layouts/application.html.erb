@@ -25,6 +25,11 @@
               <% if user_signed_in? %>
                 <div class="col-3">
                   <div class="header-content">
+                    <%= link_to 'マイページ', public_users_my_page_path, class:"btn btn-outline-dark" %>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="header-content">
                     <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"btn btn-outline-dark" %>
                   </div>
                 </div>
@@ -48,10 +53,13 @@
     </header>
 
     <main class="container-fluid">
-      <div class="row">
+
+        <div class="col">
         <% flash.each do |message_type, message| %>
           <div class="flash-message <%= message_type %>"><%= message %></div>
         <% end %>
+        </div>
+        <div class="row">
         <%= yield %>
       </div>
     </main>

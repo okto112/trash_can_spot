@@ -1,21 +1,21 @@
-<div class="col m-50">
+<div class="col-3 m-auto">
   <h2>新規ユーザー登録</h2>
 
   <%= form_with model: @user, url: registration_path(resource_name), local: true do |f| %>
     <%= render "public/shared/error_messages", resource: resource %>
 
     <div class="field">
-      <%= f.label :name %><br>
+      <%= f.label :name, "ユーザーネーム" %><br>
       <%= f.text_field :name, autofocus: true %>
     </div>
 
     <div class="field">
-      <%= f.label :email %><br />
+      <%= f.label :email, "メールアドレス" %><br />
       <%= f.email_field :email, autocomplete: "email" %>
     </div>
 
     <div class="field">
-      <%= f.label :password %>
+      <%= f.label :password, "パスワード" %>
       <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em>
       <% end %><br />
@@ -23,7 +23,7 @@
     </div>
 
     <div class="field">
-      <%= f.label :password_confirmation %><br />
+      <%= f.label :password_confirmation, "パスワード" %><br />
       <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
     </div>
 
@@ -32,5 +32,11 @@
     </div>
   <% end %>
 
-  <%= render "public/shared/links" %>
+  <div class="mt-4">
+    <h4>既に登録済みの方</h4>
+    <p>
+      <%= link_to 'こちら', new_user_session_path %>
+      からログインしてください。
+    </p>
+  </div>
 </div>

@@ -1,14 +1,14 @@
-<div class="col">
+<div class="col-3 m-auto">
   <h2>ログイン</h2>
 
 <%= form_with model: @user, url: session_path(resource_name), local: true do |f| %>
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label :email, "メールアドレス" %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
   <div class="field">
-    <%= f.label :password %><br />
+    <%= f.label :password, "パスワード" %><br />
     <%= f.password_field :password, autocomplete: "current-password" %>
   </div>
 
@@ -20,7 +20,7 @@
   <% end %>
 
   <div class="actions">
-    <%= f.submit "ログイン", class:"btn btn-primary" %>
+    <%= f.submit "ログイン", class:"btn btn-primary mt-2" %>
   </div>
 <% end %>
 
