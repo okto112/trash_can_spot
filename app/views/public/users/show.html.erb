@@ -1,1 +1,41 @@
-<h1>マイページ</h1>
+<div class="col">
+  <div class="text-center">
+    <h2 class="p-2 bg-secondary text-white">マイページ</h2>
+
+    <div class="row">
+      <h2 class="m-3">登録情報</h2>
+    </div>
+
+    <table class="table">
+      <tbody>
+        <tr>
+          <td class="table-active">ユーザーネーム</td>
+          <td><%= @user.name %></td>
+        </tr>
+
+        <tr>
+          <td class="table-active">メールアドレス</td>
+          <td><%= @user.email %></td>
+        </tr>
+
+        <tr>
+          <td class="table-active">パスワード</td>
+          <td>*********</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="row">
+      <p><%= link_to '編集する', public_users_information_edit_path,class:"btn btn-success ml-3" %></p>
+    </div>
+
+    <div class="row">
+      <p><%= link_to '登録したスポットを見る', class:"btn btn-primary btn-sm m-3" %></p>
+      <p><%= link_to '投稿したコメントを見る', class:"btn btn-primary btn-sm m-3" %></p>
+    </div>
+
+    <div class="row">
+      <p><%= link_to '退会する', public_users_unsubscribe_path, class:"btn btn-danger ml-3" %></p>
+    </div>
+  </div>
+</div>

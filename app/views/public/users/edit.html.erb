@@ -1,0 +1,32 @@
+<div class="col">
+  <div class="text-center">
+    <h2 class="p-2 bg-secondary text-white mb-5">会員情報編集</h2>
+
+    <%= form_with model: @user, url: public_users_information_path do |f| %>
+      <table>
+        <tbody>
+          <tr>
+            <td style="width: 40%">氏名</td>
+            <td style="width: 40%"><%= f.text_field :name, autofocus: true, placeholder:"ニックネーム" %></td>
+          </tr>
+
+          <tr>
+            <td>メールアドレス</td>
+            <td><%= f.text_field :email, placeholder:"○○○＠○○○○" %></td>
+          </tr>
+
+          <tr>
+            <td>パスワード</td>
+            <td><%= f.text_field :encrypted_password %></td>
+          </tr>
+        </tbody>
+      </table>
+
+    <div class="col-4 m-auto">
+      <div class="row d-flex justify-content-around mt-4">
+        <p><%= f.submit "編集を保存", class:"btn btn-success" %></p>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
