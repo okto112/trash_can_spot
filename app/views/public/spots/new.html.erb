@@ -1,29 +1,56 @@
 <div class="col">
   <h2 class="p-2 bg-secondary text-white mb-5 text-center">スポット登録</h2>
+<div class="row">
+  <div class="col-3">
+    <h3>スポット情報</h3>
+    <%= form_with model: @spot, url: public_spots_path do |f| %>
 
-  <h3>スポット情報</h3>
-  <%= form_with model: @spot, url: public_spots_path do |f| %>
+      <h3>スポット名</h3>
+      <div class="ml-4">
+        <%= f.text_field :name, placeholder: "例：コンビニのゴミ箱" %>
+      </div>
 
-    <h3>スポット名</h3>
-    <div class="ml-4">
-      <%= f.text_field :name, placeholder: "例：コンビニのゴミ箱" %>
-    </div>
+      <h3>スポット説明</h3>
+      <div class="ml-4">
+          <p><%= f.text_area :introduction, placeholder: "例：○○コンビニの前にあるゴミ箱です。" %></p>
+      </div>
 
-    <h3>スポット説明</h3>
-    <div class="ml-4">
-        <p><%= f.text_area :introduction, placeholder: "例：○○コンビニの前にあるゴミ箱です。" %></p>
-    </div>
+      <h3>ゴミ箱の種類</h3>
+      <div class="ml-4">
+          <% Spot.kinds_i18n.each do |key, value| %>
+            <%= check_box_tag 'spot[kind][]', key %> <%= label_tag 'spot[kind][]', value %></br>
+          <% end %>
+      </div>
 
-    <h3>ゴミ箱の種類</h3>
-    <div class="ml-4">
-        <% Spot.kinds_i18n.each do |key, value| %>
-          <p><%= check_box_tag 'spot[kind][]', key %> <%= label_tag 'spot[kind][]', value %></p>
-        <% end %>
-    </div>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
 
-    <%= f.hidden_field :user_id, :value => current_user.id %>
+      <%= f.submit "スポットを登録する", class:"btn btn-primary" %>
 
-    <%= f.submit "スポットを登録する", class:"btn btn-primary" %>
+    <% end %>
+  </div>
 
-  <% end %>
+  <div class="col-9">
+   <div id="map">
+     <script>
+       (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+          key: "<%= ENV['API_KEY'] %>"
+        });
+
+        let map;
+
+        async function initMap() {
+          const { Map } = await google.maps.importLibrary("maps");
+
+          map = new Map(document.getElementById("map"), {
+            center: { lat: 35.681236, lng: 139.767125 },
+            zoom: 15,
+            mapTypeControl: false
+          });
+        }
+
+        initMap()
+     </script>
+   </div>
+  </div>
+  </div>
 </div>
