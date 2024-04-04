@@ -1,0 +1,32 @@
+<div class="col">
+  <h2 class="p-2 bg-secondary text-white mb-5 text-center">登録したスポット一覧</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="table-active">登録日</th>
+        <th class="table-active">スポット名</th>
+        <th class="table-active">ゴミの種類</th>
+        <th class="table-active"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @spots.each do |spot| %>
+      <tr>
+        <td><%= spots.created_at.strftime('%Y/%m/%d') %></td>
+        <td>
+          <p><%= spot.name %></p>
+        </td>
+        <td></td>
+        <td>
+          <%= link_to '表示', public_spot_path(spot.id), class:"btn btn-primary" %>
+          <%= link_to '削除', public_spot_path(spot.id), method: :delete, data: {confirm: "スポットを削除しますか？"}, class:"btn btn-primary" %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @spots %>
+</div>

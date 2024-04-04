@@ -1,0 +1,29 @@
+<div class="col">
+  <h2 class="p-2 bg-secondary text-white mb-5 text-center">スポット登録</h2>
+
+  <h3>スポット情報</h3>
+  <%= form_with model: @spot, url: public_spots_path do |f| %>
+
+    <h3>スポット名</h3>
+    <div class="ml-4">
+      <%= f.text_field :name, placeholder: "例：コンビニのゴミ箱" %>
+    </div>
+
+    <h3>スポット説明</h3>
+    <div class="ml-4">
+        <p><%= f.text_area :introduction, placeholder: "例：○○コンビニの前にあるゴミ箱です。" %></p>
+    </div>
+
+    <h3>ゴミ箱の種類</h3>
+    <div class="ml-4">
+        <% Spot.kinds_i18n.each do |key, value| %>
+          <p><%= check_box_tag 'spot[kind][]', key %> <%= label_tag 'spot[kind][]', value %></p>
+        <% end %>
+    </div>
+
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+
+    <%= f.submit "スポットを登録する", class:"btn btn-primary" %>
+
+  <% end %>
+</div>
