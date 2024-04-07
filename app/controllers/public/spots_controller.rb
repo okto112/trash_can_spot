@@ -10,20 +10,24 @@ class Public::SpotsController < ApplicationController
 
   def new
     @spot = Spot.new
+    @kinds = Kind.all
   end
 
   def create
     @spot = Spot.new(spot_params)
-    # @spot.kind = spot_params[:kind].map(&:to_sym) if spot_params[:kind].present?
+    checked_kinds = params[:kinds]
+    checked_kinds.each do |kind_id|
+       SpotKind.create(spot_id: @spot.id, kind_id: kind_id)
+     end
     if @spot.save
       flash[:notice] = "スポットを登録しました！"
-      redirect_to spots_path
+      redirect_to public_spots_path
     else
       @spots = Spot.where(user_id: current_user.id).page(params[:page])
       render :index
     end
   end
-  
+
   def destroy
     spot = Spot.find(params[:id])
     spot.destroy
@@ -33,6 +37,6 @@ class Public::SpotsController < ApplicationController
   private
 
   def spot_params
-    params.require(:spot).permit(:user_id, :name, :introduction, kind:[])
+    params.require(:spot).permit(:user_id, :name, :introduction, :latitude, :longitude, kind:[])
   end
 end

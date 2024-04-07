@@ -1,3 +1,6 @@
 class Spot < ApplicationRecord
-  enum kind: { burnable_garbage: 0, plastic: 1, pet_bottles: 2, can: 3, bottle: 4 }
+  has_many :comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :spot_kinds, dependent: :destroy
+  belongs_to :user
 end

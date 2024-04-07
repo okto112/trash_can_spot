@@ -10,3 +10,7 @@ Admin.create!(
   email: 'admin@example.com',
   password: 'admin!'
 )
+
+Kind.create!(
+  [{ name: "燃えるゴミ" }, { name: "プラスチック" }, { name: "ペットボトル" }, { name: "カン" }, { name: "ビン" }]
+)

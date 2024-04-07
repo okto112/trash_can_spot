@@ -17,12 +17,15 @@
 
       <h3>ゴミ箱の種類</h3>
       <div class="ml-4">
-          <% Spot.kinds_i18n.each do |key, value| %>
-            <%= check_box_tag 'spot[kind][]', key %> <%= label_tag 'spot[kind][]', value %></br>
+          <% @kinds.each do |kind| %>
+            <%= check_box_tag 'kinds[]', kind.id %>
+            <%= label_tag "kind_#{kind.id}", kind.name %><br>
           <% end %>
       </div>
 
       <%= f.hidden_field :user_id, :value => current_user.id %>
+      <%= f.hidden_field :latitude, :value => 35.681236 %>
+      <%= f.hidden_field :longitude, :value => 139.767125 %>
 
       <%= f.submit "スポットを登録する", class:"btn btn-primary" %>
 
