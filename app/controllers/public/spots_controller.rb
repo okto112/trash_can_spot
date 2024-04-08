@@ -16,15 +16,18 @@ class Public::SpotsController < ApplicationController
   def create
     @spot = Spot.new(spot_params)
     checked_kinds = params[:kinds]
-    checked_kinds.each do |kind_id|
-       SpotKind.create(spot_id: @spot.id, kind_id: kind_id)
-     end
-    if @spot.save
-      flash[:notice] = "スポットを登録しました！"
-      redirect_to public_spots_path
-    else
-      @spots = Spot.where(user_id: current_user.id).page(params[:page])
-      render :index
+
+    Spot.transaction do
+      if @spot.save
+        checked_kinds.each do |kind_id|
+          SpotKind.create(spot_id: @spot.id, kind_id: kind_id)
+        end
+        flash[:notice] = "スポットを登録しました！"
+        redirect_to public_spots_path
+      else
+        @spots = Spot.where(user_id: current_user.id).page(params[:page])
+        render :index
+      end
     end
   end
 

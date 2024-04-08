@@ -19,9 +19,9 @@
           <p><%= spot.name %></p>
         </td>
         <td>
-          <% spot.spot_kind.each do |kind| %>
+          <% spot.spot_kinds.each do |spot_kind| %>
 
-             <%= kind.name %><br>
+             <%= spot_kind.kind.name %><br>
 
           <% end %>
         <td>
