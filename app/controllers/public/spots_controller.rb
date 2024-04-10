@@ -15,18 +15,27 @@ class Public::SpotsController < ApplicationController
 
   def create
     @spot = Spot.new(spot_params)
-    checked_kinds = params[:kinds]
+    checked_kinds = params[:spot][:kind_ids]
 
     Spot.transaction do
       if @spot.save
         checked_kinds.each do |kind_id|
-          SpotKind.create(spot_id: @spot.id, kind_id: kind_id)
+          spot_kind = SpotKind.create(spot_id: @spot.id, kind_id: kind_id)
+          unless spot_kind.valid?
+            @spot.errors.add(:kinds, spot_kind.errors[:kind_id])
+          end
         end
-        flash[:notice] = "スポットを登録しました！"
-        redirect_to public_spots_path
+
+        if @spot.errors.empty?
+          flash[:notice] = "スポットを登録しました！"
+          redirect_to public_spots_path
+        else
+          @kinds = Kind.all
+          render :new
+        end
       else
-        @spots = Spot.where(user_id: current_user.id).page(params[:page])
-        render :index
+        @kinds = Kind.all
+        render :new
       end
     end
   end
@@ -40,6 +49,6 @@ class Public::SpotsController < ApplicationController
   private
 
   def spot_params
-    params.require(:spot).permit(:user_id, :name, :introduction, :latitude, :longitude, kind:[])
+    params.require(:spot).permit(:user_id, :name, :introduction, :latitude, :longitude,  kind_ids: [] )
   end
 end

@@ -4,4 +4,8 @@ class Spot < ApplicationRecord
   has_many :spot_kinds, dependent: :destroy
   has_many :kinds, through: :spot_kinds
   belongs_to :user
+
+  validates :name, length: { in: 1..20 }
+  validates :introduction, length: { in: 1..50 }
+  validates :kind_ids, presence: { message: "を1つ以上選択してください"}
 end
