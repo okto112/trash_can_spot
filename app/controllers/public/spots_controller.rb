@@ -20,6 +20,10 @@ class Public::SpotsController < ApplicationController
     Spot.transaction do
       if @spot.save
         checked_kinds.each do |kind_id|
+          if SpotKind.find_by(spot_id: @spot.id, kind_id: kind_id)
+            break
+          end
+
           spot_kind = SpotKind.create(spot_id: @spot.id, kind_id: kind_id)
           unless spot_kind.valid?
             @spot.errors.add(:kinds, spot_kind.errors[:kind_id])
