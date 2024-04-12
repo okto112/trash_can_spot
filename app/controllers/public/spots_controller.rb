@@ -44,6 +44,46 @@ class Public::SpotsController < ApplicationController
     end
   end
 
+  def edit
+    @spot = Spot.find(params[:id])
+    @kinds = Kind.all
+  end
+
+  def update
+    @spot = Spot.find(params[:id])
+    checked_kinds = params[:spot][:kind_ids]
+
+    if checked_kinds.nil?
+      @spot.errors.add(:kind_ids, "を1つ以上選択してください")
+      @kinds = Kind.all
+      render :edit and return
+    end
+
+    Spot.transaction do
+      if @spot.update(spot_params)
+        checked_kinds.each do |kind_id|
+          if SpotKind.find_by(spot_id: @spot.id, kind_id: kind_id)
+            break
+          end
+
+          spot_kind = SpotKind.create(spot_id: @spot.id, kind_id: kind_id)
+          unless spot_kind.valid?
+            @spot.errors.add(:kinds, spot_kind.errors[:kind_id])
+          end
+        end
+
+        if @spot.errors.empty?
+          flash[:notice] = "スポットを編集しました！"
+          redirect_to public_spot_path(@spot.id)
+        else
+          render :edit
+        end
+      else
+        render :edit
+      end
+    end
+  end
+
   def destroy
     spot = Spot.find(params[:id])
     spot.destroy

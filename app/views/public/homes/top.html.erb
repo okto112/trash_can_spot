@@ -1,1 +1,6 @@
 <h1>topページ</h1>
+<div class="col">
+  <% flash.each do |message_type, message| %>
+    <div class="flash-message <%= message_type %>"><%= message %></div>
+  <% end %>
+</div>
