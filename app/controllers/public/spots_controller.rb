@@ -76,9 +76,11 @@ class Public::SpotsController < ApplicationController
           flash[:notice] = "スポットを編集しました！"
           redirect_to public_spot_path(@spot.id)
         else
+          @kinds = Kind.all
           render :edit
         end
       else
+        @kinds = Kind.all
         render :edit
       end
     end

@@ -1,11 +1,7 @@
 <div class="col">
   <h2 class="p-2 bg-secondary text-white mb-4 text-center">スポット詳細</h2>
 
-  <div class="col">
-    <% flash.each do |message_type, message| %>
-      <div class="flash-message <%= message_type %>"><%= message %></div>
-    <% end %>
-  </div>
+  <%= render 'layouts/flash_message' %>
 
   <div class="row justify-content-md-center h-100">
     <div class="col-2">

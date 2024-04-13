@@ -9,7 +9,7 @@ html,body {
   height: calc(100% - 10%);
 }
 
-.error_message {
+.error_message, #error_explanation {
   color: red;
 }
 
