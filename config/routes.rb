@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     patch '/users/information', to: 'users#update'
     get '/users/unsubscribe', to: 'users#unsubscribe'
     patch '/users/withdraw', to: 'users#withdraw'
+    get '/main', to: 'homes#main'
     resources :spots, only: [:new, :index, :show, :create, :edit, :update, :destroy]
   end
 

@@ -24,7 +24,7 @@
             <div class="row justify-content-md-between">
               <% if user_signed_in? %>
                   <div class="header-content">
-                    <%= link_to 'スポットを見る', root_path, data: {"turbolinks" => false}, class:"btn btn-outline-dark" %>
+                    <%= link_to 'スポットを見る', public_main_path, data: {"turbolinks" => false}, class:"btn btn-outline-dark" %>
                   </div>
                   <div class="header-content">
                     <%= link_to 'マイページ', public_users_my_page_path, class:"btn btn-outline-dark" %>

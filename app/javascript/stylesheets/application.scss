@@ -31,3 +31,53 @@ html,body {
   color: #930403;
   border: solid 1px #930403;
 }
+
+.burnable-garbage {
+  border-radius: 5px;
+  padding: 1px;
+  margin: 1px;
+  text-align: center;
+  background-color: #FF99CC;
+  color: #F00;
+  border: solid 1px #F00;
+}
+
+.plastic {
+  border-radius: 5px;
+  padding: 1px;
+  margin: 1px;
+  text-align: center;
+  background-color: #DCC2FF;
+  color: purple;
+  border: solid 1px purple;
+}
+
+.pet-bottles {
+  border-radius: 5px;
+  padding: 1px;
+  margin: 1px;
+  text-align: center;
+  background-color: #C2EEFF;
+  color: #1E90FF;
+  border: solid 1px #1E90FF;
+}
+
+.can {
+  border-radius: 5px;
+  padding: 1px;
+  margin: 1px;
+  text-align: center;
+  background-color: #FFFFCC;
+  color: #FFD700;
+  border: solid 1px #FFD700;
+}
+
+.bottle {
+  border-radius: 5px;
+  padding: 1px;
+  margin: 1px;
+  text-align: center;
+  background-color: #AEFFBD;
+  color: #008000;
+  border: solid 1px #008000;
+}
