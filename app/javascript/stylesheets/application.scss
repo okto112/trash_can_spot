@@ -6,8 +6,9 @@ html,body {
 
 #map {
   width: 100%;
-  height: calc(100% - 10%);
+  height: 80vh;
 }
+
 
 .error_message, #error_explanation {
   color: red;
@@ -32,6 +33,27 @@ html,body {
   border: solid 1px #930403;
 }
 
+.spot-info {
+  display: none;
+  animation: slideIn 0.1s linear;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-200px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.spot-kind {
+  border-radius: 5px;
+  padding: 1px;
+  margin: 1px;
+  text-align: center;
+}
+
 .burnable-garbage {
   border-radius: 5px;
   padding: 1px;
@@ -43,40 +65,24 @@ html,body {
 }
 
 .plastic {
-  border-radius: 5px;
-  padding: 1px;
-  margin: 1px;
-  text-align: center;
   background-color: #DCC2FF;
   color: purple;
   border: solid 1px purple;
 }
 
 .pet-bottles {
-  border-radius: 5px;
-  padding: 1px;
-  margin: 1px;
-  text-align: center;
   background-color: #C2EEFF;
   color: #1E90FF;
   border: solid 1px #1E90FF;
 }
 
 .can {
-  border-radius: 5px;
-  padding: 1px;
-  margin: 1px;
-  text-align: center;
   background-color: #FFFFCC;
   color: #FFD700;
   border: solid 1px #FFD700;
 }
 
 .bottle {
-  border-radius: 5px;
-  padding: 1px;
-  margin: 1px;
-  text-align: center;
   background-color: #AEFFBD;
   color: #008000;
   border: solid 1px #008000;
