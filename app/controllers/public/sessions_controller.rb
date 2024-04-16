@@ -6,7 +6,7 @@ class Public::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
   def after_sign_in_path_for(resource)
-    root_path
+    public_main_path
   end
 
   def after_sign_out_path_for(resource)
@@ -16,7 +16,7 @@ class Public::SessionsController < Devise::SessionsController
   def guest_sign_in
     user = User.guest
     sign_in user
-    redirect_to root_path, notice: "ゲストでログインしました。"
+    redirect_to public_main_path, notice: "ゲストでログインしました。"
   end
 
   # GET /resource/sign_in

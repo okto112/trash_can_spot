@@ -1,4 +1,20 @@
 <div class="col">
+  <%= render 'layouts/flash_message' %>
+  <div class="row justify-content-md-center">
+    <div class="row">
+      <div class="">
+        <div class="font-weight-bold">ジャンル検索</div>
+      </div>
+      <div class="p-2">
+        <% @kinds.each do |kind| %>
+          <%= link_to  kind.name, public_main_path(kind_id: kind.id), data: {"turbolinks" => false}, class:"btn btn-outline-dark" %>
+        <% end %>
+      </div>
+    </div>
+    <%= form_with url: public_main_path, method: :get do |f| %>
+      <%= f.text_field :key_word,value: @key_word, placeholder: "キーワード検索", class:"m-4" %>
+    <% end %>
+  </div>
   <div class="row justify-content-md-center">
     <div class="col-2 spot-info">
       <h3 class="mb-4">スポット情報</h3>
@@ -46,6 +62,31 @@
                 mapTypeControl: false
               });
 
+              initSpots()
+            }
+
+            //検索後のマップ作成
+            let geocoder
+            function codeAddress(){
+              geocoder = new google.maps.Geocoder();
+              let inputAddress = document.getElementById('address').value;
+              geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+                if (status == 'OK') {
+                  map = new google.maps.Map(document.getElementById('map'), {
+                    center:  {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()},
+                    zoom: 15,
+                    mapTypeControl: false
+                  });
+
+                  initSpots()
+                } else {
+                  alert('該当する結果がありませんでした：' + status);
+                }
+              });
+            }
+
+
+            function initSpots(){
               <% @spots.each do |spot|%>
                 ( function() {
                   let markerLatLng = { lat: <%= spot.latitude %>, lng: <%= spot.longitude %> };
@@ -114,24 +155,6 @@
 
                })();
               <% end %>
-            }
-
-            //検索後のマップ作成
-            let geocoder
-            function codeAddress(){
-              geocoder = new google.maps.Geocoder();
-              let inputAddress = document.getElementById('address').value;
-              geocoder.geocode( { 'address': inputAddress}, function(results, status) {
-                if (status == 'OK') {
-                  map = new google.maps.Map(document.getElementById('map'), {
-                    center:  {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()},
-                    zoom: 15,
-                    mapTypeControl: false
-                  });
-                } else {
-                  alert('該当する結果がありませんでした：' + status);
-                }
-              });
             }
 
             initMap()
