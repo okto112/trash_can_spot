@@ -4,6 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :spots, dependent: :destroy
+  has_many :fanorites, dependent: :destroy
+  has_many :comments, dependent: :destroy
+
   GUEST_USER_EMAIL = "guest@example.com"
 
   def self.guest

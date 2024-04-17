@@ -1,0 +1,39 @@
+<div class="col">
+  <h2 class="p-2 bg-secondary text-white mb-5 text-center">登録したスポット一覧</h2>
+
+  <%= render 'layouts/flash_message' %>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="table-active">登録日</th>
+        <th class="table-active">スポット名</th>
+        <th class="table-active">ゴミの種類</th>
+        <th class="table-active"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @spots.each do |spot| %>
+      <tr>
+        <td><%= spot.created_at.strftime('%Y/%m/%d') %></td>
+        <td>
+          <p><%= spot.name %></p>
+        </td>
+        <td>
+          <% spot.spot_kinds.each do |spot_kind| %>
+
+             <%= spot_kind.kind.name %><br>
+
+          <% end %>
+        <td>
+          <%= link_to '表示', public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" %>
+          <%= link_to '削除', public_spot_path(spot.id), method: :delete, data: {confirm: "スポットを削除しますか？"}, class:"btn btn-primary" %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @spots %>
+</div>

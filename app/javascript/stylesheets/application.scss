@@ -1,1 +1,89 @@
 @use '~bootstrap/scss/bootstrap';
+
+html,body {
+    height: 100%;
+}
+
+#map {
+  width: 100%;
+  height: 76vh;
+}
+
+
+.error_message, #error_explanation {
+  color: red;
+}
+
+.flash-message {
+  border-radius: 5px;
+  padding: 16px 24px;
+  margin: 16px 0px;
+  text-align: center;
+}
+
+.flash-message.notice {
+  background-color: #bcdfff;
+  color: #0067C0;
+  border: solid 1px #0067C0;
+}
+
+.flash-message.alert {
+  background-color: #ffd4d1;
+  color: #930403;
+  border: solid 1px #930403;
+}
+
+.spot-info {
+  display: none;
+  animation: slideIn 0.1s linear;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-200px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.spot-kind {
+  border-radius: 5px;
+  padding: 1px;
+  margin: 1px;
+  text-align: center;
+}
+
+.burnable-garbage {
+  border-radius: 5px;
+  padding: 1px;
+  margin: 1px;
+  text-align: center;
+  background-color: #FF99CC;
+  color: #F00;
+  border: solid 1px #F00;
+}
+
+.plastic {
+  background-color: #DCC2FF;
+  color: purple;
+  border: solid 1px purple;
+}
+
+.pet-bottles {
+  background-color: #C2EEFF;
+  color: #1E90FF;
+  border: solid 1px #1E90FF;
+}
+
+.can {
+  background-color: #FFFFCC;
+  color: #FFD700;
+  border: solid 1px #FFD700;
+}
+
+.bottle {
+  background-color: #AEFFBD;
+  color: #008000;
+  border: solid 1px #008000;
+}

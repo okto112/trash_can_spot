@@ -12,27 +12,32 @@
   </head>
 
   <body>
-    <header class="header mb-2">
+    <header class="header mb-2 border-bottom">
       <div class="container-fluid">
-        <div class="row py-3">
+        <div class="row align-items-center">
           <div class="col-3">
             <div class="logo">
               <h1>ゴミ箱スポット</h1>
             </div>
           </div>
-          <div class="col-5 offset-4">
-            <div class="row">
+          <div class="col-5 offset-3">
+            <div class="row justify-content-md-between ">
               <% if user_signed_in? %>
-                <div class="col-3">
+                  <div class="header-content">
+                    <%= link_to 'スポットを見る', public_main_path, data: {"turbolinks" => false}, class:"btn btn-outline-dark" %>
+                  </div>
                   <div class="header-content">
                     <%= link_to 'マイページ', public_users_my_page_path, class:"btn btn-outline-dark" %>
                   </div>
-                </div>
-                <div class="col-3">
+                  <div class="header-content">
+                    <%= link_to 'スポット登録', new_public_spot_path, data: {"turbolinks" => false}, class:"btn btn-outline-dark" %>
+                  </div>
+                  <div class="header-content">
+                    <%= link_to 'お気に入り', class:"btn btn-outline-dark" %>
+                  </div>
                   <div class="header-content">
                     <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"btn btn-outline-dark" %>
                   </div>
-                </div>
 
               <% elsif %>
                 <div class="col-3">
@@ -53,13 +58,7 @@
     </header>
 
     <main class="container-fluid">
-
-        <div class="col">
-        <% flash.each do |message_type, message| %>
-          <div class="flash-message <%= message_type %>"><%= message %></div>
-        <% end %>
-        </div>
-        <div class="row">
+      <div class="row">
         <%= yield %>
       </div>
     </main>

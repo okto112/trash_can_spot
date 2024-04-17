@@ -1,0 +1,178 @@
+<div class="col">
+  <%= render 'layouts/flash_message' %>
+  <div class="row justify-content-md-center mb-2">
+    <div class="row align-items-center border border-dark rounded p-1">
+      <div class="">
+        <div class="font-weight-bold">種類検索：</div>
+      </div>
+      <div class="align-middle m-1">
+        <%= link_to "すべて", public_main_path(kind_id: 0), data: {"turbolinks" => false}, id: 0 %>
+        <% @kinds.each do |kind| %>
+          <%= link_to  kind.name, public_main_path(kind_id: kind.id), data: {"turbolinks" => false}, id: kind.id %>
+        <% end %>
+      </div>
+    </div>
+    <%= form_with url: public_main_path, method: :get, class:"d-flex align-items-center border border-dark rounded p-2 ml-4" do |f| %>
+      <%= f.text_field :key_word,value: @key_word, placeholder: "キーワード検索" %>
+      <%= f.submit "検索", class:"btn btn-info btn-sm ml-1" %>
+    <% end %>
+    <form class="d-flex align-items-center border border-dark rounded p-2 ml-2">
+      <input id="address" type="textbox" placeholder="地図検索">
+      <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1">検索</button>
+    </form>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-2 spot-info">
+      <h3 class="mb-4">スポット情報</h3>
+        <h4>スポット名</h4>
+        <div class="ml-4 ">
+          <p id="spot-name"></p>
+        </div>
+
+        <h4>スポット説明</h4>
+        <div class="ml-4">
+          <p id="spot-introduction"></p>
+        </div>
+
+        <h4>ゴミ箱の種類</h4>
+        <div id="spot-kinds" class="ml-4"></div>
+        <div id="date"></div>
+        <div id="edit-button" class="m-4"></div>
+
+        <h4>スポットへのコメント</h4>
+    </div>
+
+    <div class="col-9 ml-3">
+      <div id="map" class="mt-2">
+         <script>
+           (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+              key: "<%= ENV['API_KEY'] %>"
+            });
+
+            //初期マップの設定
+            let map;
+            let marker
+            let markerIds = [];
+            let infoWindows = [];
+            let spotKindsHtml = "";
+            let changeStyle =false;
+
+            async function initMap() {
+              const { Map } = await google.maps.importLibrary("maps");
+
+              map = new google.maps.Map(document.getElementById('map'), {
+                center:  {lat: 34.70246347104699, lng: 135.4955532773327},
+                zoom: 15,
+                mapTypeControl: false
+              });
+
+              initSpots()
+            }
+
+            //検索後のマップ作成
+            let geocoder
+            function codeAddress(){
+              geocoder = new google.maps.Geocoder();
+              let inputAddress = document.getElementById('address').value;
+              geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+                if (status == 'OK') {
+                  map = new google.maps.Map(document.getElementById('map'), {
+                    center:  {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()},
+                    zoom: 15,
+                    mapTypeControl: false
+                  });
+
+                  initSpots()
+                } else {
+                  alert('該当する結果がありませんでした：' + status);
+                }
+              });
+            }
+
+            //スポットの初期化
+            function initSpots(){
+              <% @spots.each do |spot|%>
+                ( function() {
+                  let markerLatLng = { lat: <%= spot.latitude %>, lng: <%= spot.longitude %> };
+                  let marker = new google.maps.Marker({
+                    position: markerLatLng,
+                    id: '<%= spot.id %>',
+                    map: map
+                  });
+
+                  kindsInfo();
+                  let infowindow = new google.maps.InfoWindow({
+                    position: markerLatLng,
+                    content: "スポット情報</br>" +
+                      "スポット名：<%= spot.name %></br>" +
+                      "ゴミの種類：</br>" +
+                      spotKindsHtml +
+                      "登録日：<%= spot.created_at.strftime('%Y/%m/%d') %>"
+                  });
+
+                  marker.addListener('click', function() {
+                    closeInfoWindows();
+                    kindsInfo();
+
+                    if (!changeStyle) {
+                      document.querySelector('.spot-info').style.display = 'block';
+                      removeClass = true;
+                    }
+
+                    document.getElementById("spot-name").textContent = "<%= spot.name %>";
+                    document.getElementById("spot-introduction").textContent = "<%= spot.introduction %>";
+                    document.getElementById("spot-kinds").innerHTML = spotKindsHtml;
+                    document.getElementById("date").textContent = "登録日：<%= spot.created_at.strftime('%Y/%m/%d') %>";
+                    <% if spot.id == current_user.id || spot.user.email == current_user.email %>
+                      document.getElementById("edit-button").innerHTML = '<%= link_to "編集する", edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" %>';
+                    <% end %>
+
+                    infowindow.open(map, marker);
+                    markerIds.push(<%= spot.id %>);
+                    infoWindows.push(infowindow);
+                    spotKindsHtml = "";
+                  });
+
+                  function closeInfoWindows() {
+                    for (let i = 0; i < infoWindows.length; i++) {
+                      infoWindows[i].close();
+                    }
+                  }
+
+                  function kindsInfo() {
+                    spotKindsHtml = "";
+                    <% spot.spot_kinds.each do |spot_kind| %>
+                      <% case spot_kind.kind.name %>
+                        <% when '燃えるゴミ' %>
+                          spotKindsHtml += "<p class='spot-kind burnable-garbage'><%= spot_kind.kind.name %></p>";
+                        <% when 'プラスチック' %>
+                          spotKindsHtml += "<p class='spot-kind plastic'><%= spot_kind.kind.name %></p>";
+                        <% when 'ペットボトル' %>
+                          spotKindsHtml += "<p class='spot-kind pet-bottles'><%= spot_kind.kind.name %></p>";
+                        <% when 'カン' %>
+                          spotKindsHtml += "<p class='spot-kind can'><%= spot_kind.kind.name %></p>";
+                        <% when 'ビン' %>
+                          spotKindsHtml += "<p class='spot-kind bottle'><%= spot_kind.kind.name %></p>";
+                      <% end %>
+                    <% end %>
+                  }
+
+               })();
+              <% end %>
+            }
+
+            initMap()
+
+            //種類検索タグのスタイル設定
+            window.onload = function() {
+              document.getElementById("0").classList.add("btn", "btn-outline-dark");
+              <% @kinds.each do |kind| %>
+                document.getElementById("<%= kind.id %>").classList.add("btn", "btn-outline-secondary");
+              <% end %>
+              document.getElementById("<%= @kind_id %>").classList.add("btn", "btn-warning");
+            };
+         </script>
+      </div>
+    </div>
+  </div>
+</div>
