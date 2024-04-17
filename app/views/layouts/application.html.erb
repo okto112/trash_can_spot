@@ -12,16 +12,16 @@
   </head>
 
   <body>
-    <header class="header mb-2">
+    <header class="header mb-2 border-bottom">
       <div class="container-fluid">
-        <div class="row py-3">
+        <div class="row align-items-center">
           <div class="col-3">
             <div class="logo">
               <h1>ゴミ箱スポット</h1>
             </div>
           </div>
           <div class="col-5 offset-3">
-            <div class="row justify-content-md-between">
+            <div class="row justify-content-md-between ">
               <% if user_signed_in? %>
                   <div class="header-content">
                     <%= link_to 'スポットを見る', public_main_path, data: {"turbolinks" => false}, class:"btn btn-outline-dark" %>
