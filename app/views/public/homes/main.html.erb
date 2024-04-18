@@ -36,8 +36,12 @@
 
         <h4>ゴミ箱の種類</h4>
         <div id="spot-kinds" class="ml-4"></div>
+
         <div id="date"></div>
-        <div id="edit-button" class="m-4"></div>
+
+        <div id="favorite_form" class="mt-2 d-flex"></div>
+
+        <div id="edit-button" class="text-center"></div>
 
         <h4>スポットへのコメント</h4>
     </div>
@@ -123,6 +127,7 @@
                     document.getElementById("spot-introduction").textContent = "<%= spot.introduction %>";
                     document.getElementById("spot-kinds").innerHTML = spotKindsHtml;
                     document.getElementById("date").textContent = "登録日：<%= spot.created_at.strftime('%Y/%m/%d') %>";
+                    document.getElementById("favorite_form").innerHTML = '<p>お気に入り登録</p><i id="favorite_button" class="fa-solid fa-star ml-3" onclick="addToFavorites(<%= spot.id %>)"></i>';
                     <% if spot.id == current_user.id || spot.user.email == current_user.email %>
                       document.getElementById("edit-button").innerHTML = '<%= link_to "編集する", edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" %>';
                     <% end %>
@@ -171,6 +176,22 @@
               <% end %>
               document.getElementById("<%= @kind_id %>").classList.add("btn", "btn-warning");
             };
+
+            //お気に入り登録処理
+            function addToFavorites(spotId) {
+              console.log(spotId);
+              // $.ajax({
+              //   url: '/favorites/create',
+              //   method: 'POST',
+              //   data: { spot_id: spotId },
+              //   success: function(response) {
+              //     // 成功した場合の処理を書く
+              //   },
+              //   error: function() {
+              //     // エラーが発生した場合の処理を書く
+              //   }
+              // });
+            }
          </script>
       </div>
     </div>

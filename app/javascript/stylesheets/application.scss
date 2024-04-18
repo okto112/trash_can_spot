@@ -33,6 +33,7 @@ html,body {
   border: solid 1px #930403;
 }
 
+
 .spot-info {
   display: none;
   animation: slideIn 0.1s linear;
@@ -46,6 +47,7 @@ html,body {
     transform: translateX(0);
   }
 }
+
 
 .spot-kind {
   border-radius: 5px;
@@ -86,4 +88,9 @@ html,body {
   background-color: #AEFFBD;
   color: #008000;
   border: solid 1px #008000;
+}
+
+#favorite_button {
+  color: #AAA;
+  font-size: 26px;
 }
