@@ -1,5 +1,6 @@
 class Public::SpotsController < ApplicationController
   before_action :authenticate_user!
+
   def index
     @spots = Spot.where(user_id: current_user.id).page(params[:page])
   end

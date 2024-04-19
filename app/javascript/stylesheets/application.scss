@@ -90,7 +90,12 @@ html,body {
   border: solid 1px #008000;
 }
 
-#favorite_button {
+#favorite_btn_off {
   color: #AAA;
+  font-size: 26px;
+}
+
+#favorite_btn_on {
+  color: #FF0;
   font-size: 26px;
 }
