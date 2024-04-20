@@ -1,13 +1,13 @@
 <div class="col">
-  <h2 class="p-2 bg-secondary text-white mb-5 text-center">登録したスポット一覧</h2>
+  <h2 class="p-2 bg-secondary text-white mb-5 text-center">お気に入りスポット一覧</h2>
 
     <%= render 'layouts/flash_message' %>
 
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th class="table-active">登録日</th>
         <th class="table-active">スポット名</th>
+        <th class="table-active">スポット説明</th>
         <th class="table-active">ゴミの種類</th>
         <th class="table-active"></th>
       </tr>
@@ -16,8 +16,8 @@
     <tbody>
       <% @spots.each do |spot| %>
       <tr>
-        <td class="align-middle"><%= spot.created_at.strftime('%Y/%m/%d') %></td>
         <td class="align-middle"><%= spot.name %></td>
+        <td class="align-middle"><%= spot.introduction %></td>
         <td class="kinds-td align-middle">
           <div class="d-flex">
           <% spot.spot_kinds.each do |spot_kind| %>
@@ -37,8 +37,8 @@
           </div>
         </td>
         <td class="text-center d-flex justify-content-around">
-          <%= link_to '表示', public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-info" %>
-          <%= link_to '削除', public_spot_path(spot.id), method: :delete, data: {confirm: "スポットを削除しますか？"}, class:"btn btn-danger" %>
+          <div><%= link_to '表示', public_favorite_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-info" %></div>
+          <div><%= link_to '削除', public_favorite_path(spot.id), method: :delete, data: {confirm: "お気に入り一覧トから削除しますか？"}, class:"btn btn-danger" %></div>
         </td>
       </tr>
       <% end %>

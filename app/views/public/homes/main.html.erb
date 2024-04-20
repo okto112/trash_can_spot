@@ -1,5 +1,7 @@
 <div class="col">
-  <%= render 'layouts/flash_message' %>
+  <div class="flash-message-container">
+    <%= render 'layouts/flash_message' %>
+  </div>
   <div class="row justify-content-md-center mb-2">
     <div class="row align-items-center border border-dark rounded p-1">
       <div class="">
@@ -22,7 +24,7 @@
     </form>
   </div>
   <div class="row justify-content-md-center">
-    <div class="col-2 spot-info">
+    <div id="spot-info" class="col-2 border border-3 ">
       <h3 class="mb-4">スポット情報</h3>
         <h4>スポット名</h4>
         <div class="ml-4 ">
@@ -119,18 +121,18 @@
                     kindsInfo();
 
                     if (!changeStyle) {
-                      document.querySelector('.spot-info').style.display = 'block';
+                      document.getElementById('spot-info').style.display = 'block';
                       removeClass = true;
                     }
 
-                    document.getElementById("spot-name").textContent = "<%= spot.name %>";
-                    document.getElementById("spot-introduction").textContent = "<%= spot.introduction %>";
-                    document.getElementById("spot-kinds").innerHTML = spotKindsHtml;
-                    document.getElementById("date").textContent = "登録日：<%= spot.created_at.strftime('%Y/%m/%d') %>";
-                    document.getElementById("favorite_form").innerHTML = '<p>お気に入り登録</p><div id="favorite_btn_<%= spot.id %>"></div>';
+                    $("#spot-name").text("<%= spot.name %>");
+                    $("#spot-introduction").text("<%= spot.introduction %>");
+                    $("#spot-kinds").html(spotKindsHtml);
+                    $("#date").text("登録日：<%= spot.created_at.strftime('%Y/%m/%d') %>");
+                    $("#favorite_form").html('<p>お気に入り登録</p><div id="favorite_btn_<%= spot.id %>"></div>');
                     $('#favorite_btn_<%= spot.id %>').html("<%= j(render 'public/favorites/favorite_btn', spot: spot) %>");
                     <% if spot.id == current_user.id || spot.user.email == current_user.email %>
-                      document.getElementById("edit-button").innerHTML = '<%= link_to "編集する", edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" %>';
+                      $("#edit-button").html('<%= link_to "編集する", edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" %>');
                     <% end %>
 
                     infowindow.open(map, marker);
@@ -171,12 +173,14 @@
 
             //種類検索タグのスタイル設定
             window.onload = function() {
-              document.getElementById("0").classList.add("btn", "btn-outline-dark");
+              $("#0").addClass("btn btn-outline-dark");
               <% @kinds.each do |kind| %>
-                document.getElementById("<%= kind.id %>").classList.add("btn", "btn-outline-secondary");
+                $("#<%= kind.id %>").addClass("btn btn-outline-secondary");
               <% end %>
-              document.getElementById("<%= @kind_id %>").classList.add("btn", "btn-warning");
+              $("#<%= @kind_id %>").addClass("btn btn-warning");
             };
+
+            $('.flash-message').hide().fadeIn(200).delay(1000).fadeOut(200);
          </script>
       </div>
     </div>
