@@ -3,7 +3,7 @@
     <i id="favorite_btn_on" class="fa-solid fa-star ml-3"></i>
   <% end %>
 <% else %>
-  <%= link_to public_favorites_path, method: :post, remote: true, data: {"turbolinks" => false} do %>
+  <%= link_to public_favorites_path(spot_id: spot.id), method: :post, remote: true, data: {"turbolinks" => false} do %>
     <i id="favorite_btn_off" class="fa-solid fa-star ml-3"></i>
   <% end %>
 <% end %>

@@ -127,7 +127,8 @@
                     document.getElementById("spot-introduction").textContent = "<%= spot.introduction %>";
                     document.getElementById("spot-kinds").innerHTML = spotKindsHtml;
                     document.getElementById("date").textContent = "登録日：<%= spot.created_at.strftime('%Y/%m/%d') %>";
-                    document.getElementById("favorite_form").innerHTML = '<p>お気に入り登録</p><div id="favorite_btn"><%= render 'public/favorites/favorite_btn', spot: spot %></div>';
+                    document.getElementById("favorite_form").innerHTML = '<p>お気に入り登録</p><div id="favorite_btn_<%= spot.id %>"></div>';
+                    $('#favorite_btn_<%= spot.id %>').html("<%= j(render 'public/favorites/favorite_btn', spot: spot) %>");
                     <% if spot.id == current_user.id || spot.user.email == current_user.email %>
                       document.getElementById("edit-button").innerHTML = '<%= link_to "編集する", edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" %>';
                     <% end %>
