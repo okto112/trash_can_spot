@@ -1,0 +1,23 @@
+<div class="col">
+  <h2 class="p-2 bg-secondary text-white mb-4 text-center">コメント投稿</h2>
+
+  <%= render 'layouts/validate_errors', data: @comment %>
+
+  <div class="row justify-content-md-center">
+    <div class="col-4">
+      <%= form_with model: @comment, url: public_comments_path do |f| %>
+
+        <h3>コメント内容</h3>
+        <div class="ml-4">
+            <p><%= f.text_area :comment, class: "w-100", placeholder: "例：大きなゴミ箱があります！" %></p>
+        </div>
+
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.hidden_field :spot_id, :value => @spot.id  %>
+        <div class="text-center">
+          <%= f.submit "コメントを投稿する", class:"btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

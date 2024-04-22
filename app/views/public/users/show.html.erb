@@ -31,9 +31,9 @@
       </div>
     <% end %>
 
-    <div class="row">
-      <p><%= link_to '登録したスポットを見る', public_spots_path, class:"btn btn-primary btn-sm m-3" %></p>
-      <p><%= link_to '投稿したコメントを見る', class:"btn btn-primary btn-sm m-3" %></p>
+    <div class="d-flex justify-content-md-center">
+      <p><%= link_to '登録したスポットを見る', public_spots_path, class:"btn btn-info m-3" %></p>
+      <p><%= link_to '投稿したコメントを見る', public_comments_path, class:"btn btn-success m-3" %></p>
     </div>
 
     <% unless @user.guest_user? %>

@@ -46,6 +46,7 @@
         <div id="edit-button" class="text-center"></div>
 
         <h4>スポットへのコメント</h4>
+        <div id="comment-button" class="text-center"></div>
     </div>
 
     <div class="col-9 ml-3">
@@ -138,6 +139,7 @@
           <% if spot.id == current_user.id || spot.user.email == current_user.email %>
             $("#edit-button").html('<%= link_to "編集する", edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" %>');
           <% end %>
+          $("#comment-button").html('<%= link_to "コメントする", new_public_comment_path(spot_id: spot.id), data: {"turbolinks" => false}, class:"btn btn-success" %>');
 
           infowindow.open(map, marker);
           markerIds.push(<%= spot.id %>);

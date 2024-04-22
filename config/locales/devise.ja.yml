@@ -147,3 +147,7 @@ ja:
          name: スポット名
          introduction: スポット説明
          kind_ids: ゴミの種類
+  activerecord:
+     attributes:
+       comment:
+         comment: コメント

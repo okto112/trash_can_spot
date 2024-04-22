@@ -90,6 +90,7 @@ class Public::SpotsController < ApplicationController
   def destroy
     spot = Spot.find(params[:id])
     spot.destroy
+    flash[:notice] = "スポットを削除しました。"
     redirect_to public_spots_path
   end
 
