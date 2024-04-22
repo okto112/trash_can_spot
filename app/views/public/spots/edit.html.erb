@@ -42,73 +42,73 @@
       <input id="address" type="textbox" placeholder = "大阪駅">
       <input type="button" value="検索" onclick="codeAddress()">
       マーカーをドラック＆ドロップで位置の調整ができます。</br>
-      <div id="map" class="mt-2">
-         <script>
-           (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
-              key: "<%= ENV['API_KEY'] %>"
-            });
-
-            //初期マップの設定
-            let map;
-            let marker
-            async function initMap() {
-              const { Map } = await google.maps.importLibrary("maps");
-
-              map = new google.maps.Map(document.getElementById('map'), {
-                center:  {lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %>},
-                zoom: 15,
-                mapTypeControl: false
-              });
-
-              initializeMarker();
-            }
-
-            // 初期マーカーの設定
-            function initializeMarker() {
-              marker = new google.maps.Marker({
-                position: { lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %> },
-                map: map,
-                draggable: true
-              });
-
-              google.maps.event.addListener(marker, 'dragend', function (event) {
-                document.getElementById('latitude').value = event.latLng.lat();
-                document.getElementById('longitude').value = event.latLng.lng();
-              });
-            }
-
-            //検索後のマップ作成
-            let geocoder
-            function codeAddress(){
-              marker.setMap(null);
-              geocoder = new google.maps.Geocoder();
-              let inputAddress = document.getElementById('address').value;
-              geocoder.geocode( { 'address': inputAddress}, function(results, status) {
-                if (status == 'OK') {
-                    //新しくマーカーを作成する
-                    map.setCenter(results[0].geometry.location);
-                        marker = new google.maps.Marker({
-                          map: map,
-                          position: results[0].geometry.location,
-                          draggable: true	// ドラッグ可能にする
-                        });
-
-                    document.getElementById('latitude').value = results[0].geometry.location.lat();
-                    document.getElementById('longitude').value = results[0].geometry.location.lng();
-
-                    google.maps.event.addListener( marker, 'dragend', function(ev){
-                        document.getElementById('latitude').value = event.latLng.lat();
-                        document.getElementById('longitude').value = event.latLng.lng();
-                    });
-                } else {
-                  alert('該当する結果がありませんでした：' + status);
-                }
-              });
-            }
-
-            initMap()
-         </script>
-      </div>
+      <div id="map" class="mt-2"></div>
     </div>
   </div>
 </div>
+
+<script>
+ (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+    key: "<%= ENV['API_KEY'] %>"
+  });
+
+  //初期マップの設定
+  let map;
+  let marker
+  async function initMap() {
+    const { Map } = await google.maps.importLibrary("maps");
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      center:  {lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %>},
+      zoom: 15,
+      mapTypeControl: false
+    });
+
+    initializeMarker();
+  }
+
+  // 初期マーカーの設定
+  function initializeMarker() {
+    marker = new google.maps.Marker({
+      position: { lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %> },
+      map: map,
+      draggable: true
+    });
+
+    google.maps.event.addListener(marker, 'dragend', function (event) {
+      document.getElementById('latitude').value = event.latLng.lat();
+      document.getElementById('longitude').value = event.latLng.lng();
+    });
+  }
+
+  //検索後のマップ作成
+  let geocoder
+  function codeAddress(){
+    marker.setMap(null);
+    geocoder = new google.maps.Geocoder();
+    let inputAddress = document.getElementById('address').value;
+    geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+      if (status == 'OK') {
+          //新しくマーカーを作成する
+          map.setCenter(results[0].geometry.location);
+              marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location,
+                draggable: true	// ドラッグ可能にする
+              });
+
+          document.getElementById('latitude').value = results[0].geometry.location.lat();
+          document.getElementById('longitude').value = results[0].geometry.location.lng();
+
+          google.maps.event.addListener( marker, 'dragend', function(ev){
+              document.getElementById('latitude').value = event.latLng.lat();
+              document.getElementById('longitude').value = event.latLng.lng();
+          });
+      } else {
+        alert('該当する結果がありませんでした：' + status);
+      }
+    });
+  }
+
+  initMap()
+</script>

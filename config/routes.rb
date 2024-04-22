@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     patch '/users/withdraw', to: 'users#withdraw'
     get '/main', to: 'homes#main'
     resources :spots, only: [:new, :index, :show, :create, :edit, :update, :destroy]
+    resources :favorites, only: [:index, :show, :create, :destroy]
   end
 
   namespace :admin do
