@@ -1,7 +1,7 @@
 @use '~bootstrap/scss/bootstrap';
 
 html,body {
-    height: 100%;
+  height: 100%;
 }
 
 #map {
@@ -54,6 +54,7 @@ html,body {
   padding: 1px;
   margin: 1px;
   text-align: center;
+  font-size: 12px;
 }
 
 .kind-td {
@@ -91,12 +92,14 @@ html,body {
   background-color: #FFFFCC;
   color: #FFD700;
   border: solid 1px #FFD700;
+  width: 20px;
 }
 
 .bottle {
   background-color: #AEFFBD;
   color: #008000;
   border: solid 1px #008000;
+  width: 30px;
 }
 
 

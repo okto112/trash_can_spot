@@ -37,7 +37,7 @@
         </div>
 
         <h4>ゴミ箱の種類</h4>
-        <div id="spot-kinds" class="ml-4"></div>
+        <div id="spot-kinds" class="ml-4 d-flex"></div>
 
         <div id="date"></div>
 
@@ -45,7 +45,8 @@
 
         <div id="edit-button" class="text-center"></div>
 
-        <h4>スポットへのコメント</h4>
+        <p>スポットへのコメント</p>
+        <div id="comments-box" class="text-center overflow-auto text-wrap border border-1" style="width:100%; height:100px;"></div>
         <div id="comment-button" class="text-center"></div>
     </div>
 
@@ -139,6 +140,13 @@
           <% if spot.id == current_user.id || spot.user.email == current_user.email %>
             $("#edit-button").html('<%= link_to "編集する", edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" %>');
           <% end %>
+          <% if @comments.where(spot_id: spot.id).any? %>
+            <% @comments.where(spot_id: spot.id).each do |comment| %>
+              $("#comments-box").append('<p><%= User.find(comment.user_id).name %></p><p><%= comment.comment %></p><p>登録日：<%= comment.created_at.strftime('%Y/%m/%d') %></p>');
+            <% end %>
+          <% else %>
+            $("#comments-box").html('<p>コメントはありません</p>');
+          <% end %>
           $("#comment-button").html('<%= link_to "コメントする", new_public_comment_path(spot_id: spot.id), data: {"turbolinks" => false}, class:"btn btn-success" %>');
 
           infowindow.open(map, marker);
@@ -170,7 +178,6 @@
             <% end %>
           <% end %>
         }
-
      })();
     <% end %>
   }
