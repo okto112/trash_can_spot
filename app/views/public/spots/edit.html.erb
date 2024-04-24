@@ -1,25 +1,25 @@
 <div class="col">
   <h2 class="p-2 bg-secondary text-white mb-2 text-center">スポット編集</h2>
 
-  <%= render 'layouts/spot_errors', spot: @spot %>
+  <%= render 'layouts/validate_errors', data: @spot %>
 
-  <div class="row justify-content-md-center">
+  <div class="row justify-content-center">
     <div class="col-2">
       <h3>スポット情報</h3>
       <%= form_with model: @spot, url: public_spot_path(@spot) do |f| %>
 
-        <h3>スポット名</h3>
-        <div class="ml-4">
+        <h4>スポット名</h4>
+        <div class="ml-4 mb-2">
           <%= f.text_field :name, placeholder: "例：コンビニのゴミ箱" %>
         </div>
 
-        <h3>スポット説明</h3>
-        <div class="ml-4">
+        <h4>スポット説明</h4>
+        <div class="ml-4 mb-2">
             <p><%= f.text_area :introduction, placeholder: "例：○○コンビニの前にあるゴミ箱です。" %></p>
         </div>
 
-        <h3>ゴミ箱の種類</h3>
-        <div class="ml-4">
+        <h4>ゴミ箱の種類</h4>
+        <div class="ml-4 mb-2">
             <% @kinds.each do |kind| %>
               <% checked = @spot.kinds.exists?(kind.id) %>
               <%= check_box_tag 'spot[kind_ids][]', kind.id, checked %>
@@ -38,7 +38,7 @@
       <% end %>
     </div>
 
-    <div class="col-9 ml-3">
+    <div class="col-9">
       <input id="address" type="textbox" placeholder = "大阪駅">
       <input type="button" value="検索" onclick="codeAddress()">
       マーカーをドラック＆ドロップで位置の調整ができます。</br>

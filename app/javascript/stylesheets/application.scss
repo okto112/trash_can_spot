@@ -2,6 +2,11 @@
 
 html,body {
   height: 100%;
+  font-family:"ヒラギノ丸ゴ Pro W4","ヒラギノ丸ゴ Pro","Hiragino Maru Gothic Pro","ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro","HG丸ｺﾞｼｯｸM-PRO","HGMaruGothicMPRO";
+}
+
+p {
+  margin: 0;
 }
 
 #map {
@@ -35,8 +40,16 @@ html,body {
 
 
 #spot-info {
+  padding: 4px;
   display: none;
+  height: 80vh;
   animation: slideIn 0.1s linear;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#spot-info::-webkit-scrollbar{
+  display: none;
 }
 
 @keyframes slideIn {
@@ -48,13 +61,16 @@ html,body {
   }
 }
 
+.fa-solid.fa-location-dot {
+  color: #E00;
+}
+
 
 .spot-kind {
   border-radius: 5px;
   padding: 1px;
   margin: 1px;
   text-align: center;
-  font-size: 12px;
 }
 
 .kind-td {
@@ -92,14 +108,12 @@ html,body {
   background-color: #FFFFCC;
   color: #FFD700;
   border: solid 1px #FFD700;
-  width: 20px;
 }
 
 .bottle {
   background-color: #AEFFBD;
   color: #008000;
   border: solid 1px #008000;
-  width: 30px;
 }
 
 
@@ -117,4 +131,18 @@ html,body {
 #favorite_btn_on {
   color: #FF0;
   font-size: 26px;
+}
+
+#comments-box {
+  font-size: 14px;
+  padding: 1px;
+  margin-bottom: 4px;
+  width: 100%;
+  height: 120px;
+}
+
+#comments-box p:nth-child(3n) {
+  font-size: 10px;
+  width: 100%;
+  margin: 0 0 2px auto;
 }

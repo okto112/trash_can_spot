@@ -3,21 +3,21 @@
 
   <%= render 'layouts/flash_message' %>
 
-  <div class="row justify-content-md-center">
+  <div class="row justify-content-center">
     <div class="col-2">
       <h3 class="mb-4">スポット情報</h3>
         <h4>スポット名</h4>
-        <div class="ml-4 ">
+        <div class="ml-4 mb-2">
           <p><%= @spot.name %></p>
         </div>
 
         <h4>スポット説明</h4>
-        <div class="ml-4">
+        <div class="ml-4 mb-2">
             <p><%= @spot.introduction %></p>
         </div>
 
         <h4>ゴミ箱の種類</h4>
-        <div class="ml-4">
+        <div class="ml-4 mb-2">
           <% @spot.spot_kinds.each do |spot_kind| %>
             <% case spot_kind.kind.name %>
               <% when '燃えるゴミ' %>
@@ -33,12 +33,12 @@
             <% end %>
           <% end %>
         </div>
-        <div class="m-4 d-flex justify-content-md-center">
+        <div class="m-4 d-flex justify-content-center">
           <div><%= link_to '編集する', edit_public_spot_path(@spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" %></div>
         </div>
     </div>
 
-    <div class="col-9 ml-3">
+    <div class="col-9">
       <div id="map"></div>
     </div>
   </div>
