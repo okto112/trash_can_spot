@@ -10,6 +10,7 @@ class Public::HomesController < ApplicationController
         flash.now[:alert] = "該当するスポットは見つかりませんでした。"
       end
       @key_word = params[:key_word]
+      @comments = Comment.all
       @kinds = Kind.all
       @kind_id = 0
     elsif params[:kind_id] != nil && params[:kind_id] != "0"
@@ -18,10 +19,12 @@ class Public::HomesController < ApplicationController
       if @spots == []
         flash.now[:alert] = "該当するスポットは見つかりませんでした。"
       end
+      @comments = Comment.all
       @kinds = Kind.all
       @kind_id = params[:kind_id]
     else
       @spots = Spot.all
+      @comments = Comment.all
       @kinds = Kind.all
       @kind_id = 0
     end

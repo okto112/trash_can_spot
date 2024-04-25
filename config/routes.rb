@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     get '/main', to: 'homes#main'
     resources :spots, only: [:new, :index, :show, :create, :edit, :update, :destroy]
     resources :favorites, only: [:index, :show, :create, :destroy]
+    resources :comments, only: [:new,:index, :show, :create, :edit, :update, :destroy]
   end
 
   namespace :admin do

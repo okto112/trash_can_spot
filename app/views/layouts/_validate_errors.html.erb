@@ -1,7 +1,7 @@
-<% if spot.errors.any? %>
+<% if data.errors.any? %>
   <div class="col mb-2">
     <ul class="error_message">
-      <% spot.errors.full_messages.each do |message| %>
+      <% data.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
     </ul>
