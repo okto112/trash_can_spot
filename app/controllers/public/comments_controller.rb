@@ -7,6 +7,14 @@ class Public::CommentsController < ApplicationController
 
   def show
     @comment = Comment.find(params[:id])
+    @spot = Spot.find(@comment.spot_id)
+    @kinds = Kind.all
+  end
+
+  def edit
+    @comment = Comment.find(params[:id])
+    @spot = Spot.find(@comment.spot_id)
+    @kinds = Kind.all
   end
 
   def new
@@ -24,6 +32,18 @@ class Public::CommentsController < ApplicationController
       @spot = Spot.find(comment_params[:spot_id])
       @kinds = Kind.all
       render :new
+    end
+  end
+
+  def update
+    @comment = Comment.find(params[:id])
+    if @comment.update(comment_params)
+      redirect_to public_comment_path(@comment.id)
+      flash[:notice] = "コメントを編集しました!"
+    else
+      @spot = Spot.find(@comment.spot_id)
+      @kinds = Kind.all
+      render :edit
     end
   end
 
