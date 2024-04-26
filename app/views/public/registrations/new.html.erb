@@ -1,41 +1,43 @@
 <div class="col-3 m-auto">
-  <h2 class="text-center m-4">新規ユーザー登録</h2>
+  <div class="mt-4 pt-4 pb-5 border rounded">
+    <h2 class="text-center m-4 border-bottom border-primary">新規ユーザー登録</h2>
 
-  <%= form_with model: @user, url: registration_path(resource_name), local: true do |f| %>
-    <%= render "public/shared/error_messages", resource: resource %>
-    <div class="m-auto w-50">
-    <div class="field">
-      <%= f.label :name, "ユーザーネーム" %><br>
-      <%= f.text_field :name, autofocus: true %>
-    </div>
+    <%= form_with model: @user, url: registration_path(resource_name), local: true do |f| %>
+      <%= render "public/shared/error_messages", resource: resource %>
+      <div class="m-auto w-50">
+      <div class="field">
+        <%= f.label :name, "ユーザー名" %><br>
+        <%= f.text_field :name, autofocus: true %>
+      </div>
 
-    <div class="field">
-      <%= f.label "メールアドレス" %><br>
-      <%= f.email_field :email, autocomplete: "email" %>
-    </div>
+      <div class="field">
+        <%= f.label "メールアドレス" %><br>
+        <%= f.email_field :email, autocomplete: "email" %>
+      </div>
 
-    <div class="field">
-      <%= f.label "パスワード" %>
-      <em>(6文字以上)</em>
-      <%= f.password_field :password, autocomplete: "new-password" %>
-    </div>
+      <div class="field">
+        <%= f.label "パスワード" %>
+        <em>(6文字以上)</em>
+        <%= f.password_field :password, autocomplete: "new-password" %>
+      </div>
 
-    <div class="field">
-      <%= f.label :password_confirmation, "パスワード" %><br>
-      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-    </div>
+      <div class="field">
+        <%= f.label :password_confirmation, "パスワード" %><br>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
 
-    <div class="actions text-center">
-      <%= f.submit "新規登録", class:"btn btn-success mt-4" %>
-    </div>
-    </div>
-  <% end %>
+      <div class="actions text-center">
+        <%= f.submit "新規登録", class:"btn btn-success mt-4" %>
+      </div>
+      </div>
+    <% end %>
 
-  <div class="mt-4 text-center">
-    <h4>既に登録済みの方</h4>
-    <p>
-      <%= link_to 'こちら', new_user_session_path %>
-      からログインしてください。
-    </p>
+    <div class="mt-4 text-center">
+      <h4>既に登録済みの方</h4>
+      <p>
+        <%= link_to 'こちら', new_user_session_path %>
+        からログインしてください。
+      </p>
+    </div>
   </div>
 </div>

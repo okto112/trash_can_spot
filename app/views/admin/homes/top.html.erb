@@ -1,1 +1,167 @@
-<h1>admin TOPページ</h1>
+<div class="col">
+  <div class="flash-message-container">
+    <%= render 'layouts/flash_message' %>
+  </div>
+
+  <div class="row justify-content-center">
+    <div id="spot-info" class="col-2 overflow-auto">
+      <h3 class="mb-2"><i class="fa-solid fa-location-dot"></i> スポット情報</h3>
+        <h4>スポット名：</h4>
+        <div class="ml-4 mb-2">
+          <p id="spot-name"></p>
+        </div>
+
+        <h4>スポット説明：</h4>
+        <div class="ml-4 mb-2">
+          <p id="spot-introduction"></p>
+        </div>
+
+        <h4>ゴミ箱の種類：</h4>
+        <div id="spot-kinds" class="text-center mb-2"></div>
+
+        <div id="date" class="mb-2 text-right"></div>
+
+        <div id="edit-button" class="text-center mb-3"></div>
+
+        <p class="text-center border-top p-2">スポットへのコメント</p>
+        <div id="comments-box" class="overflow-auto text-wrap border border-1" ></div>
+        <div id="comment-button" class="text-center"></div>
+    </div>
+
+    <div class="col-9">
+      <div class="row justify-content-center mb-2">
+        <form class="d-flex align-items-center">
+          <input id="address" type="textbox" placeholder="地図検索">
+          <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1">検索</button>
+        </form>
+      </div>
+      <div id="map" class="mt-2"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+ (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+    key: "<%= ENV['API_KEY'] %>"
+  });
+
+  //初期マップの設定
+  let map;
+  let marker
+  let markerIds = [];
+  let infoWindows = [];
+  let spotKindsHtml = "";
+  let changeStyle =false;
+
+  async function initMap() {
+    const { Map } = await google.maps.importLibrary("maps");
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      center:  {lat: 34.70246347104699, lng: 135.4955532773327},
+      zoom: 15,
+      mapTypeControl: false
+    });
+
+    initSpots()
+  }
+
+  //検索後のマップ作成
+  let geocoder
+  function codeAddress(){
+    geocoder = new google.maps.Geocoder();
+    let inputAddress = document.getElementById('address').value;
+    geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+      if (status == 'OK') {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center:  {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()},
+          zoom: 15,
+          mapTypeControl: false
+        });
+
+        initSpots()
+      } else {
+        alert('該当する結果がありませんでした：' + status);
+      }
+    });
+  }
+
+  //スポットの初期化
+  function initSpots(){
+    <% @spots.each do |spot|%>
+      ( function() {
+        let markerLatLng = { lat: <%= spot.latitude %>, lng: <%= spot.longitude %> };
+        let marker = new google.maps.Marker({
+          position: markerLatLng,
+          id: '<%= spot.id %>',
+          map: map
+        });
+
+        kindsInfo();
+        let infowindow = new google.maps.InfoWindow({
+          position: markerLatLng,
+          content: "スポット情報</br>" +
+            "スポット名：<%= spot.name %></br>" +
+            "ゴミの種類：</br>" +
+            spotKindsHtml +
+            "<div class='text-right'>登録日：<%= spot.created_at.strftime('%Y/%m/%d') %></div>"
+        });
+
+        marker.addListener('click', function() {
+          closeInfoWindows();
+          kindsInfo();
+
+          if (!changeStyle) {
+            document.getElementById('spot-info').style.display = 'block';
+            removeClass = true;
+          }
+
+          $("#spot-name").text("<%= spot.name %>");
+          $("#spot-introduction").text("<%= spot.introduction %>");
+          $("#spot-kinds").html(spotKindsHtml);
+          $("#date").text("登録日：<%= spot.created_at.strftime('%Y/%m/%d') %>");
+          $("#edit-button").html('<%= link_to "編集する", edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" %>');
+          <% if @comments.where(spot_id: spot.id).any? %>
+            $("#comments-box").html('');
+            <% @comments.where(spot_id: spot.id).each do |comment| %>
+              $("#comments-box").append('<p class="mt-1"><%= User.find(comment.user_id).name %></p><p class="p-1"><%= comment.comment %></p><p class="border-bottom text-right">登録日：<%= comment.created_at.strftime('%Y/%m/%d') %></p>');
+            <% end %>
+          <% else %>
+            $("#comments-box").html('<p>コメントはありません</p>');
+          <% end %>
+          $("#comment-button").html('<%= link_to "コメントする", new_public_comment_path(spot_id: spot.id), data: {"turbolinks" => false}, class:"btn btn-success mt-2" %>');
+
+          infowindow.open(map, marker);
+          markerIds.push(<%= spot.id %>);
+          infoWindows.push(infowindow);
+          spotKindsHtml = "";
+        });
+
+        function closeInfoWindows() {
+          for (let i = 0; i < infoWindows.length; i++) {
+            infoWindows[i].close();
+          }
+        }
+
+        function kindsInfo() {
+          spotKindsHtml = "";
+          <% spot.spot_kinds.each do |spot_kind| %>
+            <% case spot_kind.kind.name %>
+              <% when '燃えるゴミ' %>
+                spotKindsHtml += "<p class='spot-kind burnable-garbage'><%= spot_kind.kind.name %></p>";
+              <% when 'プラスチック' %>
+                spotKindsHtml += "<p class='spot-kind plastic'><%= spot_kind.kind.name %></p>";
+              <% when 'ペットボトル' %>
+                spotKindsHtml += "<p class='spot-kind pet-bottles'><%= spot_kind.kind.name %></p>";
+              <% when 'カン' %>
+                spotKindsHtml += "<p class='spot-kind can'><%= spot_kind.kind.name %></p>";
+              <% when 'ビン' %>
+                spotKindsHtml += "<p class='spot-kind bottle'><%= spot_kind.kind.name %></p>";
+            <% end %>
+          <% end %>
+        }
+     })();
+    <% end %>
+  }
+
+  initMap()
+</script>

@@ -1,5 +1,5 @@
 <div class="col">
-  <h2 class="p-2 bg-info text-white mb-2 text-center">コメント投稿</h2>
+  <h2 class="p-2 bg-info text-white mb-2 text-center"><%= User.find(@comment.user_id).name %>さんのコメント編集</h2>
 
   <div class="col mb-4">
     <div id="comment-map" class="m-auto"></div>
@@ -7,7 +7,7 @@
 
   <div class="row">
     <div class="col-5 m-auto">
-      <%= form_with model: @comment, url: public_comments_path do |f| %>
+      <%= form_with model: @comment, url: admin_comment_path(@comment) do |f| %>
 
         <h3>コメント内容：</h3>
         <%= render 'layouts/validate_errors', data: @comment %>
@@ -15,10 +15,10 @@
             <%= f.text_area :comment, id: "comment_form_area", placeholder: "例：大きなゴミ箱があります！" %>
         </div>
 
-        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.hidden_field :user_id, :value => @comment.user_id %>
         <%= f.hidden_field :spot_id, :value => @spot.id  %>
         <div class="text-center">
-          <%= f.submit "コメントを投稿する", class:"btn btn-primary" %>
+          <%= f.submit "変更を保存する", class:"btn btn-primary" %>
         </div>
       <% end %>
     </div>

@@ -141,13 +141,3 @@ ja:
       not_saved:
         one: エラーが発生したため %{resource} は保存されませんでした。
         other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
-  activerecord:
-     attributes:
-       spot:
-         name: スポット名
-         introduction: スポット説明
-         kind_ids: ゴミの種類
-  activerecord:
-     attributes:
-       comment:
-         comment: コメント

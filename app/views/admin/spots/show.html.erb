@@ -1,5 +1,5 @@
 <div class="col">
-  <h2 class="p-2 bg-info text-white mb-4 text-center">スポット詳細</h2>
+  <h2 class="p-2 bg-info text-white mb-4 text-center"><%= @spot.name %>のスポット詳細</h2>
 
   <%= render 'layouts/flash_message' %>
 
@@ -34,7 +34,7 @@
           <% end %>
         </div>
         <div class="m-4 d-flex justify-content-center">
-          <div><%= link_to '編集する', edit_public_spot_path(@spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" %></div>
+          <div><%= link_to '編集する', edit_admin_spot_path(@spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" %></div>
         </div>
     </div>
 

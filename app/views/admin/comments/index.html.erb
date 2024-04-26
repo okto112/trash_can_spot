@@ -1,5 +1,5 @@
 <div class="col">
-  <h2 class="p-2 bg-info text-white mb-5 text-center">投稿したコメント一覧</h2>
+  <h2 class="p-2 bg-info text-white mb-5 text-center">コメント一覧</h2>
 
     <%= render 'layouts/flash_message' %>
 
@@ -7,6 +7,7 @@
     <thead>
       <tr>
         <th class="table-active">登録日</th>
+        <th class="table-active">ユーザー名</th>
         <th class="table-active">スポット名</th>
         <th class="table-active">コメント内容</th>
         <th class="table-active"></th>
@@ -17,11 +18,16 @@
       <% @comments.each do |comment| %>
       <tr>
         <td class="align-middle"><%= comment.created_at.strftime('%Y/%m/%d') %></td>
+        <td class="align-middle">
+          <%= link_to admin_user_path(comment.user_id) do %>
+            <%= User.find(comment.user_id).name %>
+          <% end %>
+        </td>
         <td class="align-middle"><%= Spot.find(comment.spot_id).name %></td>
         <td class="align-middle"><%= comment.comment %></td>
         <td class="text-center d-flex justify-content-around">
-          <%= link_to '表示', public_comment_path(comment.id), data: {"turbolinks" => false}, class:"btn btn-info" %>
-          <%= link_to '削除', public_comment_path(comment.id), method: :delete, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-danger" %>
+          <%= link_to '表示', admin_comment_path(comment.id), data: {"turbolinks" => false}, class:"btn btn-info" %>
+          <%= link_to '削除', admin_comment_path(comment.id), method: :delete, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-danger" %>
         </td>
       </tr>
       <% end %>

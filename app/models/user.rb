@@ -8,6 +8,9 @@ class User < ApplicationRecord
   has_many :fanorites, dependent: :destroy
   has_many :comments, dependent: :destroy
 
+  validates :name, length: { in: 1..20 }
+  validates :email, presence: true
+
   GUEST_USER_EMAIL = "guest@example.com"
 
   def self.guest

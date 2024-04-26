@@ -1,12 +1,12 @@
 <div class="col">
-  <h2 class="p-2 bg-info text-white mb-2 text-center">スポット編集</h2>
+  <h2 class="p-2 bg-info text-white mb-2 text-center"><%= @spot.name %>スポット編集</h2>
 
   <%= render 'layouts/validate_errors', data: @spot %>
 
   <div class="row justify-content-center">
     <div class="col-2">
       <h3>スポット情報</h3>
-      <%= form_with model: @spot, url: public_spot_path(@spot) do |f| %>
+      <%= form_with model: @spot, url: admin_spot_path(@spot) do |f| %>
 
         <h4>スポット名</h4>
         <div class="ml-4 mb-2">
@@ -27,7 +27,7 @@
             <% end %>
         </div>
 
-        <%= f.hidden_field :user_id, :value => current_user.id %>
+        <%= f.hidden_field :user_id, :value => @spot.user_id %>
         <%= f.hidden_field :latitude, id: 'latitude', value: @spot.latitude %>
         <%= f.hidden_field :longitude, id: 'longitude', value: @spot.longitude %>
 

@@ -14,6 +14,11 @@ class Public::SpotsController < ApplicationController
     @kinds = Kind.all
   end
 
+  def edit
+    @spot = Spot.find(params[:id])
+    @kinds = Kind.all
+  end
+
   def create
     @spot = Spot.new(spot_params)
     checked_kinds = params[:spot][:kind_ids]
@@ -43,11 +48,6 @@ class Public::SpotsController < ApplicationController
         render :new
       end
     end
-  end
-
-  def edit
-    @spot = Spot.find(params[:id])
-    @kinds = Kind.all
   end
 
   def update
