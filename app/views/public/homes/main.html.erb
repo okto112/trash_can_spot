@@ -3,28 +3,32 @@
     <%= render 'layouts/flash_message' %>
   </div>
   <div class="row justify-content-center mb-2">
-    <div class="row align-items-center border border-dark rounded p-1">
-      <div class="">
+    <div class="row align-items-center border border-dark rounded">
         <div class="font-weight-bold">種類検索：</div>
-      </div>
-      <div class="align-middle m-1">
-        <%= link_to "すべて", public_main_path(kind_id: 0), data: {"turbolinks" => false}, id: 0 %>
+      <div class="d-flex align-middle m-1">
+        <div class="bg-white m-1">
+          <%= link_to "すべて", public_main_path(kind_id: 0), data: {"turbolinks" => false}, id: 0 %>
+        </div>
         <% @kinds.each do |kind| %>
+        <div class="bg-white m-1">
           <%= link_to  kind.name, public_main_path(kind_id: kind.id), data: {"turbolinks" => false}, id: kind.id %>
+        </div>
         <% end %>
       </div>
     </div>
-    <%= form_with url: public_main_path, method: :get, class:"d-flex align-items-center border border-dark rounded p-2 ml-4" do |f| %>
-      <%= f.text_field :key_word,value: @key_word, placeholder: "キーワード検索" %>
-      <%= f.submit "検索", class:"btn btn-info btn-sm ml-1" %>
-    <% end %>
+    <div class="d-flex align-items-center border border-dark rounded p-2 ml-4">
+      <%= form_with url: public_main_path, method: :get do |f| %>
+        <%= f.text_field :key_word,value: @key_word, placeholder: "キーワード検索" %>
+        <%= f.submit "検索", class:"btn btn-info btn-sm ml-1" %>
+      <% end %>
+    </div>
     <form class="d-flex align-items-center border border-dark rounded p-2 ml-2">
       <input id="address" type="textbox" placeholder="地図検索">
       <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1">検索</button>
     </form>
   </div>
   <div class="row justify-content-center">
-    <div id="spot-info" class="col-2 overflow-auto">
+    <div id="spot-info" class="col-2 overflow-auto p-2 bg-white">
       <h3 class="mb-2"><i class="fa-solid fa-location-dot"></i> スポット情報</h3>
         <h4>スポット名：</h4>
         <div class="ml-4 mb-2">
@@ -50,7 +54,7 @@
         <div id="comment-button" class="text-center"></div>
     </div>
 
-    <div class="col-9">
+    <div class="col-10 p-1">
       <div id="map" class="mt-2"></div>
     </div>
   </div>

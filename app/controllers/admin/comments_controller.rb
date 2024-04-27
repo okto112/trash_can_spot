@@ -3,7 +3,39 @@ class Admin::CommentsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @comments = Comment.page(params[:page])
+    if params[:key_word] != nil
+      @comments = Comment.where("comment LIKE ?", "%#{params[:key_word]}%").page(params[:page])
+      @users = User.where("name LIKE ?", "%#{params[:key_word]}%")
+      @spots = Spot.where("name LIKE ?", "%#{params[:key_word]}%")
+      if @comments.any? && @users.any? && @spots.any? || @comments.any? && @users.any? || @comments.any? && @spots.any?
+        comment_ids = @comments.pluck(:id)
+        user_ids = @users.pluck(:id)
+        spot_ids = @spots.pluck(:id)
+        @comments = Comment.where(id: comment_ids).page(params[:page])
+        @comments = @comments.or( Comment.where(user_id: user_ids).page(params[:page]))
+        @comments = @comments.or(Comment.where(spot_id: spot_ids).page(params[:page]))
+      elsif @comments.empty? && @users.any? && @spots.any?
+        user_ids = @users.pluck(:id)
+        spot_ids = @spots.pluck(:id)
+        @comments = Comment.where(user_id: user_ids).page(params[:page])
+        @comments = @comments.or(Comment.where(spot_id: spot_ids).page(params[:page]))
+      elsif @comments.empty? && @users.any? && @spots.empty?
+        user_ids = @users.pluck(:id)
+        @comments = Comment.where(user_id: user_ids).page(params[:page])
+      elsif @comments.empty? && @users.empty? && @spots.any?
+        spot_ids = @spots.pluck(:id)
+        @comments = Comment.where(spot_id: spot_ids).page(params[:page])
+      elsif @comments.empty? && @users.empty? && @spots.empty?
+        flash.now[:alert] = "該当するスポットは見つかりませんでした。"
+      end
+      @key_word = params[:key_word]
+    elsif params[:user_id] != nil
+      @comments = Comment.where(user_id: params[:user_id]).page(params[:page])
+      @key_word = nil
+    else
+      @comments = Comment.page(params[:page])
+      @key_word = nil
+    end
   end
 
   def show

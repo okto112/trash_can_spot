@@ -3,7 +3,29 @@ class Admin::SpotsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @spots = Spot.page(params[:page])
+    if params[:key_word] != nil
+      @spots = Spot.where("name LIKE ?", "%#{params[:key_word]}%").page(params[:page])
+      @users = User.where("name LIKE ?", "%#{params[:key_word]}%")
+      @kind = Kind.where(name: params[:key_word])
+      if @spots.empty? && @users.any?
+        user_ids = @users.pluck(:id)
+        @spots = Spot.where(user_id: user_ids).page(params[:page])
+      elsif @kind.any?
+        kind_id = @kind.pluck(:id)
+        @spot_kinds = SpotKind.where(kind_id: kind_id)
+        spot_ids = @spot_kinds.pluck(:spot_id)
+        @spots = Spot.where(id: spot_ids).page(params[:page])
+      else
+        flash.now[:alert] = "該当するスポットは見つかりませんでした。"
+      end
+      @key_word = params[:key_word]
+    elsif params[:user_id] != nil
+      @spots = Spot.where(user_id: params[:user_id]).page(params[:page])
+      @key_word = nil
+    else
+      @spots = Spot.page(params[:page])
+      @key_word = nil
+    end
   end
 
   def show

@@ -3,10 +3,25 @@
 html,body {
   height: 100%;
   font-family:"ヒラギノ丸ゴ Pro W4","ヒラギノ丸ゴ Pro","Hiragino Maru Gothic Pro","ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro","HG丸ｺﾞｼｯｸM-PRO","HGMaruGothicMPRO";
+  background-color: #F5FFFA;
+}
+
+header {
+  background-color: #66CC99	;
+}
+
+.header-content {
+  background-color: #F5FFFA	;
 }
 
 p {
   margin: 0;
+}
+
+h2 {
+  padding: 8px;
+  color: white;
+  background-color: #8FBC8F;
 }
 
 #map {
@@ -71,8 +86,8 @@ p {
   }
 }
 
-// マーカーアイコン
-.fa-solid.fa-location-dot {
+//スポット情報内のマーカーアイコン
+#spot-info .fa-solid.fa-location-dot {
   color: #E00;
 }
 

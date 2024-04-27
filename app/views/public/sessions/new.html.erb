@@ -1,6 +1,6 @@
-<div class="col-3 m-auto">
-  <div class="mt-4 pt-4 pb-5 text-center border rounded">
-    <h2 class="m-4 border-bottom border-primary">ログイン</h2>
+<div class="col-4 m-auto">
+  <div class="mt-4 pt-4 pb-5 text-center border rounded bg-white">
+    <h3 class="m-4 border-bottom border-success">ログイン</h3>
     <%= render 'layouts/flash_message' %>
 
     <%= form_with model: @user, url: session_path(resource_name), local: true do |f| %>

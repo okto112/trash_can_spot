@@ -1,9 +1,9 @@
 <div class="col">
   <div class="text-center">
-    <h2 class="p-2 bg-info text-white mb-5 text-center"><%= @user.name %>さんのユーザー詳細</h2>
+    <h2 class="mb-2 text-center"><%= @user.name %>さんのユーザー詳細</h2>
 
     <div class="row">
-      <h2 class="m-3">登録情報</h2>
+      <h3 class="m-3">登録情報</h3>
     </div>
 
     <table class="table table-bordered">
@@ -38,12 +38,12 @@
 
 
     <div class="row justify-content-center mb-4">
-      <p><%= link_to '編集する', edit_admin_user_path,class:"btn btn-success ml-3" %></p>
+      <p><%= link_to '編集する', edit_admin_user_path,class:"btn btn-primary ml-3" %></p>
     </div>
 
     <div class="d-flex justify-content-center">
-      <p><%= link_to '登録したスポットを見る', class:"btn btn-info m-3" %></p>
-      <p><%= link_to '投稿したコメントを見る', class:"btn btn-success m-3" %></p>
+      <p><%= link_to '登録したスポットを見る', admin_spots_path(user_id: @user.id), class:"btn btn-info m-3" %></p>
+      <p><%= link_to '投稿したコメントを見る', admin_comments_path(user_id: @user.id), class:"btn btn-success m-3" %></p>
     </div>
   </div>
 </div>

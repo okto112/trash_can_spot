@@ -1,9 +1,9 @@
 <div class="col">
   <div class="text-center">
-    <h2 class="p-2 bg-info text-white">マイページ</h2>
+    <h2>マイページ</h2>
 
     <div class="row">
-      <h2 class="m-3">登録情報</h2>
+      <h3 class="m-3">登録情報</h3>
     </div>
 
     <table class="table table-bordered">
@@ -21,19 +21,19 @@
     </table>
 
     <% unless @user.guest_user? %>
-      <div class="row">
-        <p><%= link_to '編集する', public_users_information_edit_path,class:"btn btn-success ml-3" %></p>
+      <div class="row justify-content-center m-4">
+        <%= link_to '編集する', public_users_information_edit_path,class:"btn btn-primary w-25" %>
       </div>
     <% end %>
 
-    <div class="d-flex justify-content-md-center">
+    <div class="d-flex justify-content-center">
       <p><%= link_to '登録したスポットを見る', public_spots_path, class:"btn btn-info m-3" %></p>
       <p><%= link_to '投稿したコメントを見る', public_comments_path, class:"btn btn-success m-3" %></p>
     </div>
 
     <% unless @user.guest_user? %>
-      <div class="row">
-        <p><%= link_to '退会する', public_users_unsubscribe_path, class:"btn btn-danger ml-3" %></p>
+      <div class="row justify-content-center mt-4">
+        <%= link_to '退会する', public_users_unsubscribe_path, class:"btn btn-danger" %>
       </div>
     <% end %>
   </div>

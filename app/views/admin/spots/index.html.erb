@@ -1,7 +1,15 @@
 <div class="col">
-  <h2 class="p-2 bg-info text-white mb-5 text-center">スポット一覧</h2>
+  <h2 class="mb-2 text-center">スポット一覧</h2>
 
-    <%= render 'layouts/flash_message' %>
+  <%= render 'layouts/flash_message' %>
+
+  <div class="d-flex justify-content-center p-2 ml-4 w-25">
+    <%= form_with url: admin_spots_path, method: :get, id: "search-form" do |f| %>
+      <%= f.text_field :key_word, value: @key_word, placeholder: "キーワード検索" %>
+      <%= f.submit "検索", class: "btn btn-info btn-sm ml-1" %>
+      <%= link_to "リセット", admin_spots_path, method: :get, class: "btn btn-warning btn-sm text-white ml-1" %>
+    <% end %>
+  </div>
 
   <table class="table table-bordered">
     <thead>
