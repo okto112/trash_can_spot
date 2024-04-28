@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <header class="header mb-2 border-bottom">
+    <header class="header mb-2">
       <div class="container-fluid">
         <div class="row align-items-center">
           <div class="col-3">
@@ -20,23 +20,33 @@
               <h1>ゴミ箱スポット</h1>
             </div>
           </div>
-          <div class="col-5 offset-3">
+          <div class="col-6 offset-3">
             <% if user_signed_in? %>
-              <div class="row justify-content-md-between ">
-                <div class="header-content">
-                  <%= link_to 'スポットを見る', public_main_path, data: {"turbolinks" => false}, class:"btn btn-outline-dark" %>
+              <div class="row justify-content-md-between mr-auto">
+                <div class="header-content rounded">
+                  <%= link_to public_main_path, data: {"turbolinks" => false}, class:"btn btn-outline-success" do %>
+                    <i class="fa-solid fa-map-location-dot"> スポットを見る</i>
+                  <% end %>
                 </div>
-                <div class="header-content">
-                  <%= link_to 'マイページ', public_users_my_page_path, class:"btn btn-outline-dark" %>
+                <div class="header-content rounded">
+                  <%= link_to public_users_my_page_path, class:"btn btn-outline-success" do %>
+                    <i class="fa-solid fa-user"> マイページ</i>
+                  <% end %>
                 </div>
-                <div class="header-content">
-                  <%= link_to 'スポット登録', new_public_spot_path, data: {"turbolinks" => false}, class:"btn btn-outline-dark" %>
+                <div class="header-content rounded">
+                  <%= link_to new_public_spot_path, data: {"turbolinks" => false}, class:"btn btn-outline-success" do %>
+                    <i class="fa-solid fa-location-dot"> スポット登録</i>
+                  <% end %>
                 </div>
-                <div class="header-content">
-                  <%= link_to 'お気に入り', public_favorites_path, class:"btn btn-outline-dark" %>
+                <div class="header-content rounded">
+                  <%= link_to public_favorites_path, class:"btn btn-outline-success" do %>
+                    <i class="fa-solid fa-star"> お気に入り</i>
+                  <% end %>
                 </div>
-                <div class="header-content">
-                  <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class:"btn btn-outline-dark" %>
+                <div class="header-content rounded">
+                  <%= link_to destroy_user_session_path, method: :delete, class:"btn btn-outline-success" do %>
+                    <i class="fa-solid fa-right-from-bracket"> ログアウト</i>
+                  <% end %>
                 </div>
             <% elsif %>
               <div class="row justify-content-md-around ">
@@ -62,6 +72,6 @@
   </body>
 
   <script>
-    $('.flash-message').hide().fadeIn(0).delay(1000).fadeOut(200);
+    $('.flash-message').hide().fadeIn(0).delay(2000).fadeOut(200);
   </script>
 </html>

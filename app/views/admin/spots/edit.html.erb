@@ -1,12 +1,12 @@
 <div class="col">
-  <h2 class="mb-1 text-center">スポット登録</h2>
+  <h2 class="mb-1 text-center"><%= @spot.name %>のスポット編集</h2>
 
   <%= render 'layouts/validate_errors', data: @spot %>
 
   <div class="row justify-content-center">
     <div class="col-2 p-2 bg-white border border-success rounded">
       <h3><i id="spot-icon"  class="fa-solid fa-location-dot"></i> スポット情報</h3>
-      <%= form_with model: @spot, url: public_spots_path do |f| %>
+      <%= form_with model: @spot, url: admin_spot_path(@spot) do |f| %>
 
         <h4>スポット名</h4>
         <div class="ml-4 mb-2">
@@ -21,18 +21,19 @@
         <h4>ゴミ箱の種類</h4>
         <div class="ml-4 mb-2">
             <% @kinds.each do |kind| %>
-              <%= check_box_tag 'spot[kind_ids][]', kind.id %>
+              <% checked = @spot.kinds.exists?(kind.id) %>
+              <%= check_box_tag 'spot[kind_ids][]', kind.id, checked %>
               <%= label_tag "kind_#{kind.id}", kind.name %><br>
             <% end %>
         </div>
 
-        <%= f.hidden_field :user_id, :value => current_user.id %>
-        <%= f.hidden_field :latitude, id: 'latitude', value: '34.70246347104699'  %>
-        <%= f.hidden_field :longitude, id: 'longitude', value: '135.4955532773327' %>
+        <%= f.hidden_field :user_id, :value => @spot.user_id %>
+        <%= f.hidden_field :latitude, id: 'latitude', value: @spot.latitude %>
+        <%= f.hidden_field :longitude, id: 'longitude', value: @spot.longitude %>
 
-        <div class="text-center">
-          <%= button_tag type: "submit", class: "btn btn-success" do %>
-           <i class="fa-solid fa-location-dot"> スポットを登録する</i>
+        <div class="m-4 text-center">
+          <%= button_tag type: "submit", class: "btn btn-primary" do %>
+           <i class="fa-solid fa-floppy-disk"> 変更を保存</i>
           <% end %>
         </div>
 
@@ -41,9 +42,9 @@
 
     <div class="col-9">
       <form class="d-flex align-items-center mb-1">
-      <input id="address" type="textbox" placeholder = "大阪駅">
-      <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-magnifying-glass"> 検索</i></button>
-      <p class="ml-1">マーカーをドラック＆ドロップで位置の調整ができます</p>
+        <input id="address" type="textbox" placeholder = "大阪駅">
+        <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-magnifying-glass"> 検索</i></button>
+        <p class="ml-1">マーカーをドラック＆ドロップで位置の調整ができます</p>
       </form>
       <div id="map"></div>
     </div>
@@ -62,7 +63,7 @@
     const { Map } = await google.maps.importLibrary("maps");
 
     map = new google.maps.Map(document.getElementById('map'), {
-      center:  {lat: 34.70246347104699, lng: 135.4955532773327},
+      center:  {lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %>},
       zoom: 15,
       mapTypeControl: false
     });
@@ -73,7 +74,7 @@
   // 初期マーカーの設定
   function initializeMarker() {
     marker = new google.maps.Marker({
-      position: { lat: 34.70246347104699, lng: 135.4955532773327 },
+      position: { lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %> },
       map: map,
       draggable: true
     });
@@ -86,18 +87,12 @@
 
   //検索後のマップ作成
   let geocoder
-  let aft = false;
   function codeAddress(){
     marker.setMap(null);
     geocoder = new google.maps.Geocoder();
     let inputAddress = document.getElementById('address').value;
     geocoder.geocode( { 'address': inputAddress}, function(results, status) {
       if (status == 'OK') {
-          //マーカーが複数できないようにする
-          if (aft){
-              marker.setMap(null);
-          }
-
           //新しくマーカーを作成する
           map.setCenter(results[0].geometry.location);
               marker = new google.maps.Marker({
@@ -105,9 +100,6 @@
                 position: results[0].geometry.location,
                 draggable: true	// ドラッグ可能にする
               });
-
-          //二度目以降か判断
-          aft = true
 
           document.getElementById('latitude').value = results[0].geometry.location.lat();
           document.getElementById('longitude').value = results[0].geometry.location.lng();

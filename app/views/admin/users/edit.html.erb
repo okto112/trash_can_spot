@@ -1,67 +1,48 @@
 <div class="col">
-  <h2 class="p-2 bg-secondary text-white mb-5 text-center"><%= @user.name %>さんのユーザー情報編集</h2>
+  <div class="text-center">
+    <h2 class="mb-5"><%= @user.name %>さんのユーザー情報編集</h2>
 
-<div class="col-5 m-auto">
-  <%= form_with model: @user, url: admin_user_path(@user) do |f| %>
-    <table>
-      <tbody>
-        <tr>
-          <td style="width: 40%">
-            ユーザーID
-          </td>
-          <td style="width: 40%">
-            <%= @user.id %>
-          </td>
-        </tr>
+    <div class="col-5 m-auto">
+      <div class="text-left">
+      <%= render 'layouts/validate_errors', data: @user %>
+      </div>
+      <%= form_with model: @user, url: admin_user_path(@user) do |f| %>
+        <table>
+          <tbody>
+            <tr>
+              <td style="width: 40%">ユーザーID</td>
+              <td style="width: 40%"><%= @user.id %></td>
+            </tr>
 
-        <tr>
-          <td>
-            ユーザーネーム
-          </td>
-          <td>
-            <%= f.text_field :name, autofocus: true, placeholder:"ニックネーム" %>
-          </td>
-        </tr>
+            <tr>
+              <td>ユーザー名</td>
+              <td><%= f.text_field :name, autofocus: true, placeholder:"ニックネーム" %></td>
+            </tr>
 
-        <tr>
-          <td>
-            メールアドレス
-          </td>
-          <td>
-            <%= f.text_field :email, placeholder:"○○○＠○○○○" %>
-          </td>
-        </tr>
+            <tr>
+              <td>メールアドレス</td>
+              <td><%= f.text_field :email, placeholder:"○○○＠○○○○" %></td>
+            </tr>
 
-        <tr>
-          <td>
-            パスワード
-          </td>
-          <td>
-            <%= f.text_field :encrypted_password, placeholder:"○○○＠○○○○" %>
-          </td>
-        </tr>
+            <tr>
+              <td>会員ステータス</td>
+              <td>
+                <%= f.radio_button :is_active, :true, checked: true %>
+                <%= f.label :is_active, "有効", class:"text-success font-weight-bold" %>
 
-        <tr>
-          <td>
-            会員ステータス
-          </td>
-          <td>
-            <%= f.radio_button :is_active, :true, checked: true %>
-            <%= f.label :is_active, "有効", class:"text-success font-weight-bold" %>
+                <%= f.radio_button :is_active, :false %>
+                <%= f.label :is_active, "退会", class:"text-danger font-weight-bold" %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-            <%= f.radio_button :is_active, :false %>
-            <%= f.label :is_active, "退会", class:"text-danger font-weight-bold" %>
-          </td>
-        </tr>
-
-        <tr>
-          <td></td>
-          <td>
-            <%= f.submit "編集を保存", class:"btn btn-success" %>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  <% end %>
+        <div class="row d-flex justify-content-around mt-4">
+          <%= button_tag type: "submit", class: "btn btn-success" do %>
+           <i class="fa-solid fa-floppy-disk"> 変更を保存</i>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

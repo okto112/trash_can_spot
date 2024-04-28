@@ -1,12 +1,23 @@
 <div class="col">
-  <h2 class="mb-5 text-center">登録したスポット一覧</h2>
+  <h2 class="mb-2 text-center">スポット一覧</h2>
 
-    <%= render 'layouts/flash_message' %>
+  <%= render 'layouts/flash_message' %>
+
+  <div class="d-flex justify-content-center p-2 ml-4 w-25">
+    <%= form_with url: admin_spots_path, method: :get, id: "search-form" do |f| %>
+      <%= f.text_field :key_word, value: @key_word, placeholder: "キーワード検索" %>
+      <%= button_tag type: "submit", class: "btn btn-info btn-sm ml-1" do %>
+         <i class="fa-solid fa-magnifying-glass"> 検索</i>
+        <% end %>
+      <%= link_to "リセット", admin_spots_path, method: :get, class: "btn btn-warning btn-sm text-white ml-1", id:"btn-font-bold" %>
+    <% end %>
+  </div>
 
   <table class="table table-bordered">
     <thead>
       <tr>
         <th class="table-active">登録日</th>
+        <th class="table-active">ユーザー名</th>
         <th class="table-active">スポット名</th>
         <th class="table-active" style="width: 36%">ゴミの種類</th>
         <th class="table-active"></th>
@@ -17,9 +28,14 @@
       <% @spots.each do |spot| %>
       <tr>
         <td class="align-middle"><%= spot.created_at.strftime('%Y/%m/%d') %></td>
+        <td class="align-middle">
+          <%= link_to admin_user_path(spot.user_id) do %>
+            <%= User.find(spot.user_id).name %>
+          <% end %>
+        </td>
         <td class="align-middle"><%= spot.name %></td>
         <td class="kinds-td align-middle">
-          <div class="d-flex">
+          <div class="d-flex flex-wrap">
           <% spot.spot_kinds.each do |spot_kind| %>
              <% case spot_kind.kind.name %>
                 <% when '燃えるゴミ' %>
@@ -37,8 +53,8 @@
           </div>
         </td>
         <td class="text-center d-flex justify-content-around">
-          <%= link_to '表示', public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-info", id:"btn-font-bold" %>
-          <%= link_to '削除', public_spot_path(spot.id), method: :delete, data: {confirm: "スポットを削除しますか？"}, class:"btn btn-danger", id:"btn-font-bold" %>
+          <%= link_to '表示', admin_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-info", id:"btn-font-bold" %>
+          <%= link_to '削除', admin_spot_path(spot.id), method: :delete, data: {confirm: "スポットを削除しますか？"}, class:"btn btn-danger", id:"btn-font-bold" %>
         </td>
       </tr>
       <% end %>

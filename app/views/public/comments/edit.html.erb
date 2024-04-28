@@ -1,5 +1,5 @@
 <div class="col">
-  <h2 class="p-2 bg-secondary text-white mb-2 text-center">コメント投稿</h2>
+  <h2 class="mb-2 text-center">コメント編集</h2>
 
   <div class="col mb-4">
     <div id="comment-map" class="m-auto"></div>
@@ -18,7 +18,9 @@
         <%= f.hidden_field :user_id, :value => current_user.id %>
         <%= f.hidden_field :spot_id, :value => @spot.id  %>
         <div class="text-center">
-          <%= f.submit "変更を保存する", class:"btn btn-primary" %>
+          <%= button_tag type: "submit", class: "btn btn-primary" do %>
+           <i class="fa-solid fa-floppy-disk"> 変更を保存</i>
+          <% end %>
         </div>
       <% end %>
     </div>

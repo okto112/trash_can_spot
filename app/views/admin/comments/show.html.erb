@@ -1,28 +1,23 @@
 <div class="col">
-  <h2 class="mb-2 text-center">コメント投稿</h2>
+  <h2 class="mb-2 text-center"><%= User.find(@comment.user_id).name %>さんのコメント詳細</h2>
 
-  <div class="col mb-4">
+  <%= render 'layouts/flash_message' %>
+
+  <div class="col mb-3">
     <div id="comment-map" class="m-auto"></div>
   </div>
 
   <div class="row">
     <div class="col-5 m-auto">
-      <%= form_with model: @comment, url: public_comments_path do |f| %>
-
         <h3>コメント内容：</h3>
-        <%= render 'layouts/validate_errors', data: @comment %>
-        <div class="ml-4 mb-2">
-            <%= f.text_area :comment, id: "comment_form_area", placeholder: "例：大きなゴミ箱があります！" %>
+        <div id="comment_form_area" class="ml-4 mb-2 border border-success">
+            <%= @comment.comment %>
         </div>
-
-        <%= f.hidden_field :user_id, :value => current_user.id %>
-        <%= f.hidden_field :spot_id, :value => @spot.id  %>
-        <div class="text-center">
-          <%= button_tag type: "submit", class: "btn btn-success" do %>
-           <i class="fa-solid fa-plus"> コメントを投稿する</i>
+        <div class="m-2 d-flex justify-content-center">
+          <%= link_to edit_admin_comment_path(@comment.id), data: {"turbolinks" => false}, class:"btn btn-primary" do %>
+            <i class="fa-solid fa-pen-to-square"> 編集する</i>
           <% end %>
         </div>
-      <% end %>
     </div>
   </div>
 </div>

@@ -1,11 +1,21 @@
 <div class="col">
-  <h2 class="p-2 bg-secondary text-white mb-5 text-center">ユーザー一覧</h2>
+  <h2 class="mb-2 text-center">ユーザー一覧</h2>
 
-  <table class="table">
+  <div class="d-flex justify-content-center p-2 ml-4 w-25">
+    <%= form_with url: admin_users_path, method: :get, id: "search-form" do |f| %>
+      <%= f.text_field :key_word, value: @key_word, placeholder: "キーワード検索" %>
+      <%= button_tag type: "submit", class: "btn btn-info btn-sm ml-1" do %>
+       <i class="fa-solid fa-magnifying-glass"> 検索</i>
+      <% end %>
+      <%= link_to "リセット", admin_users_path, method: :get, class: "btn btn-warning btn-sm text-white ml-1", id:"btn-font-bold" %>
+    <% end %>
+  </div>
+
+  <table class="table table-bordered">
     <thead>
       <tr>
         <th class="table-active">ユーザーID</th>
-        <th class="table-active">ユーザーネーム</th>
+        <th class="table-active">ユーザー名</th>
         <th class="table-active">メールアドレス</th>
         <th class="table-active">ステータス</th>
       </tr>

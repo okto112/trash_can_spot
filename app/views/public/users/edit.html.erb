@@ -1,13 +1,16 @@
 <div class="col">
   <div class="text-center">
-    <h2 class="p-2 bg-secondary text-white mb-5">会員情報編集</h2>
+    <h2 class="mb-5">会員情報編集</h2>
 
     <div class="col-4 m-auto">
+      <div class="text-left">
+      <%= render 'layouts/validate_errors', data: @user %>
+      </div>
       <%= form_with model: @user, url: public_users_information_path do |f| %>
         <table>
           <tbody>
             <tr>
-              <td style="width: 40%">ユーザーネーム</td>
+              <td style="width: 40%">ユーザー名</td>
               <td style="width: 40%"><%= f.text_field :name, autofocus: true, placeholder:"ニックネーム" %></td>
             </tr>
 
@@ -19,7 +22,9 @@
         </table>
 
         <div class="row d-flex justify-content-around mt-4">
-          <p><%= f.submit "編集を保存", class:"btn btn-success" %></p>
+          <%= button_tag type: "submit", class: "btn btn-success" do %>
+           <i class="fa-solid fa-floppy-disk"> 変更を保存</i>
+          <% end %>
         </div>
       <% end %>
     </div>
