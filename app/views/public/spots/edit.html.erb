@@ -1,11 +1,11 @@
 <div class="col">
-  <h2 class="mb-2 text-center">スポット編集</h2>
+  <h2 class="mb-1 text-center">スポット編集</h2>
 
   <%= render 'layouts/validate_errors', data: @spot %>
 
   <div class="row justify-content-center">
-    <div class="col-2">
-      <h3>スポット情報</h3>
+    <div class="col-2 p-2 bg-white border border-success rounded">
+      <h3><i id="spot-icon"  class="fa-solid fa-location-dot"></i> スポット情報</h3>
       <%= form_with model: @spot, url: public_spot_path(@spot) do |f| %>
 
         <h4>スポット名</h4>
@@ -31,18 +31,22 @@
         <%= f.hidden_field :latitude, id: 'latitude', value: @spot.latitude %>
         <%= f.hidden_field :longitude, id: 'longitude', value: @spot.longitude %>
 
-        <div class="m-4">
-          <%= f.submit "変更を保存", class:"btn btn-primary" %>
+        <div class="m-4 text-center">
+          <%= button_tag type: "submit", class: "btn btn-primary" do %>
+           <i class="fa-solid fa-floppy-disk"> 変更を保存</i>
+          <% end %>
         </div>
 
       <% end %>
     </div>
 
     <div class="col-9">
-      <input id="address" type="textbox" placeholder = "大阪駅">
-      <input type="button" value="検索" onclick="codeAddress()">
-      マーカーをドラック＆ドロップで位置の調整ができます。</br>
-      <div id="map" class="mt-2"></div>
+      <form class="d-flex align-items-center mb-1">
+        <input id="address" type="textbox" placeholder = "大阪駅">
+        <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-magnifying-glass"> 検索</i></button>
+        <p class="ml-1">マーカーをドラック＆ドロップで位置の調整ができます</p>
+      </form>
+      <div id="map"></div>
     </div>
   </div>
 </div>

@@ -27,7 +27,9 @@
         </div>
 
         <div class="actions text-center">
-          <%= f.submit "新規登録", class:"btn btn-success mt-4" %>
+          <%= button_tag type: "submit", class: "btn btn-success mt-4 w-50" do %>
+           <i class="fa-solid fa-user-plus"> 新規登録</i>
+          <% end %>
         </div>
       </div>
     <% end %>

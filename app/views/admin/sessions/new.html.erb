@@ -14,9 +14,10 @@
         <%= f.password_field :password, autocomplete: "current-password" %>
       </div>
 
-      <div class="actions btn btn-primary btn-sm mt-4 w-50">
-        <i class="fa-solid fa-right-to-bracket"></i>
-        <%= f.submit "ログイン", class:"btn btn-primary" %>
+      <div class="actions">
+        <%= button_tag type: "submit", class: "btn btn-primary mt-4 w-50" do %>
+         <i class="fa-solid fa-right-to-bracket"> ログイン</i>
+        <% end %>
       </div>
     <% end %>
 

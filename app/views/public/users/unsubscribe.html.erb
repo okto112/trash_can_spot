@@ -1,5 +1,5 @@
 <div class="col">
-  <div class="text-center">
+  <div class="text-center mt-5">
     <p>本当に退会しますか？</p>
 
     <p>退会すると、ユーザー情報や</p>
@@ -10,8 +10,10 @@
 
     <%= f.hidden_field :is_active, :value => false %>
 
-    <%= link_to '退会しない', public_users_my_page_path, class:"btn btn-primary m-2" %>
-    <%= f.submit "退会する", data: {confirm: "本当に退会 しますか？"}, class:"btn btn-danger m-2" %>
+    <div class="mt-4">
+      <%= link_to '退会しない', public_users_my_page_path, class:"btn btn-primary m-2", id:"btn-font-bold" %>
+      <%= f.submit "退会する", data: {confirm: "本当に退会 しますか？"}, class:"btn btn-danger m-2", id:"btn-font-bold" %>
+    </div>
 
     <% end %>
   </div>

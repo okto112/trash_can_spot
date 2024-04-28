@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <header class="header mb-2 border-bottom">
+    <header class="header mb-2">
       <div class="container-fluid">
         <div class="row align-items-center">
           <div class="col-3">
@@ -25,7 +25,7 @@
               <div class="row justify-content-md-between mr-auto">
                 <div class="header-content rounded">
                   <%= link_to public_main_path, data: {"turbolinks" => false}, class:"btn btn-outline-success" do %>
-                    <i class="fa-solid fa-location-dot"> スポットを見る</i>
+                    <i class="fa-solid fa-map-location-dot"> スポットを見る</i>
                   <% end %>
                 </div>
                 <div class="header-content rounded">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="header-content rounded">
                   <%= link_to new_public_spot_path, data: {"turbolinks" => false}, class:"btn btn-outline-success" do %>
-                    <i class="fa-solid fa-plus"> スポット登録</i>
+                    <i class="fa-solid fa-location-dot"> スポット登録</i>
                   <% end %>
                 </div>
                 <div class="header-content rounded">

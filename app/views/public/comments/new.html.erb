@@ -18,7 +18,9 @@
         <%= f.hidden_field :user_id, :value => current_user.id %>
         <%= f.hidden_field :spot_id, :value => @spot.id  %>
         <div class="text-center">
-          <%= f.submit "コメントを投稿する", class:"btn btn-primary" %>
+          <%= button_tag type: "submit", class: "btn btn-success" do %>
+           <i class="fa-solid fa-plus"> コメントを投稿する</i>
+          <% end %>
         </div>
       <% end %>
     </div>

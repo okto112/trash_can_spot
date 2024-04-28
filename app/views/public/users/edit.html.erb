@@ -22,7 +22,9 @@
         </table>
 
         <div class="row d-flex justify-content-around mt-4">
-          <p><%= f.submit "編集を保存", class:"btn btn-success" %></p>
+          <%= button_tag type: "submit", class: "btn btn-success" do %>
+           <i class="fa-solid fa-floppy-disk"> 変更を保存</i>
+          <% end %>
         </div>
       <% end %>
     </div>

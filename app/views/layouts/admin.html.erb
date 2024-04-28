@@ -23,7 +23,7 @@
                 <% if admin_signed_in? %>
                     <div class="header-content rounded">
                       <%= link_to admin_root_path, data: {"turbolinks" => false}, class:"btn btn-outline-success" do %>
-                       <i class="fa-solid fa-location-dot"> スポットを見る</i>
+                       <i class="fa-solid fa-map-location-dot"> スポットを見る</i>
                       <% end %>
                     </div>
                     <div class="header-content rounded">
@@ -33,7 +33,7 @@
                     </div>
                     <div class="header-content rounded">
                       <%= link_to admin_spots_path, class:"btn btn-outline-success" do %>
-                        <i class="fa-solid fa-location-pin"> スポット一覧</i>
+                        <i class="fa-solid fa-location-dot"> スポット一覧</i>
                       <% end %>
                     </div>
                     <div class="header-content rounded">
