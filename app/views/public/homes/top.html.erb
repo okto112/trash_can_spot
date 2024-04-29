@@ -1,1 +1,32 @@
-<h1>Topページ</h1>
+<div class="col-6 text-center m-auto">
+  <div class="mt-5 pb-1">
+    <h1 id="font-bold">ようこそ！</h1>
+    <h1 id="font-bold">ゴミ箱スポットへ！</h1>
+  </div>
+
+  <div id="top_text_border" class="d-flex justify-content-center p-4">
+    <p>
+      <%= link_to new_user_registration_path, class:"btn btn-warning mr-5" do %>
+        <i class="fa-solid fa-user-plus"> 新規登録</i>
+      <% end %>
+    </p>
+    <p>
+      <%= link_to new_user_session_path, class:"btn btn-primary ml-5" do %>
+        <i class="fa-solid fa-right-to-bracket"> ログイン</i>
+      <% end %>
+    </p>
+  </div>
+
+  <h3 class="text-dark m-4">ゴミ箱スポットとは？</h3>
+  <h5 id="font-bold" class="text-dark">
+    街中にあるゴミ箱の場所や捨てれるゴミの種類を登録しておくことで、ペットボトルやティッシュなどのゴミを捨てたい時にいつでもゴミ箱の場所を確認することができます！</br>
+    また、その情報を他のユーザーが閲覧することや対象のスポットにコメントを投稿することもできます！</br>
+    コメントも他のユーザーが閲覧できる為、ゴミ箱の追加情報や現在のゴミ箱の状況などをコメントしましょう！</br>
+  </h5>
+
+  <div class="m-4 p-2">
+    <%= image_tag("trash_can_spot.gif", class: "top_image border p-2") %>
+  </div>
+
+
+</div>

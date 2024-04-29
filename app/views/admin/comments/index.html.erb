@@ -9,7 +9,7 @@
       <%= button_tag type: "submit", class: "btn btn-info btn-sm ml-1" do %>
          <i class="fa-solid fa-magnifying-glass"> 検索</i>
         <% end %>
-      <%= link_to "リセット", admin_comments_path, method: :get, class: "btn btn-warning btn-sm text-white ml-1", id:"btn-font-bold" %>
+      <%= link_to "リセット", admin_comments_path, method: :get, class: "btn btn-warning btn-sm text-white ml-1", id:"font-bold" %>
     <% end %>
   </div>
 
@@ -36,8 +36,8 @@
         <td class="align-middle"><%= Spot.find(comment.spot_id).name %></td>
         <td class="align-middle"><%= comment.comment %></td>
         <td class="text-center d-flex justify-content-around">
-          <%= link_to '表示', admin_comment_path(comment.id), data: {"turbolinks" => false}, class:"btn btn-info", id:"btn-font-bold" %>
-          <%= link_to '削除', admin_comment_path(comment.id), method: :delete, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-danger", id:"btn-font-bold" %>
+          <%= link_to '表示', admin_comment_path(comment.id), data: {"turbolinks" => false}, class:"btn btn-info", id:"font-bold" %>
+          <%= link_to '削除', admin_comment_path(comment.id), method: :delete, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-danger", id:"font-bold" %>
         </td>
       </tr>
       <% end %>

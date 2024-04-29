@@ -37,8 +37,8 @@
           </div>
         </td>
         <td class="text-center d-flex justify-content-around">
-          <div><%= link_to '表示', public_favorite_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-info", id:"btn-font-bold" %></div>
-          <div><%= link_to '削除', public_favorite_path(spot.id), method: :delete, data: {confirm: "お気に入り一覧トから削除しますか？"}, class:"btn btn-danger", id:"btn-font-bold" %></div>
+          <div><%= link_to '表示', public_favorite_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-info", id:"font-bold" %></div>
+          <div><%= link_to '削除', public_favorite_path(spot.id), method: :delete, data: {confirm: "お気に入り一覧トから削除しますか？"}, class:"btn btn-danger", id:"font-bold" %></div>
         </td>
       </tr>
       <% end %>

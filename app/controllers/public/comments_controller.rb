@@ -1,5 +1,6 @@
 class Public::CommentsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_user, only: [:show, :edit]
 
   def index
     @comments = Comment.where(user_id: current_user.id).page(params[:page])
@@ -63,5 +64,12 @@ class Public::CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:user_id, :spot_id, :comment)
+  end
+
+  def check_user
+    unless Comment.find(params[:id]).user_id == current_user.id
+      flash[:alert] = "他のユーザーが投稿したコメントの詳細閲覧・編集はできません。"
+      redirect_to public_comments_path
+    end
   end
 end
