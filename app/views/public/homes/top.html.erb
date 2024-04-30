@@ -1,4 +1,7 @@
-<div class="col-6 text-center m-auto">
+<div class="col-sm-6 text-center m-auto">
+
+  <%= render 'layouts/flash_message' %>
+
   <div class="mt-5 pb-1">
     <h1 id="font-bold">ようこそ！</h1>
     <h1 id="font-bold">ゴミ箱スポットへ！</h1>
@@ -24,8 +27,37 @@
     コメントも他のユーザーが閲覧できる為、ゴミ箱の追加情報や現在のゴミ箱の状況などをコメントしましょう！</br>
   </h5>
 
-  <div class="m-4 p-2">
-    <%= image_tag("trash_can_spot.gif", class: "top_image border p-2") %>
+  <div id="carouselExampleIndicators" class="carousel slide top_image border p-2 mt-5 mb-5" data-ride="carousel">
+    <ol class="carousel-indicators bg-dark" style="opacity: .5;">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <%= image_tag("trash_can_spot.PNG", class: "d-block w-100") %>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag("trash_can_spot2.PNG", class: "d-block w-100") %>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag("trash_can_spot3.PNG", class: "d-block w-100") %>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag("trash_can_spot4.PNG", class: "d-block w-100") %>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag("trash_can_spot5.PNG", class: "d-block w-100") %>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
 
 
