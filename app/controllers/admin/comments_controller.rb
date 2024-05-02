@@ -54,7 +54,7 @@ class Admin::CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     if @comment.update(comment_params)
       redirect_to admin_comment_path(@comment.id)
-      flash[:notice] = "コメントを編集しました!"
+      flash[:notice] = "「#{@comment.name}」を編集しました!"
     else
       @spot = Spot.find(@comment.spot_id)
       @kinds = Kind.all
@@ -66,11 +66,11 @@ class Admin::CommentsController < ApplicationController
     comment = Comment.find(params[:id])
     if comment.destroy
       redirect_to admin_comments_path
-      flash[:notice] = "コメントを削除しました。"
+      flash[:notice] = "「#{comment.name}」を削除しました。"
     else
       @comments = Comment.page(params[:page])
       render :index
-      flash.now[:alert] = "コメントを削除できませんでした。"
+      flash.now[:alert] = "「#{comment.name}」を削除できませんでした。"
     end
   end
 

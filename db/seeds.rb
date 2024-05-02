@@ -11,6 +11,10 @@ Admin.create!(
   password: 'admin!'
 )
 
-Kind.create!(
-  [{ name: "燃えるゴミ" }, { name: "プラスチック" }, { name: "ペットボトル" }, { name: "カン" }, { name: "ビン" }]
-)
+Kind.create!([
+  {name: "燃えるゴミ", color: "red" },
+  { name: "プラスチック", color: "purple" },
+  { name: "ペットボトル", color: "blue" },
+  { name: "カン", color: "yellow" },
+  { name: "ビン", color: "green" }
+])

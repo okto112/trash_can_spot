@@ -10,16 +10,16 @@
 
         <h4>スポット名</h4>
         <div class="ml-4 mb-2">
-          <%= f.text_field :name, placeholder: "例：コンビニのゴミ箱" %>
+          <%= f.text_field :name, placeholder: "例：コンビニのゴミ箱", style:"width: 100%;" %>
         </div>
 
         <h4>スポット説明</h4>
         <div class="ml-4 mb-2">
-            <p><%= f.text_area :introduction, placeholder: "例：○○コンビニの前にあるゴミ箱です。" %></p>
+            <p><%= f.text_area :introduction, placeholder: "例：○○コンビニの前にあるゴミ箱です。", style:"width: 100%;" %></p>
         </div>
 
         <h4>ゴミ箱の種類</h4>
-        <div class="ml-4 mb-2">
+        <div class="ml-4 mb-2 overflow-auto" style="width: 90%; max-height: 200px;" >
             <% @kinds.each do |kind| %>
               <%= check_box_tag 'spot[kind_ids][]', kind.id %>
               <%= label_tag "kind_#{kind.id}", kind.name %><br>

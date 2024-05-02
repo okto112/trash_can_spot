@@ -19,17 +19,27 @@
         <h4>ゴミ箱の種類</h4>
         <div class="ml-4 mb-2">
           <% @spot.spot_kinds.each do |spot_kind| %>
-            <% case spot_kind.kind.name %>
-              <% when '燃えるゴミ' %>
-                <p class='spot-kind burnable-garbage'><%= spot_kind.kind.name %></p>
-              <% when 'プラスチック' %>
-                <p class='spot-kind plastic'><%= spot_kind.kind.name %></p>
-              <% when 'ペットボトル' %>
-                <p class='spot-kind pet-bottles'><%= spot_kind.kind.name %></p>
-              <% when 'カン' %>
-                <p class='spot-kind can'><%= spot_kind.kind.name %></p>
-              <% when 'ビン' %>
-                <p class='spot-kind bottle'><%= spot_kind.kind.name %></p>
+            <% case spot_kind.kind.color %>
+              <% when 'white' %>
+                <p class='spot-kind white'><%= spot_kind.kind.name %></p>
+              <% when 'gray' %>
+                <p class='spot-kind gray'><%= spot_kind.kind.name %></p>
+              <% when 'red' %>
+                <p class='spot-kind red'><%= spot_kind.kind.name %></p>
+              <% when 'purple' %>
+                <p class='spot-kind purple'><%= spot_kind.kind.name %></p>
+              <% when 'blue' %>
+                <p class='spot-kind blue'><%= spot_kind.kind.name %></p>
+              <% when 'yellow' %>
+                <p class='spot-kind yellow'><%= spot_kind.kind.name %></p>
+              <% when 'green' %>
+                <p class='spot-kind green'><%= spot_kind.kind.name %></p>
+              <% when 'orange' %>
+                <p class='spot-kind orange'><%= spot_kind.kind.name %></p>
+              <% when 'pink' %>
+                <p class='spot-kind pink'><%= spot_kind.kind.name %></p>
+              <% when 'brown' %>
+                <p class='spot-kind brown'><%= spot_kind.kind.name %></p>
             <% end %>
           <% end %>
         </div>

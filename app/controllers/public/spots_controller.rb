@@ -38,7 +38,7 @@ class Public::SpotsController < ApplicationController
         end
 
         if @spot.errors.empty?
-          flash[:notice] = "スポットを登録しました！"
+          flash[:notice] = "「#{@spot.name}」を登録しました！"
           redirect_to public_spots_path
         else
           @kinds = Kind.all
@@ -75,7 +75,7 @@ class Public::SpotsController < ApplicationController
         end
 
         if @spot.errors.empty?
-          flash[:notice] = "スポットを編集しました！"
+          flash[:notice] = "「#{@spot.name}」を編集しました！"
           redirect_to public_spot_path(@spot.id)
         else
           @kinds = Kind.all
@@ -91,7 +91,7 @@ class Public::SpotsController < ApplicationController
   def destroy
     spot = Spot.find(params[:id])
     spot.destroy
-    flash[:notice] = "スポットを削除しました。"
+    flash[:notice] = "「#{spot.name}」を削除しました。"
     redirect_to public_spots_path
   end
 

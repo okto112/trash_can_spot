@@ -61,7 +61,7 @@ class Admin::SpotsController < ApplicationController
         end
 
         if @spot.errors.empty?
-          flash[:notice] = "スポットを編集しました！"
+          flash[:notice] = "「#{@spot.name}」を編集しました！"
           redirect_to admin_spot_path(@spot.id)
         else
           @kinds = Kind.all
@@ -77,7 +77,7 @@ class Admin::SpotsController < ApplicationController
   def destroy
     spot = Spot.find(params[:id])
     spot.destroy
-    flash[:notice] = "スポットを削除しました。"
+    flash[:notice] = "「#{spot.name}」を削除しました。"
     redirect_to admin_spots_path
   end
 

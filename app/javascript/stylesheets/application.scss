@@ -130,38 +130,64 @@ h3, h4 {
   font-size: 12px;
 }
 
-.burnable-garbage {
-  border-radius: 5px;
-  padding: 1px;
-  margin: 1px;
-  text-align: center;
-  background-color: #FF99CC;
+.red {
+  background-color: #FFBEDA	;
   color: #F00;
   border: solid 1px #F00;
 }
 
-.plastic {
+.purple {
   background-color: #DCC2FF;
   color: purple;
   border: solid 1px purple;
 }
 
-.pet-bottles {
+.blue {
   background-color: #C2EEFF;
   color: #1E90FF;
   border: solid 1px #1E90FF;
 }
 
-.can {
+.yellow {
   background-color: #FFFFCC;
   color: #FFD700;
   border: solid 1px #FFD700;
 }
 
-.bottle {
+.green {
   background-color: #AEFFBD;
   color: #008000;
   border: solid 1px #008000;
+}
+
+.orange {
+  background-color: #FFDEAD;
+  color: #FF8C00;
+  border: solid 1px #FF8C00;
+}
+
+.pink {
+  background-color: #FFDDFF;
+  color: #FF1493;
+  border: solid 1px #FF1493;
+}
+
+.brown {
+  background-color: #DEB887;
+  color: #800;
+  border: solid 1px #800;
+}
+
+.white {
+  background-color: white;
+  color: black;
+  border: solid 1px black;
+}
+
+.gray {
+  background-color: #CCC;
+  color: #555;
+  border: solid 1px #555;
 }
 
 
@@ -192,4 +218,8 @@ h3, h4 {
 #comments-box p:nth-of-type(3n) {
   font-size: 10px;
   width: 100%;
+}
+
+.field_with_errors {
+  display: inline;
 }

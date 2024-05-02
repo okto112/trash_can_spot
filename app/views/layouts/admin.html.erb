@@ -10,7 +10,7 @@
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
   <body>
-     <header class="header mb-2 border-bottom">
+     <header class="header mb-2">
         <div class="container-fluid">
           <div class="row pt-3">
             <div class="col-3">
@@ -18,7 +18,7 @@
                 <h1 id="font-bold" class="text-success">ゴミ箱スポット</h1>
               </div>
             </div>
-            <div class="col-6 ml-auto">
+            <div class="col-8 ml-auto">
               <div class="row justify-content-between mr-auto">
                 <% if admin_signed_in? %>
                     <div class="header-content rounded">
@@ -39,6 +39,11 @@
                     <div class="header-content rounded">
                       <%= link_to admin_comments_path, class:"btn btn-outline-success" do %>
                        <i class="fa-solid fa-comment-dots"> コメント一覧</i>
+                      <% end %>
+                    </div>
+                    <div class="header-content rounded">
+                      <%= link_to admin_kinds_path, class:"btn btn-outline-success" do %>
+                       <i class="fa-solid fa-trash"> ゴミの種類一覧</i>
                       <% end %>
                     </div>
                     <div class="header-content rounded">

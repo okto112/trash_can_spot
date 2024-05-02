@@ -24,6 +24,9 @@ ja:
       user:
         name: ユーザー名
         email: メールアドレス
+      kind:
+        name: ゴミの名前
+        color: 色
   date:
     abbr_day_names:
     - 日
