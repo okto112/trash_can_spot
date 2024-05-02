@@ -15,6 +15,16 @@ header {
   background-color: #F5FFFA	;
 }
 
+#top_text_border {
+  border-top: 3px solid #28a745;
+  border-bottom: 3px solid #28a745;
+}
+
+// .top_image {
+//   width: 100%;
+//   height: 320px;
+// }
+
 p {
   margin: 0;
 }
@@ -32,7 +42,7 @@ h3, h4 {
   font-weight: bold;
 }
 
-#btn-font-bold {
+#font-bold {
   font-weight: bold;
 }
 

@@ -12,16 +12,16 @@
   </head>
 
   <body>
-    <header class="header mb-2">
-      <div class="container-fluid">
-        <div class="row align-items-center">
-          <div class="col-3">
-            <div class="logo">
-              <h1>ゴミ箱スポット</h1>
+    <% if user_signed_in? %>
+      <header class="header mb-2">
+        <div class="container-fluid">
+          <div class="row align-items-center">
+            <div class="col-3">
+              <div class="logo">
+                <h1 id="font-bold" class="text-success">ゴミ箱スポット</h1>
+              </div>
             </div>
-          </div>
-          <div class="col-6 offset-3">
-            <% if user_signed_in? %>
+            <div class="col-6 offset-3">
               <div class="row justify-content-md-between mr-auto">
                 <div class="header-content rounded">
                   <%= link_to public_main_path, data: {"turbolinks" => false}, class:"btn btn-outline-success" do %>
@@ -48,21 +48,12 @@
                     <i class="fa-solid fa-right-from-bracket"> ログアウト</i>
                   <% end %>
                 </div>
-            <% elsif %>
-              <div class="row justify-content-md-around ">
-                <div class="header-content">
-                  <%= link_to '新規登録', new_user_registration_path, class:"btn btn-outline-dark" %>
-                </div>
-                <div class="header-content">
-                  <%= link_to 'ログイン', new_user_session_path, class:"btn btn-outline-dark" %>
-                </div>
               </div>
-            <% end %>
             </div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+    <% end %>
 
     <main class="container-fluid">
       <div class="row">

@@ -1,5 +1,6 @@
 class Public::SpotsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_user, only: [:show, :edit]
 
   def index
     @spots = Spot.where(user_id: current_user.id).page(params[:page])
@@ -98,5 +99,12 @@ class Public::SpotsController < ApplicationController
 
   def spot_params
     params.require(:spot).permit(:user_id, :name, :introduction, :latitude, :longitude,  kind_ids: [] )
+  end
+
+  def check_user
+    unless Spot.find(params[:id]).user_id == current_user.id
+      flash[:alert] = "他のユーザーが登録したスポットの詳細閲覧・編集はできません。"
+      redirect_to public_spots_path
+    end
   end
 end

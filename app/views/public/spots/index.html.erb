@@ -37,8 +37,8 @@
           </div>
         </td>
         <td class="text-center d-flex justify-content-around">
-          <%= link_to '表示', public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-info", id:"btn-font-bold" %>
-          <%= link_to '削除', public_spot_path(spot.id), method: :delete, data: {confirm: "スポットを削除しますか？"}, class:"btn btn-danger", id:"btn-font-bold" %>
+          <%= link_to '表示', public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-info", id:"font-bold" %>
+          <%= link_to '削除', public_spot_path(spot.id), method: :delete, data: {confirm: "スポットを削除しますか？"}, class:"btn btn-danger", id:"font-bold" %>
         </td>
       </tr>
       <% end %>

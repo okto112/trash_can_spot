@@ -1,5 +1,6 @@
 class Public::FavoritesController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_user, only: [:show]
 
   def index
     @favorites = Favorite.where(user_id: current_user.id)
@@ -22,6 +23,7 @@ class Public::FavoritesController < ApplicationController
     @favorite = Favorite.find_by(user_id: current_user.id, spot_id: @spot.id)
     respond_to do |format|
       format.js {
+        byebug
         @favorite.destroy
         flash.now[:alert] = "お気に入りから削除しました。"
       }
@@ -29,6 +31,14 @@ class Public::FavoritesController < ApplicationController
         @favorite.destroy
         redirect_to public_favorites_path, notice: "お気に入り一覧から削除しました。"
       }
+    end
+  end
+
+  def check_user
+    @favorites = Favorite.where(spot_id: params[:id])
+    if @favorites.find_by(user_id: current_user.id).nil?
+      flash[:alert] = "お気に入り登録していないスポットは閲覧できません。"
+      redirect_to public_favorites_path
     end
   end
 end
