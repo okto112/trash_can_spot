@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2024_04_08_111522) do
 
   create_table "kinds", force: :cascade do |t|
     t.text "name", null: false
+    t.text "color", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

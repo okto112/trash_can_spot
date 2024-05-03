@@ -44,10 +44,11 @@
     key: "<%= ENV['API_KEY'] %>"
   });
 
-  //初期マップの設定
+  //マップの初期設定
   let map;
   let marker
   let markerIds = [];
+  let infowindow = "";
   let infoWindows = [];
   let spotKindsHtml = "";
   let changeStyle =false;
@@ -96,14 +97,6 @@
         });
 
         kindsInfo();
-        let infowindow = new google.maps.InfoWindow({
-          position: markerLatLng,
-          content: "スポット情報</br>" +
-            "スポット名：<%= spot.name %></br>" +
-            "ゴミの種類：</br>" +
-            spotKindsHtml +
-            "<div class='text-right'>登録日：<%= spot.created_at.strftime('%Y/%m/%d') %></div>"
-        });
 
         marker.addListener('click', function() {
           closeInfoWindows();
@@ -136,28 +129,27 @@
           spotKindsHtml = "";
         });
 
+
+        // マップ内のウィンドウを閉じる
         function closeInfoWindows() {
           for (let i = 0; i < infoWindows.length; i++) {
             infoWindows[i].close();
           }
         }
 
+        // kindの呼出しとマップ内のウィンドウの内容作成
         function kindsInfo() {
           spotKindsHtml = "";
-          <% spot.spot_kinds.each do |spot_kind| %>
-            <% case spot_kind.kind.name %>
-              <% when '燃えるゴミ' %>
-                spotKindsHtml += "<p class='spot-kind burnable-garbage'><%= spot_kind.kind.name %></p>";
-              <% when 'プラスチック' %>
-                spotKindsHtml += "<p class='spot-kind plastic'><%= spot_kind.kind.name %></p>";
-              <% when 'ペットボトル' %>
-                spotKindsHtml += "<p class='spot-kind pet-bottles'><%= spot_kind.kind.name %></p>";
-              <% when 'カン' %>
-                spotKindsHtml += "<p class='spot-kind can'><%= spot_kind.kind.name %></p>";
-              <% when 'ビン' %>
-                spotKindsHtml += "<p class='spot-kind bottle'><%= spot_kind.kind.name %></p>";
-            <% end %>
-          <% end %>
+          <%= render 'layouts/spot_kinds_html', spot: spot %>
+
+          infowindow = new google.maps.InfoWindow({
+            position: markerLatLng,
+            content: "スポット情報</br>" +
+              "スポット名：<%= spot.name %></br>" +
+              "ゴミの種類：</br>" +
+              spotKindsHtml +
+              "<div class='text-right'>登録日：<%= spot.created_at.strftime('%Y/%m/%d') %></div>"
+          });
         }
      })();
     <% end %>

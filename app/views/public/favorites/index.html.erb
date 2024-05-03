@@ -20,20 +20,7 @@
         <td class="align-middle"><%= spot.introduction %></td>
         <td class="kinds-td align-middle">
           <div class="d-flex">
-          <% spot.spot_kinds.each do |spot_kind| %>
-             <% case spot_kind.kind.name %>
-                <% when '燃えるゴミ' %>
-                  <div class='kind-td burnable-garbage'><%= spot_kind.kind.name %></div>
-                <% when 'プラスチック' %>
-                  <div class='kind-td plastic'><%= spot_kind.kind.name %></div>
-                <% when 'ペットボトル' %>
-                  <div class='kind-td pet-bottles'><%= spot_kind.kind.name %></div>
-                <% when 'カン' %>
-                  <div class='kind-td can'><%= spot_kind.kind.name %></div>
-                <% when 'ビン' %>
-                  <div class='kind-td bottle'><%= spot_kind.kind.name %></div>
-              <% end %>
-          <% end %>
+            <%= render 'layouts/kinds_view_index', spot: spot %>
           </div>
         </td>
         <td class="text-center d-flex justify-content-around">

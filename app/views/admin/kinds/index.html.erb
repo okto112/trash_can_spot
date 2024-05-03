@@ -1,0 +1,66 @@
+<div class="col">
+  <h2 class="mb-2 text-center">ゴミの種類一覧</h2>
+
+  <%= render 'layouts/flash_message' %>
+
+  <div class="d-flex justify-content-center">
+    <p>
+      <%= link_to new_admin_kind_path, class:"btn btn-info m-3" do %>
+        <i class="fa-solid fa-plus"> ゴミの種類を追加する</i>
+      <% end %>
+    </p>
+  </div>
+
+  <table class="table table-bordered w-50 m-auto">
+    <thead>
+      <tr>
+        <th class="table-active" style="width: 70%">ゴミの種類</th>
+        <th class="table-active"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @kinds.each do |kind| %>
+        <tr>
+          <td class="align-middle">
+            <div id='<%= kind.id %>' class="m-auto w-50"><%= kind.name %></div>
+          </td>
+          <td class="text-center d-flex justify-content-around">
+            <%= link_to '編集', edit_admin_kind_path(kind.id), class:"btn btn-info", id:"font-bold" %>
+            <%= link_to '削除', admin_kind_path(kind.id), method: :delete, data: {confirm: "「#{kind.name}」を削除しますか？"}, class:"btn btn-danger", id:"font-bold" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @kinds %>
+
+</div>
+
+<script>
+  <% @kinds.each do |kind| %>
+   <% case kind.color %>
+      <% when 'white' %>
+        $('#<%= kind.id %>').addClass("spot-kind white");
+      <% when 'gray' %>
+        $('#<%= kind.id %>').addClass("spot-kind gray");
+      <% when 'red' %>
+        $('#<%= kind.id %>').addClass("spot-kind red");
+      <% when 'purple' %>
+        $('#<%= kind.id %>').addClass("spot-kind purple");
+      <% when 'blue' %>
+        $('#<%= kind.id %>').addClass("spot-kind blue");
+      <% when 'yellow' %>
+        $('#<%= kind.id %>').addClass("spot-kind yellow");
+      <% when 'green' %>
+        $('#<%= kind.id %>').addClass("spot-kind green");
+      <% when 'orange' %>
+        $('#<%= kind.id %>').addClass("spot-kind orange");
+      <% when 'pink' %>
+        $('#<%= kind.id %>').addClass("spot-kind pink");
+      <% when 'brown' %>
+        $('#<%= kind.id %>').addClass("spot-kind brown");
+    <% end %>
+  <% end %>
+</script>

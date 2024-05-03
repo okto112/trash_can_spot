@@ -5,13 +5,13 @@
   <div class="row justify-content-center mb-2">
     <div class="row p-1 align-items-center border border-success rounded">
         <div class="font-weight-bold">種類検索：</div>
-      <div class="d-flex align-middle ml-1">
+      <div id="kinds-box" class="d-flex align-middle ml-1 overflow-auto">
         <div class="bg-white m-1">
-          <%= link_to "すべて", public_main_path(kind_id: 0), data: {"turbolinks" => false}, id: 0 %>
+          <%= link_to "すべて", public_main_path(kind_id: 0), data: {"turbolinks" => false}, id: 0, class: "kind-btn" %>
         </div>
         <% @kinds.each do |kind| %>
         <div class="bg-white m-1">
-          <%= link_to  kind.name, public_main_path(kind_id: kind.id), data: {"turbolinks" => false}, id: kind.id %>
+          <%= link_to  kind.name, public_main_path(kind_id: kind.id), data: {"turbolinks" => false}, id: kind.id, class: "kind-btn" %>
         </div>
         <% end %>
       </div>
@@ -29,6 +29,7 @@
       <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-magnifying-glass"> 検索</i></button>
     </form>
   </div>
+
   <div class="row justify-content-center">
     <div id="spot-info" class="col-2 overflow-auto p-2 bg-white border border-success rounded">
       <h3 class="mb-2"><i id="spot-icon" class="fa-solid fa-location-dot"></i> スポット情報</h3>
@@ -67,10 +68,11 @@
     key: "<%= ENV['API_KEY'] %>"
   });
 
-  //初期マップの設定
+  //マップの初期設定
   let map;
   let marker
   let markerIds = [];
+  let infowindow = "";
   let infoWindows = [];
   let spotKindsHtml = "";
   let changeStyle =false;
@@ -119,14 +121,6 @@
         });
 
         kindsInfo();
-        let infowindow = new google.maps.InfoWindow({
-          position: markerLatLng,
-          content: "スポット情報</br>" +
-            "スポット名：<%= spot.name %></br>" +
-            "ゴミの種類：</br>" +
-            spotKindsHtml +
-            "<div class='text-right'>登録日：<%= spot.created_at.strftime('%Y/%m/%d') %></div>"
-        });
 
         marker.addListener('click', function() {
           closeInfoWindows();
@@ -164,29 +158,29 @@
           spotKindsHtml = "";
         });
 
+
+        // マップ内のウィンドウを閉じる
         function closeInfoWindows() {
           for (let i = 0; i < infoWindows.length; i++) {
             infoWindows[i].close();
           }
         }
 
+        // kindの呼出しとマップ内のウィンドウの内容作成
         function kindsInfo() {
           spotKindsHtml = "";
-          <% spot.spot_kinds.each do |spot_kind| %>
-            <% case spot_kind.kind.name %>
-              <% when '燃えるゴミ' %>
-                spotKindsHtml += "<p class='spot-kind burnable-garbage'><%= spot_kind.kind.name %></p>";
-              <% when 'プラスチック' %>
-                spotKindsHtml += "<p class='spot-kind plastic'><%= spot_kind.kind.name %></p>";
-              <% when 'ペットボトル' %>
-                spotKindsHtml += "<p class='spot-kind pet-bottles'><%= spot_kind.kind.name %></p>";
-              <% when 'カン' %>
-                spotKindsHtml += "<p class='spot-kind can'><%= spot_kind.kind.name %></p>";
-              <% when 'ビン' %>
-                spotKindsHtml += "<p class='spot-kind bottle'><%= spot_kind.kind.name %></p>";
-            <% end %>
-          <% end %>
+          <%= render 'layouts/spot_kinds_html', spot: spot %>
+
+          infowindow = new google.maps.InfoWindow({
+            position: markerLatLng,
+            content: "スポット情報</br>" +
+              "スポット名：<%= spot.name %></br>" +
+              "ゴミの種類：</br>" +
+              spotKindsHtml +
+              "<div class='text-right'>登録日：<%= spot.created_at.strftime('%Y/%m/%d') %></div>"
+          });
         }
+
      })();
     <% end %>
   }
@@ -201,4 +195,13 @@
     <% end %>
     $("#<%= @kind_id %>").addClass("btn btn-warning");
   };
+
+  //種類検索の横スクロール
+  const kindsBox = document.getElementById('kinds-box');
+  kindsBox.addEventListener('wheel', function(event) {
+    event.preventDefault(); // デフォルトのスクロール動作をキャンセル
+
+    const delta = Math.max(-1, Math.min(1, (event.deltaY || -event.wheelDelta || event.detail)));
+    kindsBox.scrollLeft += (delta * 50); // 横スクロールの速度を調整するための値を設定
+  });
 </script>

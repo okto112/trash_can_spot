@@ -28,22 +28,22 @@
                     <i class="fa-solid fa-map-location-dot"> スポットを見る</i>
                   <% end %>
                 </div>
-                <div class="header-content rounded">
+                <div class="rounded">
                   <%= link_to public_users_my_page_path, class:"btn btn-outline-success" do %>
                     <i class="fa-solid fa-user"> マイページ</i>
                   <% end %>
                 </div>
-                <div class="header-content rounded">
+                <div class="rounded">
                   <%= link_to new_public_spot_path, data: {"turbolinks" => false}, class:"btn btn-outline-success" do %>
                     <i class="fa-solid fa-location-dot"> スポット登録</i>
                   <% end %>
                 </div>
-                <div class="header-content rounded">
+                <div class="rounded">
                   <%= link_to public_favorites_path, class:"btn btn-outline-success" do %>
                     <i class="fa-solid fa-star"> お気に入り</i>
                   <% end %>
                 </div>
-                <div class="header-content rounded">
+                <div class="rounded">
                   <%= link_to destroy_user_session_path, method: :delete, class:"btn btn-outline-success" do %>
                     <i class="fa-solid fa-right-from-bracket"> ログアウト</i>
                   <% end %>
