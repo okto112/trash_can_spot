@@ -33,7 +33,7 @@ https://docs.google.com/spreadsheets/d/1HsLiOCLpobTVXqInsPOmjXANZDZuQRC5GQQ0sBgc
 https://docs.google.com/spreadsheets/d/11PepSblweQKZzVoILrZzWVyUawQJ2Nhj/edit?usp=sharing&ouid=116470127435378689531&rtpof=true&sd=true
 
 * ワイヤーフレーム（ユーザー画面）<br>
-https://app.diagrams.net/#G1GTGwkU4_2-APBhyNEOpLj9vUPKdHHv2v#%7B%22pageId%22%3A%22zpNp8uK9nCq0UsbZh9sC%22%7D
+https://drive.google.com/file/d/1GTGwkU4_2-APBhyNEOpLj9vUPKdHHv2v/view?usp=sharing
 
 * 画面遷移図（ユーザー画面）<br>
 https://drive.google.com/file/d/1DxxYDWYfVoULD1ukVJqN5dNEOlycrOl8/view?usp=sharing
