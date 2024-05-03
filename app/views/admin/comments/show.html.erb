@@ -28,7 +28,7 @@
     key: "<%= ENV['API_KEY'] %>"
   });
 
-  //初期マップの設定
+  //マップの初期設定
   let map;
   let marker
   let spotKindsHtml = "";
@@ -49,7 +49,7 @@
     infowindow.open(map, marker);
   }
 
-  // 初期マーカーの設定
+  //マーカーの初期設定
   function initializeMarker() {
     marker = new google.maps.Marker({
       position: { lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %> },
@@ -57,32 +57,9 @@
     });
   }
 
-  // 情報ウィンドウの設定
+  // kindの呼出しとマップ内のウィンドウの内容作成
   function kindsInfo() {
-      <% @spot.spot_kinds.each do |spot_kind| %>
-        <% case spot_kind.kind.color %>
-          <% when 'white' %>
-            spotKindsHtml += "<p class='spot-kind white'><%= spot_kind.kind.name %></p>";
-          <% when 'gray' %>
-            spotKindsHtml += "<p class='spot-kind gray'><%= spot_kind.kind.name %></p>";
-          <% when 'red' %>
-            spotKindsHtml += "<p class='spot-kind red'><%= spot_kind.kind.name %></p>";
-          <% when 'purple' %>
-            spotKindsHtml += "<p class='spot-kind purple'><%= spot_kind.kind.name %></p>";
-          <% when 'blue' %>
-            spotKindsHtml += "<p class='spot-kind blue'><%= spot_kind.kind.name %></p>";
-          <% when 'yellow' %>
-            spotKindsHtml += "<p class='spot-kind yellow'><%= spot_kind.kind.name %></p>";
-          <% when 'green' %>
-            spotKindsHtml += "<p class='spot-kind green'><%= spot_kind.kind.name %></p>";
-          <% when 'orange' %>
-            spotKindsHtml += "<p class='spot-kind orange'><%= spot_kind.kind.name %></p>";
-          <% when 'pink' %>
-            spotKindsHtml += "<p class='spot-kind pink'><%= spot_kind.kind.name %></p>";
-          <% when 'brown' %>
-            spotKindsHtml += "<p class='spot-kind brown'><%= spot_kind.kind.name %></p>";
-        <% end %>
-      <% end %>
+      <%= render 'layouts/spot_kinds_html', spot: @spot %>
 
       infowindow = new google.maps.InfoWindow({
         position: { lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %> },

@@ -27,10 +27,7 @@
           </td>
           <td class="text-center d-flex justify-content-around">
             <%= link_to '編集', edit_admin_kind_path(kind.id), class:"btn btn-info", id:"font-bold" %>
-            <%= link_to '削除', admin_kind_path(kind.id), method: :delete,
-              data: {confirm: "「#{kind.name}」を削除しますか？\n「#{kind.name}」しか保持していないスポットも同時に削除されます。"},
-              class:"btn btn-danger", id:"font-bold"
-            %>
+            <%= link_to '削除', admin_kind_path(kind.id), method: :delete, data: {confirm: "「#{kind.name}」を削除しますか？"}, class:"btn btn-danger", id:"font-bold" %>
           </td>
         </tr>
       <% end %>

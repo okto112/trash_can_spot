@@ -33,7 +33,7 @@
     key: "<%= ENV['API_KEY'] %>"
   });
 
-  //初期マップの設定
+  //マップの初期設定
   let map;
   let marker
   let spotKindsHtml = "";
@@ -46,15 +46,13 @@
       zoom: 15,
       mapTypeControl: false
     });
+
     kindsInfo();
-
-
-
     initializeMarker();
     infowindow.open(map, marker);
   }
 
-  // 初期マーカーの設定
+  //マーカーの初期設定
   function initializeMarker() {
     marker = new google.maps.Marker({
       position: { lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %> },
@@ -62,22 +60,9 @@
     });
   }
 
-  // 情報ウィンドウの設定
+  // kindの呼出しとマップ内のウィンドウの内容作成
   function kindsInfo() {
-      <% @spot.spot_kinds.each do |spot_kind| %>
-        <% case spot_kind.kind.name %>
-          <% when '燃えるゴミ' %>
-            spotKindsHtml += "<p class='spot-kind burnable-garbage'><%= spot_kind.kind.name %></p>";
-          <% when 'プラスチック' %>
-            spotKindsHtml += "<p class='spot-kind plastic'><%= spot_kind.kind.name %></p>";
-          <% when 'ペットボトル' %>
-            spotKindsHtml += "<p class='spot-kind pet-bottles'><%= spot_kind.kind.name %></p>";
-          <% when 'カン' %>
-            spotKindsHtml += "<p class='spot-kind can'><%= spot_kind.kind.name %></p>";
-          <% when 'ビン' %>
-            spotKindsHtml += "<p class='spot-kind bottle'><%= spot_kind.kind.name %></p>";
-        <% end %>
-      <% end %>
+      <%= render 'layouts/spot_kinds_html', spot: @spot %>
 
       infowindow = new google.maps.InfoWindow({
         position: { lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %> },

@@ -1,0 +1,24 @@
+<% spot.spot_kinds.each do |spot_kind| %>
+  <% case spot_kind.kind.color %>
+    <% when 'white' %>
+      <div class='kind-td white'><%= spot_kind.kind.name %></div>
+    <% when 'gray' %>
+      <div class='kind-td gray'><%= spot_kind.kind.name %></div>
+    <% when 'red' %>
+      <div class='kind-td red'><%= spot_kind.kind.name %></div>
+    <% when 'purple' %>
+      <div class='kind-td purple'><%= spot_kind.kind.name %></div>
+    <% when 'blue' %>
+      <div class='kind-td blue'><%= spot_kind.kind.name %></div>
+    <% when 'yellow' %>
+      <div class='kind-td yellow'><%= spot_kind.kind.name %></div>
+    <% when 'green' %>
+      <div class='kind-td green'><%= spot_kind.kind.name %></div>
+    <% when 'orange' %>
+      <div class='kind-td orange'><%= spot_kind.kind.name %></div>
+    <% when 'pink' %>
+      <div class='kind-td pink'><%= spot_kind.kind.name %></div>
+    <% when 'brown' %>
+      <div class='kind-td brown'><%= spot_kind.kind.name %></div>
+  <% end %>
+<% end %>

@@ -37,16 +37,25 @@ class Admin::KindsController < ApplicationController
 
   def destroy
     kind = Kind.find(params[:id])
+    delete_flag = true
     kind.spot_kinds.each do |spot_kind|
-      spot_kind.spot.destroy if spot_kind.spot.spot_kinds.count == 1
+      if spot_kind.spot.spot_kinds.count > 0
+        delete_flag = false
+        break
+      end
     end
-    if kind.destroy
-      redirect_to admin_kinds_path
-      flash[:notice] = "「#{kind.name}」を削除しました。"
+    if delete_flag
+      if kind.destroy
+        redirect_to admin_kinds_path
+        flash[:notice] = "「#{kind.name}」を削除しました。"
+      else
+        @kinds = Kind.all.page(params[:page])
+        render :index
+        flash.now[:alert] = "「#{kind.name}」を削除できませんでした。"
+      end
     else
-     @kinds = Kind.all.page(params[:page])
-      render :index
-      flash.now[:alert] = "「#{kind.name}」を削除できませんでした。"
+      redirect_to admin_kinds_path
+      flash[:alert] = "「#{kind.name}」はスポットで使用されている為、削除できませんでした。"
     end
   end
 

@@ -18,20 +18,7 @@
 
         <h4>ゴミ箱の種類</h4>
         <div class="mb-2 text-center">
-          <% @spot.spot_kinds.each do |spot_kind| %>
-            <% case spot_kind.kind.name %>
-              <% when '燃えるゴミ' %>
-                <p class='spot-kind burnable-garbage'><%= spot_kind.kind.name %></p>
-              <% when 'プラスチック' %>
-                <p class='spot-kind plastic'><%= spot_kind.kind.name %></p>
-              <% when 'ペットボトル' %>
-                <p class='spot-kind pet-bottles'><%= spot_kind.kind.name %></p>
-              <% when 'カン' %>
-                <p class='spot-kind can'><%= spot_kind.kind.name %></p>
-              <% when 'ビン' %>
-                <p class='spot-kind bottle'><%= spot_kind.kind.name %></p>
-            <% end %>
-          <% end %>
+          <%= render 'layouts/kinds_view_show', spot: @spot %>
         </div>
         <div class="m-4 d-flex justify-content-center">
           <%= link_to edit_public_spot_path(@spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" do %>

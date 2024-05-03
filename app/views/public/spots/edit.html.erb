@@ -10,16 +10,16 @@
 
         <h4>スポット名</h4>
         <div class="ml-4 mb-2">
-          <%= f.text_field :name, placeholder: "例：コンビニのゴミ箱" %>
+          <%= f.text_field :name, placeholder: "例：コンビニのゴミ箱", style:"width: 100%;" %>
         </div>
 
         <h4>スポット説明</h4>
         <div class="ml-4 mb-2">
-            <p><%= f.text_area :introduction, placeholder: "例：○○コンビニの前にあるゴミ箱です。" %></p>
+            <p><%= f.text_area :introduction, placeholder: "例：○○コンビニの前にあるゴミ箱です。", style:"width: 100%;" %></p>
         </div>
 
         <h4>ゴミ箱の種類</h4>
-        <div class="ml-4 mb-2">
+        <div class="ml-4 mb-2 overflow-auto" style="width: 90%; max-height: 200px;">
             <% @kinds.each do |kind| %>
               <% checked = @spot.kinds.exists?(kind.id) %>
               <%= check_box_tag 'spot[kind_ids][]', kind.id, checked %>
@@ -56,7 +56,7 @@
     key: "<%= ENV['API_KEY'] %>"
   });
 
-  //初期マップの設定
+  //マップの初期設定
   let map;
   let marker
   async function initMap() {
@@ -71,7 +71,7 @@
     initializeMarker();
   }
 
-  // 初期マーカーの設定
+  //マーカーの初期設定
   function initializeMarker() {
     marker = new google.maps.Marker({
       position: { lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %> },
@@ -80,8 +80,8 @@
     });
 
     google.maps.event.addListener(marker, 'dragend', function (event) {
-      document.getElementById('latitude').value = event.latLng.lat();
-      document.getElementById('longitude').value = event.latLng.lng();
+      $('#latitude').val(event.latLng.lat());
+      $('#longitude').val(event.latLng.lng());
     });
   }
 
@@ -90,23 +90,22 @@
   function codeAddress(){
     marker.setMap(null);
     geocoder = new google.maps.Geocoder();
-    let inputAddress = document.getElementById('address').value;
+    let inputAddress = $('#address').val();
     geocoder.geocode( { 'address': inputAddress}, function(results, status) {
       if (status == 'OK') {
-          //新しくマーカーを作成する
           map.setCenter(results[0].geometry.location);
               marker = new google.maps.Marker({
                 map: map,
                 position: results[0].geometry.location,
-                draggable: true	// ドラッグ可能にする
+                draggable: true
               });
 
-          document.getElementById('latitude').value = results[0].geometry.location.lat();
-          document.getElementById('longitude').value = results[0].geometry.location.lng();
+          $('#latitude').val(results[0].geometry.location.lat());
+          $('#longitude').val(results[0].geometry.location.lng());
 
           google.maps.event.addListener( marker, 'dragend', function(ev){
-              document.getElementById('latitude').value = event.latLng.lat();
-              document.getElementById('longitude').value = event.latLng.lng();
+              $('#latitude').val(event.latLng.lat());
+              $('#longitude').val(event.latLng.lng());
           });
       } else {
         alert('該当する結果がありませんでした：' + status);

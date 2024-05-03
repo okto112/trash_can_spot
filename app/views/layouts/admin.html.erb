@@ -21,32 +21,32 @@
             <div class="col-8 ml-auto">
               <div class="row justify-content-between mr-auto">
                 <% if admin_signed_in? %>
-                    <div class="header-content rounded">
+                    <div class="rounded">
                       <%= link_to admin_root_path, data: {"turbolinks" => false}, class:"btn btn-outline-success" do %>
                        <i class="fa-solid fa-map-location-dot"> スポットを見る</i>
                       <% end %>
                     </div>
-                    <div class="header-content rounded">
+                    <div class="rounded">
                       <%= link_to admin_users_path, class:"btn btn-outline-success" do %>
                         <i class="fa-solid fa-user"> ユーザー一覧</i>
                       <% end %>
                     </div>
-                    <div class="header-content rounded">
+                    <div class="rounded">
                       <%= link_to admin_spots_path, class:"btn btn-outline-success" do %>
                         <i class="fa-solid fa-location-dot"> スポット一覧</i>
                       <% end %>
                     </div>
-                    <div class="header-content rounded">
+                    <div class="rounded">
                       <%= link_to admin_comments_path, class:"btn btn-outline-success" do %>
                        <i class="fa-solid fa-comment-dots"> コメント一覧</i>
                       <% end %>
                     </div>
-                    <div class="header-content rounded">
+                    <div class="rounded">
                       <%= link_to admin_kinds_path, class:"btn btn-outline-success" do %>
                        <i class="fa-solid fa-trash"> ゴミの種類一覧</i>
                       <% end %>
                     </div>
-                    <div class="header-content rounded">
+                    <div class="rounded">
                       <%= link_to destroy_admin_session_path, method: :delete, class:"btn btn-outline-success" do %>
                         <i class="fa-solid fa-right-from-bracket"> ログアウト</i>
                       <% end %>

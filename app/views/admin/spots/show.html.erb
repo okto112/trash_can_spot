@@ -18,30 +18,7 @@
 
         <h4>ゴミ箱の種類</h4>
         <div class="ml-4 mb-2">
-          <% @spot.spot_kinds.each do |spot_kind| %>
-            <% case spot_kind.kind.color %>
-              <% when 'white' %>
-                <p class='spot-kind white'><%= spot_kind.kind.name %></p>
-              <% when 'gray' %>
-                <p class='spot-kind gray'><%= spot_kind.kind.name %></p>
-              <% when 'red' %>
-                <p class='spot-kind red'><%= spot_kind.kind.name %></p>
-              <% when 'purple' %>
-                <p class='spot-kind purple'><%= spot_kind.kind.name %></p>
-              <% when 'blue' %>
-                <p class='spot-kind blue'><%= spot_kind.kind.name %></p>
-              <% when 'yellow' %>
-                <p class='spot-kind yellow'><%= spot_kind.kind.name %></p>
-              <% when 'green' %>
-                <p class='spot-kind green'><%= spot_kind.kind.name %></p>
-              <% when 'orange' %>
-                <p class='spot-kind orange'><%= spot_kind.kind.name %></p>
-              <% when 'pink' %>
-                <p class='spot-kind pink'><%= spot_kind.kind.name %></p>
-              <% when 'brown' %>
-                <p class='spot-kind brown'><%= spot_kind.kind.name %></p>
-            <% end %>
-          <% end %>
+          <%= render 'layouts/kinds_view_show', spot: @spot %>
         </div>
         <div class="m-4 d-flex justify-content-center">
           <%= link_to edit_admin_spot_path(@spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" do %>
@@ -61,7 +38,7 @@
     key: "<%= ENV['API_KEY'] %>"
   });
 
-  //初期マップの設定
+  //マップの初期設定
   let map;
   let marker
   async function initMap() {
@@ -76,7 +53,7 @@
     initializeMarker();
   }
 
-  // 初期マーカーの設定
+  //マーカーの初期設定
   function initializeMarker() {
     marker = new google.maps.Marker({
       position: { lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %> },
