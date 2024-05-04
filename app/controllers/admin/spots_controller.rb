@@ -3,6 +3,7 @@ class Admin::SpotsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
+    @title = "スポット"
     if params[:key_word] != nil
       @spots = Spot.where("name LIKE ?", "%#{params[:key_word]}%").page(params[:page])
       @users = User.where("name LIKE ?", "%#{params[:key_word]}%")
@@ -22,6 +23,7 @@ class Admin::SpotsController < ApplicationController
     elsif params[:user_id] != nil
       @spots = Spot.where(user_id: params[:user_id]).page(params[:page])
       @key_word = nil
+      @title = User.find(params[:user_id]).name + "さんのスポット"
     else
       @spots = Spot.page(params[:page])
       @key_word = nil
@@ -41,14 +43,13 @@ class Admin::SpotsController < ApplicationController
     @spot = Spot.find(params[:id])
     checked_kinds = params[:spot][:kind_ids]
 
-    if checked_kinds.nil?
-      @spot.errors.add(:kind_ids, "を1つ以上選択してください")
-      @kinds = Kind.all
-      render :edit and return
-    end
-
     Spot.transaction do
       if @spot.update(spot_params)
+        if checked_kinds.nil?
+          @spot.errors.add(:kind_ids, "を1つ以上選択してください")
+          @kinds = Kind.all
+          render :edit and return
+        end
         checked_kinds.each do |kind_id|
           if SpotKind.find_by(spot_id: @spot.id, kind_id: kind_id)
             break
@@ -67,7 +68,13 @@ class Admin::SpotsController < ApplicationController
           @kinds = Kind.all
           render :edit
         end
+
       else
+        if checked_kinds.nil?
+          @spot.errors.add(:kind_ids, "を1つ以上選択してください")
+        end
+        @spot.name = Spot.find(params[:id]).name
+        @spot.introduction = Spot.find(params[:id]).introduction
         @kinds = Kind.all
         render :edit
       end

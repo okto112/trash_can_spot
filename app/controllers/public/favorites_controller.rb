@@ -15,7 +15,7 @@ class Public::FavoritesController < ApplicationController
     @spot = Spot.find(params[:spot_id])
     @favorite = Favorite.new(user_id: current_user.id, spot_id: @spot.id)
     @favorite.save
-    flash[:notice] = "「#{@spot.name}」をお気に入りに追加しました。"
+    flash.now[:notice] = "「#{@spot.name}」をお気に入りに追加しました。"
   end
 
   def destroy

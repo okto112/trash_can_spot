@@ -55,14 +55,13 @@ class Public::SpotsController < ApplicationController
     @spot = Spot.find(params[:id])
     checked_kinds = params[:spot][:kind_ids]
 
-    if checked_kinds.nil?
-      @spot.errors.add(:kind_ids, "を1つ以上選択してください")
-      @kinds = Kind.all
-      render :edit and return
-    end
-
     Spot.transaction do
       if @spot.update(spot_params)
+        if checked_kinds.nil?
+          @spot.errors.add(:kind_ids, "を1つ以上選択してください")
+          @kinds = Kind.all
+          render :edit and return
+        end
         checked_kinds.each do |kind_id|
           if SpotKind.find_by(spot_id: @spot.id, kind_id: kind_id)
             break
@@ -81,7 +80,13 @@ class Public::SpotsController < ApplicationController
           @kinds = Kind.all
           render :edit
         end
+        
       else
+        if checked_kinds.nil?
+          @spot.errors.add(:kind_ids, "を1つ以上選択してください")
+        end
+        @spot.name = Spot.find(params[:id]).name
+        @spot.introduction = Spot.find(params[:id]).introduction
         @kinds = Kind.all
         render :edit
       end

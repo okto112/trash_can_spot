@@ -3,6 +3,7 @@ class Admin::CommentsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
+    @title = "コメント"
     if params[:key_word] != nil
       @comments = Comment.where("comment LIKE ?", "%#{params[:key_word]}%").page(params[:page])
       @users = User.where("name LIKE ?", "%#{params[:key_word]}%")
@@ -32,6 +33,7 @@ class Admin::CommentsController < ApplicationController
     elsif params[:user_id] != nil
       @comments = Comment.where(user_id: params[:user_id]).page(params[:page])
       @key_word = nil
+      @title = User.find(params[:user_id]).name + "さんのコメント"
     else
       @comments = Comment.page(params[:page])
       @key_word = nil
@@ -54,7 +56,7 @@ class Admin::CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     if @comment.update(comment_params)
       redirect_to admin_comment_path(@comment.id)
-      flash[:notice] = "「#{@comment.name}」を編集しました!"
+      flash[:notice] = "コメント内容を編集しました!"
     else
       @spot = Spot.find(@comment.spot_id)
       @kinds = Kind.all
@@ -66,11 +68,11 @@ class Admin::CommentsController < ApplicationController
     comment = Comment.find(params[:id])
     if comment.destroy
       redirect_to admin_comments_path
-      flash[:notice] = "「#{comment.name}」を削除しました。"
+      flash[:notice] = "コメントを削除しました。"
     else
       @comments = Comment.page(params[:page])
       render :index
-      flash.now[:alert] = "「#{comment.name}」を削除できませんでした。"
+      flash.now[:alert] = "コメントを削除できませんでした。"
     end
   end
 

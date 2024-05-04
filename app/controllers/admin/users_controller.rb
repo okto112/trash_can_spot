@@ -1,6 +1,7 @@
 class Admin::UsersController < ApplicationController
   layout 'admin'
   before_action :authenticate_admin!
+  before_action :edit_guest_user, only: [:edit, :unsubscribe]
 
   def index
     if params[:key_word] != nil
@@ -27,6 +28,7 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update(user_params)
       redirect_to admin_user_path(@user.id)
+      flash[:notice] = "「#{@user.name}」さんを編集しました!"
     else
       render :edit
     end
@@ -36,5 +38,12 @@ class Admin::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :is_active )
+  end
+
+  def edit_guest_user
+    @user = User.find(params[:id])
+    if @user.guest_user?
+      redirect_to admin_user_path(params[:id]) , notice: "ゲストユーザーはユーザー情報を編集できません。"
+    end
   end
 end

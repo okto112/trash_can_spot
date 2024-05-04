@@ -53,7 +53,8 @@ class Public::SessionsController < Devise::SessionsController
     return unless user.valid_password?(params[:user][:password])
     return if user.is_active
     unless user.is_active
-      redirect_to new_user_registration_path
+      redirect_to new_user_session_path
+      flash[:alert] = "このアカウントは無効です。"
     end
   end
 end

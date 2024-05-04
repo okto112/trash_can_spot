@@ -30,7 +30,7 @@ class Admin::KindsController < ApplicationController
       redirect_to admin_kinds_path
       flash[:notice] = "「#{@kind.name}」を編集しました!"
     else
-      @kind = Kind.find(@kind.id)
+      @kind.name = Kind.find(@kind.id).name
       render :edit
     end
   end
