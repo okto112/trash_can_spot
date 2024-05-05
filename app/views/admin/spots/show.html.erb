@@ -1,0 +1,65 @@
+<div class="col">
+  <h2 class="mb-2 text-center"><%= @spot.name %>のスポット詳細</h2>
+
+  <%= render 'layouts/flash_message' %>
+
+  <div class="row justify-content-center">
+    <div class="col-2 p-2 bg-white border border-success rounded">
+      <h3 class="mb-4"><i id="spot-icon"  class="fa-solid fa-location-dot"></i> スポット情報</h3>
+        <h4>スポット名</h4>
+        <div class="ml-4 mb-2">
+          <p><%= @spot.name %></p>
+        </div>
+
+        <h4>スポット説明</h4>
+        <div class="ml-4 mb-2">
+            <p><%= @spot.introduction %></p>
+        </div>
+
+        <h4>ゴミ箱の種類</h4>
+        <div class="ml-4 mb-2">
+          <%= render 'layouts/kinds_view_show', spot: @spot %>
+        </div>
+        <div class="m-4 d-flex justify-content-center">
+          <%= link_to edit_admin_spot_path(@spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" do %>
+            <i class="fa-solid fa-pen-to-square"> 編集する</i>
+          <% end %>
+        </div>
+    </div>
+
+    <div class="col-9">
+      <div id="map"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+ (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+    key: "<%= ENV['API_KEY'] %>"
+  });
+
+  //マップの初期設定
+  let map;
+  let marker
+  async function initMap() {
+    const { Map } = await google.maps.importLibrary("maps");
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      center:  { lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %> },
+      zoom: 15,
+      mapTypeControl: false
+    });
+
+    initializeMarker();
+  }
+
+  //マーカーの初期設定
+  function initializeMarker() {
+    marker = new google.maps.Marker({
+      position: { lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %> },
+      map: map
+    });
+  }
+
+  initMap()
+</script>

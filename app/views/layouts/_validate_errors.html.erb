@@ -1,0 +1,9 @@
+<% if data.errors.any? %>
+  <div class="col mb-2">
+    <ul class="error_message">
+      <% data.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

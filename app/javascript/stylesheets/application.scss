@@ -1,0 +1,249 @@
+@use '~bootstrap/scss/bootstrap';
+
+html,body {
+  height: 100%;
+  font-family:"ヒラギノ丸ゴ Pro W4","ヒラギノ丸ゴ Pro","Hiragino Maru Gothic Pro","ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro","HG丸ｺﾞｼｯｸM-PRO","HGMaruGothicMPRO";
+  background-color: #F5FFFA;
+}
+
+header {
+  background-color: #F5FFFA	;
+  border-bottom: 2px solid #28a745;
+}
+
+p {
+  margin: 0;
+}
+
+h2 {
+  padding: 8px;
+  font-weight: bold;
+  color: #28a745;
+  border-top: 6px solid #28a745;
+  border-bottom: 6px solid #28a745;
+}
+
+h3, h4 {
+  color: #28a745;
+  font-weight: bold;
+}
+
+#font-bold {
+  font-weight: bold;
+}
+
+
+// トップページのテキスト
+#top_text_border {
+  border-top: 3px solid #28a745;
+  border-bottom: 3px solid #28a745;
+}
+
+
+// マップ表示
+#map {
+  width: 100%;
+  height: 76vh;
+}
+
+#comment-map {
+  width: 50%;
+  height: 40vh;
+}
+
+
+// コメント投稿フォーム
+#comment_form_area {
+  width: 100%;
+  height: 20vh;
+}
+
+
+// エラーメソッド表示
+.error_message, #error_explanation {
+  color: red;
+}
+
+
+// フラッシュメッセージ表示
+.flash-message {
+  border-radius: 5px;
+  padding: 16px 24px;
+  margin: 16px 0px;
+  text-align: center;
+}
+
+.flash-message.notice {
+  background-color: #bcdfff;
+  color: #0067C0;
+  border: solid 1px #0067C0;
+}
+
+.flash-message.alert {
+  background-color: #ffd4d1;
+  color: #930403;
+  border: solid 1px #930403;
+}
+
+
+// スポット情報ウィンドウ表示
+#spot-info {
+  padding: 4px;
+  display: none;
+  height: 80vh;
+  animation: slideIn 0.1s linear;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#spot-info::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-200px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+#spot-icon {
+  color: #E00;
+}
+
+
+// kindの表示・色指定
+.spot-kind {
+  border-radius: 5px;
+  padding: 1px;
+  margin: 1px;
+  text-align: center;
+}
+
+.kind-td {
+  border-radius: 5px;
+  padding: 1px;
+  margin: 1px;
+  text-align: center;
+  width: 100px;
+  font-size: 12px;
+}
+
+.kinds-td {
+  word-wrap: break-word;
+  max-width: 200px;
+}
+
+.red {
+  background-color: #FFBEDA	;
+  color: #F00;
+  border: solid 1px #F00;
+}
+
+.purple {
+  background-color: #DCC2FF;
+  color: purple;
+  border: solid 1px purple;
+}
+
+.blue {
+  background-color: #C2EEFF;
+  color: #1E90FF;
+  border: solid 1px #1E90FF;
+}
+
+.yellow {
+  background-color: #FFFFCC;
+  color: #FFD700;
+  border: solid 1px #FFD700;
+}
+
+.green {
+  background-color: #AEFFBD;
+  color: #008000;
+  border: solid 1px #008000;
+}
+
+.orange {
+  background-color: #FFDEAD;
+  color: #FF8C00;
+  border: solid 1px #FF8C00;
+}
+
+.pink {
+  background-color: #FFDDFF;
+  color: #FF1493;
+  border: solid 1px #FF1493;
+}
+
+.brown {
+  background-color: #DEB887;
+  color: #800;
+  border: solid 1px #800;
+}
+
+.white {
+  background-color: white;
+  color: black;
+  border: solid 1px black;
+}
+
+.gray {
+  background-color: #CCC;
+  color: #555;
+  border: solid 1px #555;
+}
+
+
+// お気に入りボタン表示
+#favorite_btn_off {
+  color: #AAA;
+  font-size: 26px;
+}
+
+#favorite_btn_on {
+  color: #FF0;
+  font-size: 26px;
+}
+
+
+// コメント表示
+#comments-box {
+  font-size: 14px;
+  padding: 1px;
+  margin-bottom: 4px;
+  width: 100%;
+  max-height: 120px;
+}
+
+#comments-box p:nth-of-type(3n) {
+  font-size: 10px;
+  width: 100%;
+}
+
+
+// 種類検索表示
+#kinds-box {
+  width: 400px;
+  max-height: 50px;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#kinds-box::-webkit-scrollbar {
+  display: none;
+}
+
+#kinds-box .kind-btn {
+  writing-mode: horizontal-tb;
+  white-space: nowrap;
+}
+
+
+// labelのエラー時の改行削除
+.field_with_errors {
+  display: inline;
+}

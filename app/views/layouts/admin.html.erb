@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin-ゴミ箱スポット</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <script src="https://kit.fontawesome.com/805b015b17.js" crossorigin="anonymous"></script>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+  <body>
+     <header class="header mb-2">
+        <div class="container-fluid">
+          <div class="row pt-3">
+            <div class="col-3">
+              <div class="logo">
+                <h1 id="font-bold" class="text-success">ゴミ箱スポット</h1>
+              </div>
+            </div>
+            <div class="col-8 ml-auto">
+              <div class="row justify-content-between mr-auto">
+                <% if admin_signed_in? %>
+                    <div class="rounded">
+                      <%= link_to admin_root_path, data: {"turbolinks" => false}, class:"btn btn-outline-success" do %>
+                       <i class="fa-solid fa-map-location-dot"> スポットを見る</i>
+                      <% end %>
+                    </div>
+                    <div class="rounded">
+                      <%= link_to admin_users_path, class:"btn btn-outline-success" do %>
+                        <i class="fa-solid fa-user"> ユーザー一覧</i>
+                      <% end %>
+                    </div>
+                    <div class="rounded">
+                      <%= link_to admin_spots_path, class:"btn btn-outline-success" do %>
+                        <i class="fa-solid fa-location-dot"> スポット一覧</i>
+                      <% end %>
+                    </div>
+                    <div class="rounded">
+                      <%= link_to admin_comments_path, class:"btn btn-outline-success" do %>
+                       <i class="fa-solid fa-comment-dots"> コメント一覧</i>
+                      <% end %>
+                    </div>
+                    <div class="rounded">
+                      <%= link_to admin_kinds_path, class:"btn btn-outline-success" do %>
+                       <i class="fa-solid fa-trash"> ゴミの種類一覧</i>
+                      <% end %>
+                    </div>
+                    <div class="rounded">
+                      <%= link_to destroy_admin_session_path, method: :delete, class:"btn btn-outline-success" do %>
+                        <i class="fa-solid fa-right-from-bracket"> ログアウト</i>
+                      <% end %>
+                    </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main class="container-fluid">
+        <div class="row">
+          <%= yield %>
+        </div>
+      </main>
+  </body>
+
+  <script>
+    $('.flash-message').hide().fadeIn(0).delay(2000).fadeOut(200);
+  </script>
+</html>

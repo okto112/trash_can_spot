@@ -1,0 +1,117 @@
+<div class="col">
+  <h2 class="mb-1 text-center"><%= @spot.name %>のスポット編集</h2>
+
+  <%= render 'layouts/validate_errors', data: @spot %>
+
+  <div class="row justify-content-center">
+    <div class="col-2 p-2 bg-white border border-success rounded">
+      <h3><i id="spot-icon"  class="fa-solid fa-location-dot"></i> スポット情報</h3>
+      <%= form_with model: @spot, url: admin_spot_path(@spot) do |f| %>
+
+        <h4>スポット名</h4>
+        <div class="ml-4 mb-2">
+          <%= f.text_field :name, placeholder: "例：コンビニのゴミ箱", style:"width: 100%;" %>
+        </div>
+
+        <h4>スポット説明</h4>
+        <div class="ml-4 mb-2">
+            <p><%= f.text_area :introduction, placeholder: "例：○○コンビニの前にあるゴミ箱です。", style:"width: 100%;" %></p>
+        </div>
+
+        <h4>ゴミ箱の種類</h4>
+        <div class="ml-4 mb-2 overflow-auto" style="width: 90%; max-height: 200px;">
+            <% @kinds.each do |kind| %>
+              <% checked = @spot.kinds.exists?(kind.id) %>
+              <%= check_box_tag 'spot[kind_ids][]', kind.id, checked %>
+              <%= label_tag "kind_#{kind.id}", kind.name %><br>
+            <% end %>
+        </div>
+
+        <%= f.hidden_field :user_id, :value => @spot.user_id %>
+        <%= f.hidden_field :latitude, id: 'latitude', value: @spot.latitude %>
+        <%= f.hidden_field :longitude, id: 'longitude', value: @spot.longitude %>
+
+        <div class="m-4 text-center">
+          <%= button_tag type: "submit", class: "btn btn-primary" do %>
+           <i class="fa-solid fa-floppy-disk"> 変更内容を保存</i>
+          <% end %>
+        </div>
+
+      <% end %>
+    </div>
+
+    <div class="col-9">
+      <form class="d-flex align-items-center mb-1">
+        <input id="address" type="textbox" placeholder = "大阪駅">
+        <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-magnifying-glass"> 検索</i></button>
+        <p class="ml-1">マーカーをドラック＆ドロップで位置の調整ができます</p>
+      </form>
+      <div id="map"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+ (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+    key: "<%= ENV['API_KEY'] %>"
+  });
+
+  //マップの初期設定
+  let map;
+  let marker
+  async function initMap() {
+    const { Map } = await google.maps.importLibrary("maps");
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      center:  {lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %>},
+      zoom: 15,
+      mapTypeControl: false
+    });
+
+    initializeMarker();
+  }
+
+  //マーカーの初期設定
+  function initializeMarker() {
+    marker = new google.maps.Marker({
+      position: { lat: <%= @spot.latitude %>, lng: <%= @spot.longitude %> },
+      map: map,
+      draggable: true
+    });
+
+    google.maps.event.addListener(marker, 'dragend', function (event) {
+      $('#latitude').val(event.latLng.lat());
+      $('#longitude').val(event.latLng.lng());
+    });
+  }
+
+  //検索後のマップ作成
+  let geocoder
+  function codeAddress(){
+    marker.setMap(null);
+    geocoder = new google.maps.Geocoder();
+    let inputAddress = $('#address').val();
+    geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+      if (status == 'OK') {
+          map.setCenter(results[0].geometry.location);
+              marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location,
+                draggable: true
+              });
+
+          $('#latitude').val(results[0].geometry.location.lat());
+          $('#longitude').val(results[0].geometry.location.lng());
+
+          google.maps.event.addListener( marker, 'dragend', function(ev){
+              $('#latitude').val(event.latLng.lat());
+              $('#longitude').val(event.latLng.lng());
+          });
+      } else {
+        alert('該当する結果がありませんでした：' + status);
+      }
+    });
+  }
+
+  initMap()
+</script>

@@ -1,0 +1,58 @@
+<div class="col">
+  <div class="text-center">
+    <h2 class="mb-2 text-center"><%= @user.name %>さんのユーザー詳細</h2>
+
+    <%= render 'layouts/flash_message' %>
+
+    <div class="row">
+      <h3 class="m-3">登録情報</h3>
+    </div>
+
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td class="table-active">ユーザーID</td>
+          <td><%= @user.id %></td>
+        </tr>
+
+        <tr>
+          <td class="table-active">ユーザー名</td>
+          <td><%= @user.name %></td>
+        </tr>
+
+        <tr>
+          <td class="table-active">メールアドレス</td>
+          <td><%= @user.email %></td>
+        </tr>
+
+        <tr>
+        <td class="table-active">ステータス</td>
+        <td>
+          <% if @user.is_active == true %>
+            <p class="text-success font-weight-bold">有効</p>
+          <% else %>
+            <p class="text-danger font-weight-bold">退会</p>
+          <% end %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <% unless @user.guest_user? %>
+      <div class="row justify-content-center mb-4">
+        <%= link_to edit_admin_user_path, class:"btn btn-primary ml-3" do %>
+          <i class="fa-solid fa-user-gear"> ユーザー情報を編集する</i>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="d-flex justify-content-center">
+      <%= link_to admin_spots_path(user_id: @user.id), class:"btn btn-info m-3" do %>
+        <i class="fa-solid fa-location-dot"> 登録したスポットを見る</i>
+      <% end %>
+      <%= link_to admin_comments_path(user_id: @user.id), class:"btn btn-success m-3" do %>
+        <i class="fa-solid fa-comment-dots"> 投稿したコメントを見る</i>
+      <% end %>
+    </div>
+  </div>
+</div>

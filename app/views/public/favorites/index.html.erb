@@ -1,0 +1,36 @@
+<div class="col">
+  <h2 class="mb-5 text-center">お気に入りスポット一覧</h2>
+
+    <%= render 'layouts/flash_message' %>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="table-active">スポット名</th>
+        <th class="table-active">スポット説明</th>
+        <th class="table-active">ゴミの種類</th>
+        <th class="table-active"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @spots.each do |spot| %>
+      <tr>
+        <td class="align-middle"><%= spot.name %></td>
+        <td class="align-middle"><%= spot.introduction %></td>
+        <td class="kinds-td align-middle">
+          <div class="d-flex">
+            <%= render 'layouts/kinds_view_index', spot: spot %>
+          </div>
+        </td>
+        <td class="text-center d-flex justify-content-around">
+          <div><%= link_to '表示', public_favorite_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-info", id:"font-bold" %></div>
+          <div><%= link_to '削除', public_favorite_path(spot.id), method: :delete, data: {confirm: "お気に入り一覧トから削除しますか？"}, class:"btn btn-danger", id:"font-bold" %></div>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @spots %>
+</div>

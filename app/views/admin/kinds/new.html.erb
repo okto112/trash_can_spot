@@ -1,0 +1,56 @@
+<div class="col">
+  <h2 class="mb-4 text-center">ゴミの種類作成</h2>
+
+  <div class="row">
+    <div class="col-5 m-auto">
+      <%= form_with model: @kind, url: admin_kinds_path do |f| %>
+
+        <%= render 'layouts/validate_errors', data: @kind %>
+
+        <h3>ゴミの名前：</h3>
+        <div class="text-center">
+            <%= f.text_field :name, style: "width: 300px", placeholder: "例：燃えるゴミ（1～10字以内）" %>
+        </div>
+
+        <div class="form-group mt-5">
+          <h3>色を選択：</h3>
+          <%= f.radio_button :color, "white", id: "white" %>
+          <label for="white" class="spot-kind white w-25 mr-2">White</label>
+
+          <%= f.radio_button :color, "gray", id: "gray" %>
+          <label for="gray" class="spot-kind gray w-25 mr-2">Gray</label>
+
+          <%= f.radio_button :color, "red", id: "red" %>
+          <label for="red" class="spot-kind red w-25">Red</label></br>
+
+          <%= f.radio_button :color, "purple", id: "purple" %>
+          <label for="purple" class="spot-kind purple w-25 mr-2">Purple</label>
+
+          <%= f.radio_button :color, "blue", id: "blue" %>
+          <label for="blue" class="spot-kind blue w-25 mr-2">blue</label>
+
+          <%= f.radio_button :color, "yellow", id: "yellow" %>
+          <label for="yellow" class="spot-kind yellow w-25">Yellow</label></br>
+
+          <%= f.radio_button :color, "green", id: "green" %>
+          <label for="green" class="spot-kind green w-25 mr-2">Green</label>
+
+          <%= f.radio_button :color, "orange", id: "orange" %>
+          <label for="orange" class="spot-kind orange w-25 mr-2">Orange</label>
+
+          <%= f.radio_button :color, "pink", id: "pink" %>
+          <label for="pink" class="spot-kind pink w-25">Pink</label></br>
+
+          <%= f.radio_button :color, "brown", id: "brown" %>
+          <label for="brown" class="spot-kind brown w-25">Brown</label>
+        </div>
+
+        <div class="text-center mt-5">
+          <%= button_tag type: "submit", class: "btn btn-success" do %>
+           <i class="fa-solid fa-plus"> ゴミの種類を追加する</i>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

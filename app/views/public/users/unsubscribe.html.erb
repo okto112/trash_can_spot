@@ -1,0 +1,20 @@
+<div class="col">
+  <div class="text-center mt-5">
+    <p>本当に退会しますか？</p>
+
+    <p>退会すると、ユーザー情報や</p>
+    <p>お気に入り登録したスポットの閲覧できなくなります。</p>
+    <p>退会する場合は、「退会する」をクリックしてください。</p>
+
+    <%= form_with model: @user, url: public_users_withdraw_path do |f| %>
+
+    <%= f.hidden_field :is_active, :value => false %>
+
+    <div class="mt-4">
+      <%= link_to '退会しない', public_users_my_page_path, class:"btn btn-primary m-2", id:"font-bold" %>
+      <%= f.submit "退会する", data: {confirm: "本当に退会 しますか？"}, class:"btn btn-danger m-2", id:"font-bold" %>
+    </div>
+
+    <% end %>
+  </div>
+</div>
