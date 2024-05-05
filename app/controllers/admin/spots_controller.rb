@@ -40,6 +40,7 @@ class Admin::SpotsController < ApplicationController
   end
 
   def update
+    spot_params[:introduction].gsub!(/\r\n+/, '')
     @spot = Spot.find(params[:id])
     checked_kinds = params[:spot][:kind_ids]
 

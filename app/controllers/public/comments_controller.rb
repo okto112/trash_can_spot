@@ -25,6 +25,7 @@ class Public::CommentsController < ApplicationController
   end
 
   def create
+    comment_params[:comment].gsub!(/\r\n+/, '')
     @comment = Comment.new(comment_params)
     if @comment.save
       redirect_to public_comments_path
@@ -37,6 +38,7 @@ class Public::CommentsController < ApplicationController
   end
 
   def update
+    comment_params[:comment].gsub!(/\r\n+/, '')
     @comment = Comment.find(params[:id])
     if @comment.update(comment_params)
       redirect_to public_comment_path(@comment.id)

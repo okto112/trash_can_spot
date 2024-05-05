@@ -21,6 +21,7 @@ class Public::SpotsController < ApplicationController
   end
 
   def create
+    spot_params[:introduction].gsub!(/\r\n+/, '')
     @spot = Spot.new(spot_params)
     checked_kinds = params[:spot][:kind_ids]
 
@@ -52,6 +53,7 @@ class Public::SpotsController < ApplicationController
   end
 
   def update
+    spot_params[:introduction].gsub!(/\r\n+/, '')
     @spot = Spot.find(params[:id])
     checked_kinds = params[:spot][:kind_ids]
 
@@ -80,7 +82,7 @@ class Public::SpotsController < ApplicationController
           @kinds = Kind.all
           render :edit
         end
-        
+
       else
         if checked_kinds.nil?
           @spot.errors.add(:kind_ids, "を1つ以上選択してください")
