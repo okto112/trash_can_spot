@@ -19,6 +19,7 @@ Kind.create!([
   { name: "ビン", color: "green" }
 ])
 
+
 User.find_or_create_by!(email: "taro@example.com") do |user|
   user.name = "太郎"
   user.password = "password"
