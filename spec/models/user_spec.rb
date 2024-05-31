@@ -25,7 +25,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'userのテスト' do
-    it "正しいユーザー情報の場合は保存されるか" do
+    it "正しくユーザー情報が保存されるか" do
       expect(FactoryBot.build(:user)).to be_valid
     end
   end
