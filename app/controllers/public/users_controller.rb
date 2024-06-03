@@ -1,7 +1,7 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :edit_guest_user, only: [:edit]
-  before_action :unsubscribe_guest_user, only: [:unsubscribe, :withdraw]
+  before_action :withdrawal_guest_user, only: [:unsubscribe, :withdraw]
 
   def show
     @user = User.find(current_user.id)
