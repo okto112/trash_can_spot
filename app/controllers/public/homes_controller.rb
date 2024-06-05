@@ -1,5 +1,6 @@
 class Public::HomesController < ApplicationController
   before_action :authenticate_user!, except: [:top]
+  before_action :check_active_user, except: [:top]
 
   def top
   end
@@ -28,6 +29,16 @@ class Public::HomesController < ApplicationController
       @comments = Comment.all
       @kinds = Kind.all
       @kind_id = 0
+    end
+  end
+
+  private
+
+  def check_active_user
+    unless current_user&.is_active
+      sign_out(current_user)
+      flash[:alert] = "先程のアカウントは管理者より使用できなくなりました。"
+      redirect_to root_path
     end
   end
 end

@@ -1,20 +1,22 @@
 <div class="col-3 m-auto">
-  <div class="mt-4 pt-4 pb-5 text-center border rounded bg-white">
-    <h3 class="m-4 border-bottom border-success">ログイン</h3>
+  <div class="mt-4 pt-4 pb-5 border rounded bg-white">
+    <h3 class="text-center m-4 border-bottom border-success">ログイン</h3>
     <%= render 'layouts/flash_message' %>
 
     <%= form_with model: @admin, url: session_path(resource_name), local: true do |f| %>
+    <div class="ml-5 mr-5">
       <div class="field">
-        <%= f.label :email, "メールアドレス：" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <%= f.label :email, "メールアドレス" %><br>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"w-100" %>
       </div>
 
       <div class="field">
-        <%= f.label :password, "パスワード：" %>
-        <%= f.password_field :password, autocomplete: "current-password" %>
+        <%= f.label :password, "パスワード" %><br>
+        <%= f.password_field :password, autocomplete: "current-password", class:"w-100" %>
       </div>
+    </div>
 
-      <div class="actions">
+      <div class="actions text-center">
         <%= button_tag type: "submit", class: "btn btn-primary mt-4 w-50" do %>
          <i class="fa-solid fa-right-to-bracket"> ログイン</i>
         <% end %>

@@ -1,6 +1,8 @@
 class Public::SpotsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_active_user
   before_action :check_user, only: [:show, :edit]
+  before_action :check_destroy_spot, only: [:destroy]
 
   def index
     @spots = Spot.where(user_id: current_user.id).page(params[:page])
@@ -112,6 +114,21 @@ class Public::SpotsController < ApplicationController
     unless Spot.find(params[:id]).user_id == current_user.id
       flash[:alert] = "他のユーザーが登録したスポットの詳細閲覧・編集はできません。"
       redirect_to public_spots_path
+    end
+  end
+
+  def check_destroy_spot
+    unless Spot.find(params[:id]).user_id == current_user.id
+      flash[:alert] = "他のユーザーが登録したスポットは削除できません。"
+      redirect_to public_spots_path
+    end
+  end
+
+  def check_active_user
+    unless current_user&.is_active
+      sign_out(current_user)
+      flash[:alert] = "先程のアカウントは管理者より使用できなくなりました。"
+      redirect_to root_path
     end
   end
 end

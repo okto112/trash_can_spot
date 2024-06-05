@@ -1,5 +1,6 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_active_user
   before_action :edit_guest_user, only: [:edit]
   before_action :withdrawal_guest_user, only: [:unsubscribe, :withdraw]
 
@@ -53,6 +54,14 @@ class Public::UsersController < ApplicationController
     @user = User.find(current_user.id)
     if @user.guest_user?
       redirect_to public_users_my_page_path , alert: "ゲストユーザーは退会できません。"
+    end
+  end
+
+  def check_active_user
+    unless current_user&.is_active
+      sign_out(current_user)
+      flash[:alert] = "先程のアカウントは管理者より使用できなくなりました。"
+      redirect_to root_path
     end
   end
 end

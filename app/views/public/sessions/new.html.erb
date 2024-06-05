@@ -1,40 +1,42 @@
 <div class="col-4 m-auto">
-  <div class="mt-4 pt-4 pb-5 text-center border rounded bg-white">
-    <h3 class="m-4 border-bottom border-success">ログイン</h3>
+  <div class="mt-4 pt-4 pb-5 border rounded bg-white">
+    <h3 class="text-center m-4 border-bottom border-success">ログイン</h3>
     <%= render 'layouts/flash_message' %>
 
     <%= form_with model: @user, url: session_path(resource_name), local: true do |f| %>
+    <div class="m-auto w-50">
       <div class="field">
-        <%= f.label :email, "メールアドレス：" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <%= f.label :email, "メールアドレス" %><br>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"w-100" %>
       </div>
 
       <div class="field">
-        <%= f.label :password, "パスワード：" %>
-        <%= f.password_field :password, autocomplete: "current-password" %>
+        <%= f.label :password, "パスワード" %><br>
+        <%= f.password_field :password, autocomplete: "current-password", class:"w-100" %>
       </div>
+    </div>
 
       <% if devise_mapping.rememberable? %>
-        <div class="field">
+        <div class="field text-center mt-2">
           <%= f.check_box :remember_me %>
           <%= f.label :remember_me, "パスワードを保存する" %>
         </div>
       <% end %>
 
-      <div class="actions">
-        <%= button_tag type: "submit", class: "btn btn-primary mt-4 w-50" do %>
+      <div class="actions text-center">
+        <%= button_tag type: "submit", class: "btn btn-primary mt-3 w-50" do %>
          <i class="fa-solid fa-right-to-bracket"> ログイン</i>
         <% end %>
       </div>
     <% end %>
 
-    <div class="actions">
+    <div class="actions text-center">
       <%= link_to users_guest_sign_in_path, class: "btn btn-secondary m-3 sign_in w-50", method: :post do %>
         <i class="fa-solid fa-user"> ゲストログイン</i>
       <% end %>
     </div>
 
-    <div class="mt-4">
+    <div class="mt-4 text-center">
       <h4>会員登録が済みでない方</h4>
       <p>
         <%= link_to 'こちら', new_user_registration_path %>

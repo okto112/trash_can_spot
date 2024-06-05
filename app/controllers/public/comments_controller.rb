@@ -1,6 +1,7 @@
 class Public::CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_user, only: [:show, :edit]
+  before_action :check_destroy_comment, only: [:destroy]
 
   def index
     @comments = Comment.where(user_id: current_user.id).page(params[:page])
@@ -71,6 +72,13 @@ class Public::CommentsController < ApplicationController
   def check_user
     unless Comment.find(params[:id]).user_id == current_user.id
       flash[:alert] = "他のユーザーが投稿したコメントの詳細閲覧・編集はできません。"
+      redirect_to public_comments_path
+    end
+  end
+
+  def check_destroy_comment
+    unless Comment.find(params[:id]).user_id == current_user.id
+      flash[:alert] = "他のユーザーが投稿したコメントは削除できません。"
       redirect_to public_comments_path
     end
   end
