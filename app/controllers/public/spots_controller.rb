@@ -9,7 +9,6 @@ class Public::SpotsController < ApplicationController
   end
 
   def show
-    @spot = Spot.find(params[:id])
   end
 
   def new
@@ -18,7 +17,6 @@ class Public::SpotsController < ApplicationController
   end
 
   def edit
-    @spot = Spot.find(params[:id])
     @kinds = Kind.all
   end
 
@@ -111,6 +109,7 @@ class Public::SpotsController < ApplicationController
   end
 
   def check_user
+    @spot = Spot.find(params[:id])
     unless Spot.find(params[:id]).user_id == current_user.id
       flash[:alert] = "他のユーザーが登録したスポットの詳細閲覧・編集はできません。"
       redirect_to public_spots_path

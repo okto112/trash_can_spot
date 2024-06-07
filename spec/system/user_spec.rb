@@ -22,8 +22,8 @@ RSpec.feature 'Users', type: :feature do
 
   it 'ログインの確認' do
     visit new_user_session_path
-    fill_in 'メールアドレス：', with: 'test@example.com'
-    fill_in 'パスワード：', with: 'password1234'
+    fill_in 'メールアドレス', with: 'test@example.com'
+    fill_in 'パスワード', with: 'password1234'
     click_on 'ログイン'
     expect(current_path).to eq('/public/main')
   end

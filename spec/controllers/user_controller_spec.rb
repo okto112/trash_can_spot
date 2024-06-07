@@ -17,7 +17,6 @@ RSpec.describe Public::UsersController, type: :request do
 
         it "サインインの場合" do
           sign_in test_user
-
           get public_users_my_page_path
           expect(response).to be_successful
         end
@@ -46,6 +45,17 @@ RSpec.describe Public::UsersController, type: :request do
           patch public_users_withdraw_path, params: { user: valid_params }
           expect(response).to redirect_to(public_users_my_page_path)
           expect(flash[:alert]).to eq('ゲストユーザーは退会できません。')
+        end
+      end
+
+      context ':check_active_userのテスト' do
+        it "ログイン中にis_activeがfalseになるとログアウトするかを確認" do
+          sign_in test_user
+          test_user.is_active = false
+          get public_users_my_page_path
+          sign_out test_user
+          expect(response).to redirect_to(root_path)
+          expect(flash[:alert]).to eq('先程のアカウントは管理者より使用できなくなりました。')
         end
       end
     end
