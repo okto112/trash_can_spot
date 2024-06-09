@@ -8,7 +8,6 @@ RSpec.describe Public::UsersController, type: :request do
     let(:guest_user) { User.guest }
 
     describe "before_actionのテスト" do
-
       context ':authenticate_user!のテスト' do
         it "未サインインの場合" do
           get public_users_my_page_path
