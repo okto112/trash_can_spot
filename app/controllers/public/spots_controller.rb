@@ -1,5 +1,6 @@
 class Public::SpotsController < ApplicationController
   before_action :authenticate_user!
+  before_action :acquisition_all_kind
   before_action :check_active_user
   before_action :check_user, only: [:show, :edit]
   before_action :check_destroy_spot, only: [:destroy]
@@ -13,11 +14,9 @@ class Public::SpotsController < ApplicationController
 
   def new
     @spot = Spot.new
-    @kinds = Kind.all
   end
 
   def edit
-    @kinds = Kind.all
   end
 
   def create
@@ -42,11 +41,9 @@ class Public::SpotsController < ApplicationController
           flash[:notice] = "「#{@spot.name}」を登録しました！"
           redirect_to public_spots_path
         else
-          @kinds = Kind.all
           render :new
         end
       else
-        @kinds = Kind.all
         render :new
       end
     end
@@ -61,7 +58,6 @@ class Public::SpotsController < ApplicationController
       if @spot.update(spot_params)
         if checked_kinds.nil?
           @spot.errors.add(:kind_ids, "を1つ以上選択してください")
-          @kinds = Kind.all
           render :edit and return
         end
         checked_kinds.each do |kind_id|
@@ -79,7 +75,6 @@ class Public::SpotsController < ApplicationController
           flash[:notice] = "「#{@spot.name}」を編集しました！"
           redirect_to public_spot_path(@spot.id)
         else
-          @kinds = Kind.all
           render :edit
         end
 
@@ -89,7 +84,6 @@ class Public::SpotsController < ApplicationController
         end
         @spot.name = Spot.find(params[:id]).name
         @spot.introduction = Spot.find(params[:id]).introduction
-        @kinds = Kind.all
         render :edit
       end
     end
@@ -106,6 +100,10 @@ class Public::SpotsController < ApplicationController
 
   def spot_params
     params.require(:spot).permit(:user_id, :name, :introduction, :latitude, :longitude,  kind_ids: [] )
+  end
+
+  def acquisition_all_kind
+    @kinds = Kind.all
   end
 
   def check_user

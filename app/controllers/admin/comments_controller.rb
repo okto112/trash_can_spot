@@ -1,6 +1,7 @@
 class Admin::CommentsController < ApplicationController
   layout 'admin'
   before_action :authenticate_admin!
+  before_action :data_acquisition, except: [:index, :new, :create]
 
   def index
     @title = "コメント"
@@ -41,15 +42,9 @@ class Admin::CommentsController < ApplicationController
   end
 
   def show
-    @comment = Comment.find(params[:id])
-    @spot = Spot.find(@comment.spot_id)
-    @kinds = Kind.all
   end
 
   def edit
-    @comment = Comment.find(params[:id])
-    @spot = Spot.find(@comment.spot_id)
-    @kinds = Kind.all
   end
 
   def update
@@ -66,8 +61,7 @@ class Admin::CommentsController < ApplicationController
   end
 
   def destroy
-    comment = Comment.find(params[:id])
-    if comment.destroy
+    if @comment.destroy
       redirect_to admin_comments_path
       flash[:notice] = "コメントを削除しました。"
     else
@@ -81,5 +75,11 @@ class Admin::CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:user_id, :spot_id, :comment)
+  end
+
+  def data_acquisition
+    @comment = Comment.find(params[:id])
+    @spot = Spot.find(@comment.spot_id)
+    @kinds = Kind.all
   end
 end

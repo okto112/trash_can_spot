@@ -1,6 +1,7 @@
 class Public::HomesController < ApplicationController
   before_action :authenticate_user!, except: [:top]
   before_action :check_active_user, except: [:top]
+  before_action :all_data_acquisition
 
   def top
   end
@@ -12,8 +13,6 @@ class Public::HomesController < ApplicationController
         flash.now[:alert] = "該当するスポットは見つかりませんでした。"
       end
       @key_word = params[:key_word]
-      @comments = Comment.all
-      @kinds = Kind.all
       @kind_id = 0
     elsif params[:kind_id] != nil && params[:kind_id] != "0"
       @spotkinds = SpotKind.where(kind_id: params[:kind_id])
@@ -21,13 +20,8 @@ class Public::HomesController < ApplicationController
       if @spots.empty?
         flash.now[:alert] = "該当するスポットは見つかりませんでした。"
       end
-      @comments = Comment.all
-      @kinds = Kind.all
       @kind_id = params[:kind_id]
     else
-      @spots = Spot.all
-      @comments = Comment.all
-      @kinds = Kind.all
       @kind_id = 0
     end
   end
@@ -40,5 +34,11 @@ class Public::HomesController < ApplicationController
       flash[:alert] = "先程のアカウントは管理者より使用できなくなりました。"
       redirect_to root_path
     end
+  end
+
+  def all_data_acquisition
+    @spots = Spot.all
+    @comments = Comment.all
+    @kinds = Kind.all
   end
 end
