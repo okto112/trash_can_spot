@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Public::SpotsController, type: :request do
-  describe 'public/users_controllerのテスト' do
-    let(:user) { FactoryBot.create(:user) }
-    let(:test_user) { FactoryBot.create(:user) }
-    let(:kind) { FactoryBot.create(:kind) }
-    let(:spot) { FactoryBot.create(:spot, user_id: user.id, kind_ids: [kind.id]) }
+  describe 'public/spots_controllerのテスト' do
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:test_user) { FactoryBot.create(:user) }
+    let!(:kind) { FactoryBot.create(:kind) }
+    let!(:spot) { FactoryBot.create(:spot, user_id: user.id, kind_ids: [kind.id]) }
 
     describe "before_actionのテスト" do
       context ':authenticate_user!のテスト' do
@@ -25,7 +25,7 @@ RSpec.describe Public::SpotsController, type: :request do
 
       context ':acquisition_all_kindのテスト' do
         it "kindのデータを取得" do
-          expect(Kind.all.exists?).to eq(false)
+          expect(Kind.all.exists?).to eq(true)
         end
       end
 
@@ -42,7 +42,7 @@ RSpec.describe Public::SpotsController, type: :request do
 
       context ':check_userのテスト' do
         it "spotのデータを取得" do
-          expect(Spot.all.exists?).to eq(false)
+          expect(Spot.all.exists?).to eq(true)
         end
 
         it "ログインユーザーが作成したスポットではない場合" do
@@ -64,9 +64,12 @@ RSpec.describe Public::SpotsController, type: :request do
     end
 
     describe "各アクションのテスト" do
+      before do
+        sign_in user
+      end
+
       context 'indexのテスト' do
         it 'ログインユーザーが作成したスポットのみを表示' do
-          sign_in user
           get public_spots_path, params: { spot: spot.attributes }
           expect(assigns(:spots)).to eq([spot])
         end
@@ -74,7 +77,6 @@ RSpec.describe Public::SpotsController, type: :request do
 
       context 'newのテスト' do
         it 'スポット作成の確認' do
-          sign_in user
           get new_public_spot_path
           expect(assigns(:spot)).to be_a_new(Spot)
         end
@@ -82,14 +84,12 @@ RSpec.describe Public::SpotsController, type: :request do
 
       context 'createのテスト' do
         it 'スポット作成の確認' do
-          sign_in user
           post public_spots_path, params: { spot: { user_id: user.id, name: spot.name, introduction: spot.introduction, latitude: spot.introduction, longitude: spot.longitude, kind_ids: [kind.id] } }
           expect(flash[:notice]).to eq("「#{spot.name}」を登録しました！")
           expect(response).to redirect_to(public_spots_path)
         end
 
         it "SpotKindのエラー確認" do
-          sign_in user
           post public_spots_path, params: { spot: { introduction: "説明文" } }
           @spot = assigns(:spot)
           expect(@spot.errors.empty?).to eq(false)
@@ -98,14 +98,12 @@ RSpec.describe Public::SpotsController, type: :request do
 
       context 'updateのテスト' do
         it 'スポット情報の更新' do
-          sign_in user
           patch public_spot_path(spot), params: { spot: { id: spot.id, user_id: user.id, name: '新しいスポット', introduction: spot.introduction, latitude: spot.introduction, longitude: spot.longitude, kind_ids: [kind.id] } }
           expect(response).to redirect_to(public_spot_path(spot))
           expect(flash[:notice]).to eq("「新しいスポット」を編集しました！")
         end
 
         it 'スポット情報の更新に失敗した場合' do
-          sign_in user
           patch public_spot_path(spot), params: { spot: { introduction: "" } }
           expect(response).to render_template(:edit)
           @spot = assigns(:spot)
@@ -115,7 +113,6 @@ RSpec.describe Public::SpotsController, type: :request do
 
       context 'destroyのテスト' do
         it 'スポットの削除' do
-          sign_in user
           delete public_spot_path(spot)
           expect(response).to redirect_to(public_spots_path)
           expect(flash[:notice]).to eq("「#{spot.name}」を削除しました。")

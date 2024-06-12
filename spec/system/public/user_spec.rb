@@ -3,13 +3,9 @@
 require 'rails_helper'
 
 RSpec.feature 'Users', type: :feature do
-  before do
-    @user = User.create(
-      name: 'TEST_USER',
-      email: 'test@example.com',
-      password: 'password1234',
-    )
-  end
+
+  let!(:user) { FactoryBot.create(:user,name: 'TEST_USER', email: 'test@example.com', password: 'password1234', ) }
+
   it '新規登録の確認' do
     visit new_user_registration_path
     fill_in 'ユーザー名', with: '太郎'
