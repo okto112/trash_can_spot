@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Public::CommentsController, type: :request do
-  describe 'public/commens_controllerのテスト' do
+  describe 'public/comments_controllerのテスト' do
     let!(:user) { FactoryBot.create(:user) }
     let!(:test_user) { FactoryBot.create(:user) }
     let!(:kind) { FactoryBot.create(:kind) }
@@ -94,7 +94,7 @@ RSpec.describe Public::CommentsController, type: :request do
           expect(flash[:notice]).to eq("コメント内容を編集しました!")
         end
 
-        it 'コメントト情報の更新に失敗した場合' do
+        it 'コメント情報の更新に失敗した場合' do
           patch public_comment_path(comment), params: { comment: { comment: "" } }
           expect(response).to render_template(:edit)
         end

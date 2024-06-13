@@ -50,7 +50,6 @@ RSpec.feature 'Spots', type: :feature do
     end
 
     it 'スポット削除の確認' do
-      visit public_spots_path
       click_on '削除'
       expect(current_path).to eq("/public/spots")
     end
