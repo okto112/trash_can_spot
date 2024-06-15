@@ -1,6 +1,8 @@
 class Admin::SpotsController < ApplicationController
   layout 'admin'
   before_action :authenticate_admin!
+  before_action :spot_find, except: [:index]
+  before_action :acquisition_all_kind
 
   def index
     @title = "スポット"
@@ -31,24 +33,19 @@ class Admin::SpotsController < ApplicationController
   end
 
   def show
-    @spot = Spot.find(params[:id])
   end
 
   def edit
-    @spot = Spot.find(params[:id])
-    @kinds = Kind.all
   end
 
   def update
     spot_params[:introduction].gsub!(/\r\n+/, '')
-    @spot = Spot.find(params[:id])
     checked_kinds = params[:spot][:kind_ids]
 
     Spot.transaction do
       if @spot.update(spot_params)
         if checked_kinds.nil?
           @spot.errors.add(:kind_ids, "を1つ以上選択してください")
-          @kinds = Kind.all
           render :edit and return
         end
         checked_kinds.each do |kind_id|
@@ -66,7 +63,6 @@ class Admin::SpotsController < ApplicationController
           flash[:notice] = "「#{@spot.name}」を編集しました！"
           redirect_to admin_spot_path(@spot.id)
         else
-          @kinds = Kind.all
           render :edit
         end
 
@@ -76,16 +72,14 @@ class Admin::SpotsController < ApplicationController
         end
         @spot.name = Spot.find(params[:id]).name
         @spot.introduction = Spot.find(params[:id]).introduction
-        @kinds = Kind.all
         render :edit
       end
     end
   end
 
   def destroy
-    spot = Spot.find(params[:id])
-    spot.destroy
-    flash[:notice] = "「#{spot.name}」を削除しました。"
+    @spot.destroy
+    flash[:notice] = "「#{@spot.name}」を削除しました。"
     redirect_to admin_spots_path
   end
 
@@ -93,5 +87,13 @@ class Admin::SpotsController < ApplicationController
 
   def spot_params
     params.require(:spot).permit(:user_id, :name, :introduction, :latitude, :longitude,  kind_ids: [] )
+  end
+
+  def spot_find
+    @spot = Spot.find(params[:id])
+  end
+
+  def acquisition_all_kind
+    @kinds = Kind.all
   end
 end

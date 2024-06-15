@@ -1,6 +1,8 @@
 class Public::FavoritesController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_active_user
   before_action :check_user, only: [:show]
+  before_action :check_favorite_create, only: [:create]
 
   def index
     @favorites = Favorite.where(user_id: current_user.id)
@@ -33,11 +35,30 @@ class Public::FavoritesController < ApplicationController
     end
   end
 
+  private
+
   def check_user
     @favorites = Favorite.where(spot_id: params[:id])
     if @favorites.find_by(user_id: current_user.id).nil?
       flash[:alert] = "お気に入り登録していないスポットは閲覧できません。"
       redirect_to public_favorites_path
+    end
+  end
+
+  def check_favorite_create
+    @spot = Spot.find(params[:spot_id])
+    @favorites = Favorite.where(spot_id: @spot.id)
+    unless @favorites.find_by(user_id: current_user.id).nil?
+      flash.now[:alert] = "既にお気に入り登録されています。"
+      redirect_to public_favorites_path
+    end
+  end
+
+  def check_active_user
+    unless current_user&.is_active
+      sign_out(current_user)
+      flash[:alert] = "先程のアカウントは管理者より使用できなくなりました。"
+      redirect_to root_path
     end
   end
 end
