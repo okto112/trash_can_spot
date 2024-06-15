@@ -84,7 +84,6 @@ RSpec.feature 'Spots', type: :feature do
     end
 
     it '編集情報の保存確認' do
-      visit edit_public_spot_path(spot.id)
       fill_in 'spot[name]', with: 'new_spot'
       fill_in 'spot[introduction]', with: 'new_introduction'
       check 'spot[kind_ids][]', with: kind.id

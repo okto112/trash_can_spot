@@ -70,7 +70,7 @@ RSpec.feature 'Comments', type: :feature do
     end
   end
 
-  describe 'スポット編集画面の確認' do
+  describe 'コメント編集画面の確認' do
     before do
       visit edit_public_comment_path(comment.id)
     end

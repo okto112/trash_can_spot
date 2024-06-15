@@ -71,40 +71,10 @@ RSpec.describe Admin::UsersController, type: :request do
         end
 
         it 'ユーザー情報の更新に失敗した場合' do
-          sign_in test_user
-          patch public_users_information_path, params: { user: { name: '' } }
+          patch admin_user_path(user.id), params: { user: { name: '' } }
           expect(response).to render_template(:edit)
-          test_user.reload
-          expect(test_user.name).not_to eq('')
-        end
-      end
-
-      context 'unsubscribeのテスト' do
-        it '退会確認画面の表示' do
-          sign_in test_user
-          get public_users_unsubscribe_path
-          expect(response).to be_successful
-          expect(assigns(:user)).to eq(test_user)
-        end
-      end
-
-      context 'withdrawのテスト' do
-        it 'ユーザーの退会処理' do
-          sign_in test_user
-          valid_params = { is_active: false }
-          patch public_users_withdraw_path, params: { user: valid_params }
-          expect(response).to redirect_to(root_path)
-          expect(response).to have_http_status(302)
-          expect(flash[:notice]).to eq('ゴミ箱スポットから退会しました。')
-          expect(test_user.reload.is_active).to eq(false)
-        end
-
-        it '無効なリクエストの場合、編集ページが再表示されること' do
-          sign_in test_user
-          invalid_params = { name: '' }
-          patch public_users_withdraw_path, params: { user: invalid_params }
-          expect(response).to render_template(:edit)
-          expect(response).to have_http_status(200)
+          user.reload
+          expect(user.name).not_to eq('')
         end
       end
     end

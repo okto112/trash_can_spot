@@ -60,9 +60,12 @@ RSpec.describe Public::UsersController, type: :request do
     end
 
     describe "各アクションのテスト" do
+      before do
+        sign_in test_user
+      end
+
       context 'showのテスト' do
         it 'ユーザー情報の確認' do
-          sign_in test_user
           get public_users_my_page_path
           expect(response).to be_successful
           expect(assigns(:user)).to eq(test_user)
@@ -71,7 +74,6 @@ RSpec.describe Public::UsersController, type: :request do
 
       context 'editのテスト' do
         it '編集画面の表示' do
-          sign_in test_user
           get public_users_information_edit_path
           expect(response).to be_successful
           expect(assigns(:user)).to eq(test_user)
@@ -80,7 +82,6 @@ RSpec.describe Public::UsersController, type: :request do
 
       context 'updateのテスト' do
         it 'ユーザー情報の更新' do
-          sign_in test_user
           patch public_users_information_path, params: { user: { name: '新しい名前' } }
           expect(response).to redirect_to(public_users_my_page_path)
           expect(flash[:notice]).to eq('ユーザー情報を編集しました!')
@@ -89,7 +90,6 @@ RSpec.describe Public::UsersController, type: :request do
         end
 
         it 'ユーザー情報の更新に失敗した場合' do
-          sign_in test_user
           patch public_users_information_path, params: { user: { name: '' } }
           expect(response).to render_template(:edit)
           test_user.reload
@@ -99,7 +99,6 @@ RSpec.describe Public::UsersController, type: :request do
 
       context 'unsubscribeのテスト' do
         it '退会確認画面の表示' do
-          sign_in test_user
           get public_users_unsubscribe_path
           expect(response).to be_successful
           expect(assigns(:user)).to eq(test_user)
@@ -108,7 +107,6 @@ RSpec.describe Public::UsersController, type: :request do
 
       context 'withdrawのテスト' do
         it 'ユーザーの退会処理' do
-          sign_in test_user
           valid_params = { is_active: false }
           patch public_users_withdraw_path, params: { user: valid_params }
           expect(response).to redirect_to(root_path)
@@ -118,7 +116,6 @@ RSpec.describe Public::UsersController, type: :request do
         end
 
         it '無効なリクエストの場合、編集ページが再表示されること' do
-          sign_in test_user
           invalid_params = { name: '' }
           patch public_users_withdraw_path, params: { user: invalid_params }
           expect(response).to render_template(:edit)
