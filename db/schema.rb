@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(version: 2024_04_08_111522) do
     t.text "comment", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["spot_id"], name: "index_comments_on_spot_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -37,6 +39,8 @@ ActiveRecord::Schema.define(version: 2024_04_08_111522) do
     t.integer "spot_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["spot_id"], name: "index_favorites_on_spot_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "kinds", force: :cascade do |t|
@@ -51,6 +55,8 @@ ActiveRecord::Schema.define(version: 2024_04_08_111522) do
     t.integer "kind_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["kind_id"], name: "index_spot_kinds_on_kind_id"
+    t.index ["spot_id"], name: "index_spot_kinds_on_spot_id"
   end
 
   create_table "spots", force: :cascade do |t|

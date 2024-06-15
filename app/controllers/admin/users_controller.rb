@@ -8,7 +8,7 @@ class Admin::UsersController < ApplicationController
     if params[:key_word] != nil
       @users = User.where("id LIKE ? OR name LIKE ? OR email LIKE ?", "%#{params[:key_word]}%", "%#{params[:key_word]}%", "%#{params[:key_word]}%").page(params[:page])
       if @users.empty?
-        flash.now[:alert] = "該当するスポットは見つかりませんでした。"
+        flash.now[:alert] = "該当するユーザーは見つかりませんでした。"
       end
       @key_word = params[:key_word]
     else
