@@ -32,6 +32,19 @@ h3, h4 {
   font-weight: bold;
 }
 
+#sp-header, #toggle_btn_on {
+  display: none;
+}
+
+#toggle_btn_off, #toggle_btn_on {
+  color: #28a745;
+  border: 2px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 2px;
+  margin-rightr: 2px;
+}
+
 
 // トップページのテキスト
 #top_text_border {
@@ -246,4 +259,57 @@ h3, h4 {
 // labelのエラー時の改行削除
 .field_with_errors {
   display: inline;
+}
+
+@media (max-width: 500px) {
+  h1 {
+    font-size: 28px;
+  }
+
+  #sp-header h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  h5 {
+    font-size: 16px;
+  }
+
+  #sp-header, .navbar {
+    padding: 4px 0;
+  }
+}
+
+@media (max-width: 1300px) {
+  #sp-header h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+
+  #sp-header {
+    display: block;
+  }
+
+  #pc-header {
+    display: none;
+  }
+
+  .fa-solid.fa-bars {
+    font-size: 30px;
+  }
+
+  #top_text_border a, #top_text_border i, .actions.text-center i {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+
+  #sp-header .btn.btn-outline-success {
+    font-size: 12px;
+    padding: 4px 8px;
+    width: 90%;
+  }
 }
