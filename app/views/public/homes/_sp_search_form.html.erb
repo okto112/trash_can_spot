@@ -1,0 +1,46 @@
+<div id="sp_search_form">
+  <nav class="navbar navbar-expand-xl w-100">
+    <button id="kindSearch_btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#kindSearchNavDropdown" aria-controls="kindSearchNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <p>種類検索</p>
+    </button>
+    <div class="collapse navbar-collapse" id="kindSearchNavDropdown">
+      <div class="row justify-content-center mb-2">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <div class="row p-1 align-items-center border border-success rounded">
+                <div class="font-weight-bold">種類検索：</div>
+              <div id="kinds-box" class="d-flex align-middle ml-1 overflow-auto">
+                <div class="bg-white m-1">
+                  <%= link_to "すべて", public_main_path(kind_id: 0), data: {"turbolinks" => false}, id: "sp0", class: "kind-btn" %>
+                </div>
+                <% @kinds.each do |kind| %>
+                <div class="bg-white m-1">
+                  <%= link_to  kind.name, public_main_path(kind_id: kind.id), data: {"turbolinks" => false}, id: "sp#{kind.id}", class: "kind-btn" %>
+                </div>
+                <% end %>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+      <div class="d-flex border border-success rounded p-2 ml-4">
+        <%= form_with url: public_main_path, method: :get do |f| %>
+          <%= f.text_field :key_word,value: @key_word, placeholder: "キーワード検索", class: "mt-1" %>
+          <%= button_tag type: "submit", class: "btn btn-info btn-sm ml-1 mb-1" do %>
+           <i class="fa-solid fa-magnifying-glass"> 検索</i>
+          <% end %>
+        <% end %>
+      </div>
+      <form class="d-flex align-items-center border border-success rounded p-2 ml-2">
+        <input id="address" type="textbox" placeholder="地図検索">
+        <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-magnifying-glass"> 検索</i></button>
+      </form>
+
+  </nav>
+  <div class="flash-message-container">
+    <%= render 'layouts/flash_message' %>
+  </div>
+</div>

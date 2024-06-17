@@ -32,7 +32,7 @@ h3, h4 {
   font-weight: bold;
 }
 
-#sp-header, #toggle_btn_on {
+#sp-header, #toggle_btn_on, #sp_search_form {
   display: none;
 }
 
@@ -62,6 +62,10 @@ h3, h4 {
 #comment-map {
   width: 50%;
   height: 40vh;
+}
+
+.gm-ui-hover-effect {
+  height: 30px!important;
 }
 
 
@@ -262,13 +266,8 @@ h3, h4 {
 }
 
 @media (max-width: 500px) {
-  h1 {
-    font-size: 28px;
-  }
-
-  #sp-header h1 {
+  #top_heading h1 {
     font-size: 24px;
-    margin: 0;
   }
 
   h3 {
@@ -282,6 +281,16 @@ h3, h4 {
   #sp-header, .navbar {
     padding: 4px 0;
   }
+
+  // main画面の検索フォーム
+  #sp_search_form {
+    display: block;
+  }
+
+  #pc_search_form {
+    display: none;
+  }
+
 }
 
 @media (max-width: 1300px) {
@@ -310,6 +319,9 @@ h3, h4 {
   #sp-header .btn.btn-outline-success {
     font-size: 12px;
     padding: 4px 8px;
+    margin-bottom: 4px;
     width: 90%;
   }
+
+
 }
