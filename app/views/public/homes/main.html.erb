@@ -60,10 +60,12 @@
         <div id="comment-button" class="text-center"></div>
     </div>
 
-    <div class="col-9">
+    <div class="col-lg-9">
       <div id="map" class="mt-2"></div>
     </div>
   </div>
+
+  <%= render 'sp_spot_info' %>
 </div>
 
 <script>
@@ -192,21 +194,12 @@
 
   //種類検索タグのスタイル設定
   window.onload = function() {
-    $("#0").addClass("btn btn-outline-secondary");
+    $("#0, #sp0").addClass("btn btn-outline-secondary");
     <% @kinds.each do |kind| %>
-      $("#<%= kind.id %>").addClass("btn btn-outline-secondary");
+      $("#<%= kind.id %>, #sp<%= kind.id %>").addClass("btn btn-outline-secondary");
     <% end %>
-    $("#<%= @kind_id %>").addClass("btn btn-warning");
+    $("#<%= @kind_id %>, #sp<%= @kind_id %>").addClass("btn btn-warning");
   };
-
-  const kindSearch_btn = document.getElementById('kindSearch_btn');
-  kindSearch_btn.addEventListener('click', function() {
-    $("#sp0").addClass("btn btn-outline-secondary");
-    <% @kinds.each do |kind| %>
-      $("#sp<%= kind.id %>").addClass("btn btn-outline-secondary");
-    <% end %>
-    $("#sp<%= @kind_id %>").addClass("btn btn-warning");
-  });
 
   //種類検索の横スクロール
   const kindsBox = document.getElementById('kinds-box');

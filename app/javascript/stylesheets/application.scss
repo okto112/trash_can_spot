@@ -291,6 +291,31 @@ h3, h4 {
     display: none;
   }
 
+  .kind-btn {
+    font-size: 8px;
+  }
+
+  #kindSearchNavDropdown {
+    overflow-x: hidden;
+  }
+
+  #kinds-form {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .sp_search_btn {
+    width: 98%;
+    margin: 0 auto 2px;
+    text-align: center;
+  }
+
+  .sp_search_btn button {
+    font-size: 18px;
+    padding: 4px 6px;
+    color: #28a745;
+    border: 2px solid #28a745;
+  }
 }
 
 @media (max-width: 1300px) {
