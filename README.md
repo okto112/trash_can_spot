@@ -44,6 +44,18 @@ https://drive.google.com/file/d/17scad-qECAbOloRZeDQMQ1R1p6PmQnCF/view?usp=shari
 * 画面遷移図（管理者画面）<br>
 https://drive.google.com/file/d/1a20Owvu7uIZb0SOlu0ZqEassiQ_Nd6Qp/view?usp=sharing
 
+* AWSインフラ設計書<br>
+https://docs.google.com/spreadsheets/d/13US56VAkYT829W3JMnHwI1U041YVnJZsoBBxF0-PHII/edit?usp=sharing
+
+* AWS構成図<br>
+https://drive.google.com/file/d/1XoBQhS7GZGMfWpcWIUoSUIMwhguzZyt-/view?usp=sharing
+
+* テスト仕様書<br>
+https://docs.google.com/spreadsheets/d/1Xji2m1kUHfdtFpzU9-U0Ud3U2BiWTD_y/edit?usp=sharing&ouid=116470127435378689531&rtpof=true&sd=true
+
+* WBS<br>
+https://docs.google.com/spreadsheets/d/1lsq7Cd8Rol4E459yjj_QYEcRPy3fUyfyvh6_8U3UxSE/edit?usp=sharing
+
 ## 開発環境
 - OS：Linux(CentOS)
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
@@ -52,4 +64,4 @@ https://drive.google.com/file/d/1a20Owvu7uIZb0SOlu0ZqEassiQ_Nd6Qp/view?usp=shari
 - IDE：Cloud9
 
 ## 実装機能リスト
-https://docs.google.com/spreadsheets/d/1dWTpiRmYmatp5XhVUnzlqHyHR5CsgNEvBkjJ8dMHfpA/edit#gid=885378170
+https://docs.google.com/spreadsheets/d/1dWTpiRmYmatp5XhVUnzlqHyHR5CsgNEvBkjJ8dMHfpA/edit?usp=sharing
