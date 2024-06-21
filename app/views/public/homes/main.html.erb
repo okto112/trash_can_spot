@@ -60,7 +60,7 @@
         <div id="comment-button" class="text-center"></div>
     </div>
 
-    <div class="col-lg-9">
+    <div class="col-9">
       <div id="map" class="mt-2"></div>
     </div>
   </div>
@@ -130,32 +130,37 @@
         marker.addListener('click', function() {
           closeInfoWindows();
           kindsInfo();
+          let winWidth = $(window).width();
 
-          if (!changeStyle) {
+          if (!changeStyle && winWidth<=500) {
+            document.getElementById('sp-spot-info').style.display = 'block';
+            removeClass = true;
+          }else{
             document.getElementById('spot-info').style.display = 'block';
             removeClass = true;
           }
 
-          $("#spot-name").text("<%= spot.name %>");
-          $("#spot-introduction").text("<%= spot.introduction %>");
-          $("#spot-kinds").html(spotKindsHtml);
-          $("#date").text("登録日：<%= spot.created_at.strftime('%Y/%m/%d') %>");
+          $("#spot-name, #sp-spot-name").text("<%= spot.name %>");
+          $("#spot-introduction, #sp-spot-introduction").text("<%= spot.introduction %>");
+          $("#spot-kinds, #sp-spot-kinds").html(spotKindsHtml);
+          $("#date, #sp-date").text("登録日：<%= spot.created_at.strftime('%Y/%m/%d') %>");
           $("#favorite_form").html('<p>お気に入り登録：</p><div id="favorite_btn_<%= spot.id %>" class="m-auto"></div>');
-          $('#favorite_btn_<%= spot.id %>').html("<%= j(render 'public/favorites/favorite_btn', spot: spot) %>");
+          $("#sp-favorite_form").html('<p>お気に入り登録：</p><div id="sp-favorite_btn_<%= spot.id %>" class="m-auto"></div>');
+          $('#favorite_btn_<%= spot.id %>, #sp-favorite_btn_<%= spot.id %>').html("<%= j(render 'public/favorites/favorite_btn', spot: spot) %>");
           <% if spot.user_id == current_user.id %>
-            $("#edit-button").html('<%= link_to edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" do %><i class="fa-solid fa-pen-to-square"> 編集する</i><% end %>');
+            $("#edit-button, #sp-edit-button").html('<%= link_to edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" do %><i class="fa-solid fa-pen-to-square"> 編集する</i><% end %>');
           <% else %>
-            $("#edit-button").html('');
+            $("#edit-button, #sp-edit-button").html('');
           <% end %>
           <% if @comments.where(spot_id: spot.id).any? %>
-            $("#comments-box").html('');
+            $("#comments-box, #sp-comments-box").html('');
             <% @comments.where(spot_id: spot.id).each do |comment| %>
-              $("#comments-box").append('<p class="mt-1"><%= User.find(comment.user_id).name %></p><p class="p-1"><%= comment.comment %></p><p class="border-bottom text-right">登録日：<%= comment.created_at.strftime('%Y/%m/%d') %></p>');
+              $("#comments-box, #sp-comments-box").append('<p class="mt-1"><%= User.find(comment.user_id).name %></p><p class="p-1"><%= comment.comment %></p><p class="border-bottom text-right">登録日：<%= comment.created_at.strftime('%Y/%m/%d') %></p>');
             <% end %>
           <% else %>
-            $("#comments-box").html('<p>コメントはありません</p>');
+            $("#comments-box, #sp-comments-box").html('<p>コメントはありません</p>');
           <% end %>
-          $("#comment-button").html('<%= link_to new_public_comment_path(spot_id: spot.id), data: {"turbolinks" => false}, class:"btn btn-success mt-2" do %><i class="fa-solid fa-comment-dots"> コメントする</i><% end %>');
+          $("#comment-button, #sp-comment-button").html('<%= link_to new_public_comment_path(spot_id: spot.id), data: {"turbolinks" => false}, class:"btn btn-success mt-2" do %><i class="fa-solid fa-comment-dots"> コメントする</i><% end %>');
 
           infowindow.open(map, marker);
           markerIds.push(<%= spot.id %>);
@@ -208,5 +213,15 @@
 
     const delta = Math.max(-1, Math.min(1, (event.deltaY || -event.wheelDelta || event.detail)));
     kindsBox.scrollLeft += (delta * 50); // 横スクロールの速度を調整するための値を設定
+  });
+
+  window.addEventListener('resize', function() {
+    if (window.innerWidth <= 500) {
+      document.getElementById('spot-info').style.display = 'none';
+      document.getElementById('sp-spot-info').style.display = 'block';
+    } else {
+      document.getElementById('spot-info').style.display = 'block';
+      document.getElementById('sp-spot-info').style.display = 'none';
+    }
   });
 </script>
