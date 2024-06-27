@@ -60,7 +60,7 @@
         <div id="comment-button" class="text-center"></div>
     </div>
 
-    <div class="col-9">
+    <div class="col-sm-9">
       <div id="map" class="mt-2"></div>
     </div>
   </div>
@@ -80,7 +80,9 @@
   let infowindow = "";
   let infoWindows = [];
   let spotKindsHtml = "";
-  let changeStyle =false;
+  let changeStyle = false;
+  const spotInfoWindow = document.getElementById("spot-info")
+  const spSpotInfoWindow = document.getElementById("sp-spot-info")
 
   async function initMap() {
     const { Map } = await google.maps.importLibrary("maps");
@@ -133,11 +135,11 @@
           let winWidth = $(window).width();
 
           if (!changeStyle && winWidth<=500) {
-            document.getElementById('sp-spot-info').style.display = 'block';
-            removeClass = true;
+            spSpotInfoWindow.style.display = 'block';
+            // removeClass = true;
           }else{
-            document.getElementById('spot-info').style.display = 'block';
-            removeClass = true;
+            spotInfoWindow.style.display = 'block';
+            // removeClass = true;
           }
 
           $("#spot-name, #sp-spot-name").text("<%= spot.name %>");
@@ -190,7 +192,6 @@
               "<div class='text-right'>登録日：<%= spot.created_at.strftime('%Y/%m/%d') %></div>"
           });
         }
-
      })();
     <% end %>
   }
@@ -210,18 +211,21 @@
   const kindsBox = document.getElementById('kinds-box');
   kindsBox.addEventListener('wheel', function(event) {
     event.preventDefault(); // デフォルトのスクロール動作をキャンセル
-
     const delta = Math.max(-1, Math.min(1, (event.deltaY || -event.wheelDelta || event.detail)));
     kindsBox.scrollLeft += (delta * 50); // 横スクロールの速度を調整するための値を設定
   });
 
+
+  //スポット情報ウインドウのレスポンシブ切替表示
   window.addEventListener('resize', function() {
-    if (window.innerWidth <= 500) {
-      document.getElementById('spot-info').style.display = 'none';
-      document.getElementById('sp-spot-info').style.display = 'block';
-    } else {
-      document.getElementById('spot-info').style.display = 'block';
-      document.getElementById('sp-spot-info').style.display = 'none';
+    if (spotInfoWindow.style.display === 'block' || spSpotInfoWindow.style.display === 'block') {
+      if (window.innerWidth <= 576) {
+        spotInfoWindow.style.display = 'none';
+        spSpotInfoWindow.style.display = 'block';
+      } else {
+        spotInfoWindow.style.display = 'block';
+        spSpotInfoWindow.style.display = 'none';
+      }
     }
   });
 </script>
