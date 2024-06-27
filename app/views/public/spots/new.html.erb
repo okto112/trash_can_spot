@@ -112,7 +112,7 @@
           document.getElementById('latitude').value = results[0].geometry.location.lat();
           document.getElementById('longitude').value = results[0].geometry.location.lng();
 
-          google.maps.event.addListener( marker, 'dragend', function(ev){
+          google.maps.event.addListener( marker, 'dragend', function(event){
               document.getElementById('latitude').value = event.latLng.lat();
               document.getElementById('longitude').value = event.latLng.lng();
           });
