@@ -1,0 +1,28 @@
+<div id="sp_spot_index">
+  <% comments.each.with_index(1) do |comment, count| %>
+    <h3 class="mb-2"><i id="spot-icon" class="fa-solid fa-location-dot"></i> No.<%= count %></h3>
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th class="table-active" style="width: 40%">登録日</th>
+          <td class="align-middle"><%= comment.created_at.strftime('%Y/%m/%d') %></td>
+        </tr>
+        <tr>
+          <th class="table-active">スポット名</th>
+          <td class="align-middle"><%= Spot.find(comment.spot_id).name %></td>
+        </tr>
+        <tr>
+          <th class="table-active">コメント内容</th>
+          <td class="align-middle text-break"><%= comment.comment %></td>
+        </tr>
+        <tr>
+          <th class="table-active"></th>
+          <td colspan="2" class="text-center d-flex justify-content-around">
+            <%= link_to '表示', public_comment_path(comment.id), data: {"turbolinks" => false}, class:"btn btn-info", id:"font-bold" %>
+            <%= link_to '削除', public_comment_path(comment.id), method: :delete, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-danger", id:"font-bold" %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+</div>

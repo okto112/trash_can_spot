@@ -1,15 +1,16 @@
-<div class="col">
+<div id="spot_index" class="col">
   <h2 class="mb-5 text-center">投稿したコメント一覧</h2>
 
     <%= render 'layouts/flash_message' %>
 
-  <table class="table table-bordered">
+  <%= render 'sp_index', comments: @comments %>
+  <table id="pc_table" class="table table-bordered">
     <thead>
       <tr>
         <th class="table-active">登録日</th>
-        <th class="table-active">スポット名</th>
+        <th class="table-active" style="width: 24%">スポット名</th>
         <th class="table-active">コメント内容</th>
-        <th class="table-active"></th>
+        <th class="table-active" style="width: 20%"></th>
       </tr>
     </thead>
 
@@ -18,7 +19,7 @@
       <tr>
         <td class="align-middle"><%= comment.created_at.strftime('%Y/%m/%d') %></td>
         <td class="align-middle"><%= Spot.find(comment.spot_id).name %></td>
-        <td class="align-middle"><%= comment.comment %></td>
+        <td class="align-middle text-break"><%= comment.comment %></td>
         <td class="text-center d-flex justify-content-around">
           <%= link_to '表示', public_comment_path(comment.id), data: {"turbolinks" => false}, class:"btn btn-info", id:"font-bold" %>
           <%= link_to '削除', public_comment_path(comment.id), method: :delete, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-danger", id:"font-bold" %>
