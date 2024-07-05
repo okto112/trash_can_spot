@@ -1,10 +1,10 @@
-<div class="col">
+<div id="pc_spot_new" class="col">
   <h2 class="mb-1 text-center">スポット登録</h2>
 
   <%= render 'layouts/validate_errors', data: @spot %>
 
   <div class="row justify-content-center">
-    <div class="col-2 p-2 bg-white border border-success rounded">
+    <div id="pc_spot_form" class="col-2 p-2 bg-white border border-success rounded">
       <h3><i id="spot-icon"  class="fa-solid fa-location-dot"></i> スポット情報</h3>
       <%= form_with model: @spot, url: public_spots_path do |f| %>
 
@@ -39,15 +39,20 @@
       <% end %>
     </div>
 
-    <div class="col-9">
-      <form class="d-flex align-items-center mb-1">
-      <input id="address" type="textbox" placeholder = "大阪駅">
-      <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-magnifying-glass"> 検索</i></button>
-      <p class="ml-1">マーカーをドラック＆ドロップで位置の調整ができます</p>
+    <div class="col-xl-9">
+      <form class="d-sm-flex align-items-center mb-1">
+        <div class="d-flex justify-content-center">
+          <input id="address" type="textbox" placeholder = "大阪駅">
+          <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-magnifying-glass"> 検索</i></button>
+        </div>
+        <p class="ml-1">マーカーをドラック＆ドロップで位置の調整ができます</p>
       </form>
       <div id="map"></div>
     </div>
   </div>
+
+    <%= render 'sp_new', spot: @spot, kinds: @kinds %>
+
 </div>
 
 <script>

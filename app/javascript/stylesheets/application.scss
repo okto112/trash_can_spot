@@ -32,7 +32,7 @@ h3, h4 {
   font-weight: bold;
 }
 
-#sp-header, #toggle_btn_on, #sp_search_form, #sp-spot-info, #sp_index {
+#sp-header, #toggle_btn_on, #sp_search_form, #sp-spot-info, #sp_index, #sp_spot_new {
   display: none;
 }
 
@@ -266,7 +266,7 @@ h3, h4 {
 }
 
 @media (max-width: 500px) {
-  #top_heading h1,#my_page h2, #user_edit h2, #pc_index h2 {
+  #top_heading h1,#my_page h2, #user_edit h2, #pc_index h2, #pc_spot_new h2 {
     font-size: 24px;
   }
 
@@ -334,11 +334,11 @@ h3, h4 {
     margin: 0;
   }
 
-  #sp-header {
+  #sp-header, #sp_spot_new {
     display: block;
   }
 
-  #pc-header {
+  #pc-header, #pc_spot_form {
     display: none;
   }
 
