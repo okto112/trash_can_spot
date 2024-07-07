@@ -1,0 +1,24 @@
+<div id="sp_spot_show">
+  <div class="col p-2 mt-2 bg-white border border-success rounded">
+    <h3 class="mb-4"><i id="spot-icon"  class="fa-solid fa-location-dot"></i> スポット情報</h3>
+      <h4>スポット名</h4>
+      <div class="ml-4 mb-2">
+        <p><%= spot.name %></p>
+      </div>
+
+      <h4>スポット説明</h4>
+      <div class="ml-4 mb-2">
+          <p><%= spot.introduction %></p>
+      </div>
+
+      <h4>ゴミ箱の種類</h4>
+      <div class="mb-2 text-center">
+        <%= render 'layouts/kinds_view_show', spot: spot %>
+      </div>
+      <div class="m-4 d-flex justify-content-center">
+        <%= link_to edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" do %>
+          <i class="fa-solid fa-pen-to-square"> 編集する</i>
+        <% end %>
+      </div>
+  </div>
+</div>

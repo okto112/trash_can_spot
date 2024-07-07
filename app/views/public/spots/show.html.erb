@@ -1,10 +1,10 @@
-<div class="col">
+<div id="pc_spot_show" class="col">
   <h2 class="mb-4 text-center"><%= @spot.name %>のスポット詳細</h2>
 
   <%= render 'layouts/flash_message' %>
 
   <div class="row justify-content-center">
-    <div class="col-2 p-2 bg-white border border-success rounded">
+    <div id="pc_spot_form" class="col-2 p-2 bg-white border border-success rounded">
       <h3 class="mb-4"><i id="spot-icon"  class="fa-solid fa-location-dot"></i> スポット情報</h3>
         <h4>スポット名</h4>
         <div class="ml-4 mb-2">
@@ -27,10 +27,12 @@
         </div>
     </div>
 
-    <div class="col-9">
+    <div class="col-xl-9">
       <div id="map"></div>
     </div>
   </div>
+
+  <%= render 'sp_show', spot: @spot %>
 </div>
 
 <script>
