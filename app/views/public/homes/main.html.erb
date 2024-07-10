@@ -56,7 +56,7 @@
         <div id="edit-button" class="text-center mb-3"></div>
 
         <p id="font-bold" class="text-center text-success border-top border-success p-2">スポットへのコメント</p>
-        <div id="comments-box" class="overflow-auto text-wrap border border-success" ></div>
+        <div id="comments-box" class="overflow-auto text-wrap border border-success p-1" ></div>
         <div id="comment-button" class="text-center"></div>
     </div>
 
@@ -157,7 +157,7 @@
           <% if @comments.where(spot_id: spot.id).any? %>
             $("#comments-box, #sp-comments-box").html('');
             <% @comments.where(spot_id: spot.id).each do |comment| %>
-              $("#comments-box, #sp-comments-box").append('<p class="mt-1"><%= User.find(comment.user_id).name %></p><p class="p-1"><%= comment.comment %></p><p class="border-bottom text-right">登録日：<%= comment.created_at.strftime('%Y/%m/%d') %></p>');
+              $("#comments-box, #sp-comments-box").append('<p class="mt-1"><%= User.find(comment.user_id).name %></p><p class="p-1 text-break"><%= comment.comment %></p><p class="border-bottom text-right">登録日：<%= comment.created_at.strftime('%Y/%m/%d') %></p>');
             <% end %>
           <% else %>
             $("#comments-box, #sp-comments-box").html('<p>コメントはありません</p>');

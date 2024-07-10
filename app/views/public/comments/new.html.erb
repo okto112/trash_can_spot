@@ -1,4 +1,4 @@
-<div class="col">
+<div id="pc_display" class="col">
   <h2 class="mb-2 text-center">コメント投稿</h2>
 
   <div class="col mb-4">
@@ -6,12 +6,12 @@
   </div>
 
   <div class="row">
-    <div class="col-5 m-auto">
+    <div class="col-xl-5 m-auto">
       <%= form_with model: @comment, url: public_comments_path do |f| %>
 
         <h3>コメント内容：</h3>
         <%= render 'layouts/validate_errors', data: @comment %>
-        <div class="ml-4 mb-2">
+        <div class="ml-xl-4 mb-2">
             <%= f.text_area :comment, id: "comment_form_area", placeholder: "例：大きなゴミ箱があります！" %>
         </div>
 
