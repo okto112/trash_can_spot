@@ -7,7 +7,6 @@ class Public::HomesController < ApplicationController
   end
 
   def main
-    @screen_width = request.env["HTTP_USER_AGENT"].scan(/[\d]+/).first.to_i
     if params[:key_word] != nil
       @spots = Spot.where("name LIKE ? OR introduction LIKE ?", "%#{params[:key_word]}%", "%#{params[:key_word]}%")
       if @spots.empty?

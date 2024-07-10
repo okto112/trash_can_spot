@@ -60,7 +60,7 @@
         <div id="comment-button" class="text-center"></div>
     </div>
 
-    <div class="col-sm-9">
+    <div class="col-xl-9">
       <div id="map" class="mt-2"></div>
     </div>
   </div>
@@ -134,12 +134,10 @@
           kindsInfo();
           let winWidth = $(window).width();
 
-          if (!changeStyle && winWidth<=500) {
+          if (!changeStyle && winWidth<=1200) {
             spSpotInfoWindow.style.display = 'block';
-            // removeClass = true;
           }else{
             spotInfoWindow.style.display = 'block';
-            // removeClass = true;
           }
 
           $("#spot-name, #sp-spot-name").text("<%= spot.name %>");
@@ -219,7 +217,7 @@
   //スポット情報ウインドウのレスポンシブ切替表示
   window.addEventListener('resize', function() {
     if (spotInfoWindow.style.display === 'block' || spSpotInfoWindow.style.display === 'block') {
-      if (window.innerWidth <= 576) {
+      if (window.innerWidth <= 1200) {
         spotInfoWindow.style.display = 'none';
         spSpotInfoWindow.style.display = 'block';
       } else {
