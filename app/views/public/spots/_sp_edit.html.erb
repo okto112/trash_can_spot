@@ -1,0 +1,37 @@
+<div id="sp_spot_edit">
+  <div class="col p-2 mt-2 bg-white border border-success rounded">
+    <h3><i id="spot-icon"  class="fa-solid fa-location-dot"></i> スポット情報</h3>
+    <%= form_with model: spot, url: public_spot_path(spot) do |f| %>
+
+      <h4>スポット名</h4>
+      <div class="ml-4 mb-2">
+        <%= f.text_field :name, placeholder: "例：コンビニのゴミ箱", style:"width: 100%;" %>
+      </div>
+
+      <h4>スポット説明</h4>
+      <div class="ml-4 mb-2">
+          <p><%= f.text_area :introduction, placeholder: "例：○○コンビニの前にあるゴミ箱です。", style:"width: 100%;" %></p>
+      </div>
+
+      <h4>ゴミ箱の種類</h4>
+      <div class="ml-4 mb-2 overflow-auto" style="width: 90%; max-height: 200px;">
+          <% kinds.each do |kind| %>
+            <% checked = spot.kinds.exists?(kind.id) %>
+            <%= check_box_tag 'spot[kind_ids][]', kind.id, checked %>
+            <%= label_tag "kind_#{kind.id}", kind.name %><br>
+          <% end %>
+      </div>
+
+      <%= f.hidden_field :user_id, :value => current_user.id %>
+      <%= f.hidden_field :latitude, id: 'latitude', value: spot.latitude %>
+      <%= f.hidden_field :longitude, id: 'longitude', value: spot.longitude %>
+
+      <div class="m-4 text-center">
+        <%= button_tag type: "submit", class: "btn btn-primary" do %>
+         <i class="fa-solid fa-floppy-disk"> 変更内容を保存</i>
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
+</div>
