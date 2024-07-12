@@ -26,12 +26,12 @@ RSpec.feature 'Favorites', type: :feature do
     end
 
     it '一覧画面から詳細画面への遷移確認' do
-      click_on '表示'
+      click_on '表示', match: :first
       expect(current_path).to eq("/public/favorites/#{spot.id}")
     end
 
     it 'お気に入り削除の確認' do
-      click_on '削除'
+      click_on '削除', match: :first
       expect(current_path).to eq("/public/favorites")
     end
   end
@@ -48,7 +48,7 @@ RSpec.feature 'Favorites', type: :feature do
     end
 
     it '詳細画面から編集への遷移確認' do
-      click_on '編集する'
+      click_on '編集する', match: :first
       expect(current_path).to eq("/public/spots/#{spot.id}/edit")
     end
   end

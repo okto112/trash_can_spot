@@ -13,7 +13,8 @@
 
   <body>
     <% if user_signed_in? %>
-      <header class="header mb-2">
+    <%= render 'layouts/sp_header' %>
+      <header id="pc-header" class="header mb-2">
         <div class="container-fluid">
           <div class="row align-items-center">
             <div class="col-3">

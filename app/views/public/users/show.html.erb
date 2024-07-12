@@ -1,4 +1,4 @@
-<div class="col">
+<div id="my_page" class="col">
   <div class="text-center">
     <h2>マイページ</h2>
 
@@ -24,7 +24,7 @@
 
     <% unless @user.guest_user? %>
       <div class="row justify-content-center m-4">
-        <%= link_to public_users_information_edit_path, class:"btn btn-primary w-25" do %>
+        <%= link_to public_users_information_edit_path, class:"btn btn-primary w-sm-25" do %>
           <i class="fa-solid fa-user-gear"> ユーザー情報を編集する</i>
         <% end %>
       </div>
@@ -32,12 +32,12 @@
 
     <div class="d-flex justify-content-center">
       <p>
-        <%= link_to public_spots_path, class:"btn btn-info m-3" do %>
+        <%= link_to public_spots_path, class:"btn btn-info m-sm-3" do %>
           <i class="fa-solid fa-location-dot"> 登録したスポットを見る</i>
         <% end %>
       </p>
       <p>
-        <%= link_to public_comments_path, class:"btn btn-success m-3" do %>
+        <%= link_to public_comments_path, class:"btn btn-success m-sm-3" do %>
           <i class="fa-solid fa-comment-dots"> 投稿したコメントを見る</i>
         <% end %>
       </p>

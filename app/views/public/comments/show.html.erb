@@ -1,4 +1,4 @@
-<div class="col">
+<div id="pc_display" class="col">
   <h2 class="mb-2 text-center">コメント詳細</h2>
 
   <%= render 'layouts/flash_message' %>
@@ -8,9 +8,9 @@
   </div>
 
   <div class="row">
-    <div class="col-5 m-auto">
+    <div class="col-xl-5 m-auto">
         <h3>コメント内容：</h3>
-        <div id="comment_form_area" class="ml-4 mb-2 border border-success">
+        <div id="comment_form_area" class="ml-xl-4 mb-2 border border-success text-break">
             <%= @comment.comment %>
         </div>
         <div class="m-4 d-flex justify-content-center">

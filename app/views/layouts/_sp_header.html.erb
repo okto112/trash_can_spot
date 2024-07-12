@@ -1,0 +1,78 @@
+<header id="sp-header" class="header mb-2">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <nav class="navbar navbar-expand-xl w-100">
+        <div class="col">
+          <div class="logo">
+            <h1 id="font-bold" class="text-success">ゴミ箱スポット</h1>
+          </div>
+        </div>
+
+        <div class="col-5">
+          <div class="row justify-content-md-between mr-auto">
+            <div class="ml-auto">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars" id="toggle_btn_off"></i>
+                <i class="fa-solid fa-xmark" id="toggle_btn_on"></i>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <div class="header-content rounded">
+                    <%= link_to public_main_path, data: {"turbolinks" => false}, class:"btn btn-outline-success" do %>
+                      <i class="fa-solid fa-map-location-dot"> スポットを見る</i>
+                    <% end %>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <div class="rounded">
+                    <%= link_to public_users_my_page_path, class:"btn btn-outline-success" do %>
+                      <i class="fa-solid fa-user"> マイページ</i>
+                    <% end %>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <div class="rounded">
+                    <%= link_to new_public_spot_path, data: {"turbolinks" => false}, class:"btn btn-outline-success" do %>
+                      <i class="fa-solid fa-location-dot"> スポット登録</i>
+                    <% end %>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <div class="rounded">
+                    <%= link_to public_favorites_path, class:"btn btn-outline-success" do %>
+                      <i class="fa-solid fa-star"> お気に入り</i>
+                    <% end %>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <div class="rounded">
+                    <%= link_to destroy_user_session_path, method: :delete, class:"btn btn-outline-success" do %>
+                      <i class="fa-solid fa-right-from-bracket"> ログアウト</i>
+                    <% end %>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  var toggleBtnOff = document.getElementById("toggle_btn_off");
+  var toggleBtnON = document.getElementById("toggle_btn_on");
+
+  toggleBtnOff.addEventListener("click", function() {
+    toggleBtnOff.style.display = "none";
+    toggleBtnON.style.display = "block";
+  });
+
+  toggleBtnON.addEventListener("click", function() {
+    toggleBtnON.style.display = "none";
+    toggleBtnOff.style.display = "block";
+  });
+</script>

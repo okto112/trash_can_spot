@@ -24,10 +24,10 @@ RSpec.feature 'Spots', type: :feature do
     end
 
     it '新規登録の確認' do
-      fill_in 'spot[name]', with: 'test_spot'
-      fill_in 'spot[introduction]', with: 'test_introduction'
-      check 'spot[kind_ids][]', with: kind.id
-      click_on 'スポットを登録する'
+      fill_in 'spot[name]', with: 'test_spot', match: :first
+      fill_in 'spot[introduction]', with: 'test_introduction', match: :first
+      check 'spot[kind_ids][]', with: kind.id, match: :first
+      click_on 'スポットを登録する', match: :first
       expect(current_path).to eq('/public/spots')
     end
   end
@@ -45,12 +45,12 @@ RSpec.feature 'Spots', type: :feature do
     end
 
     it '一覧画面から詳細画面への遷移確認' do
-      click_on '表示'
+      click_on '表示', match: :first
       expect(current_path).to eq("/public/spots/#{spot.id}")
     end
 
     it 'スポット削除の確認' do
-      click_on '削除'
+      click_on '削除', match: :first
       expect(current_path).to eq("/public/spots")
     end
   end
@@ -67,7 +67,7 @@ RSpec.feature 'Spots', type: :feature do
     end
 
     it '詳細画面から編集への遷移確認' do
-      click_on '編集する'
+      click_on '編集する', match: :first
       expect(current_path).to eq("/public/spots/#{spot.id}/edit")
     end
   end
@@ -84,10 +84,10 @@ RSpec.feature 'Spots', type: :feature do
     end
 
     it '編集情報の保存確認' do
-      fill_in 'spot[name]', with: 'new_spot'
-      fill_in 'spot[introduction]', with: 'new_introduction'
-      check 'spot[kind_ids][]', with: kind.id
-      click_on '変更内容を保存'
+      fill_in 'spot[name]', with: 'new_spot', match: :first
+      fill_in 'spot[introduction]', with: 'new_introduction', match: :first
+      check 'spot[kind_ids][]', with: kind.id, match: :first
+      click_on '変更内容を保存', match: :first
       expect(current_path).to eq("/public/spots/#{spot.id}")
     end
   end

@@ -1,0 +1,64 @@
+<div id="sp_search_form">
+  <nav class="navbar navbar-expand-xl">
+    <div class="sp_search_btn">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#kindSearchNavDropdown" aria-controls="kindSearchNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <p>種類検索</p>
+      </button>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#keySearchNavDropdown" aria-controls="keySearchNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <p>キーワード検索</p>
+      </button>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mapSearchNavDropdown" aria-controls="mapSearchNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <p>地図検索</p>
+      </button>
+    </div>
+
+    <div class="collapse navbar-collapse" id="kindSearchNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <div id="kinds-form" class="d-flex align-items-center border border-success rounded p-1">
+            <div id="kinds-box" class="d-flex align-middle overflow-auto">
+              <div class="bg-white m-1">
+                <%= link_to "すべて", public_main_path(kind_id: 0), data: {"turbolinks" => false}, id: "sp0", class: "kind-btn" %>
+              </div>
+              <% @kinds.each do |kind| %>
+              <div class="bg-white m-1">
+                <%= link_to  kind.name, public_main_path(kind_id: kind.id), data: {"turbolinks" => false}, id: "sp#{kind.id}", class: "kind-btn" %>
+              </div>
+              <% end %>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="collapse navbar-collapse" id="keySearchNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <div class="d-flex border border-success rounded p-2 justify-content-center">
+            <%= form_with url: public_main_path, method: :get do |f| %>
+              <%= f.text_field :key_word,value: @key_word, placeholder: "キーワード検索", class: "mt-1" %>
+              <%= button_tag type: "submit", class: "btn btn-info btn-sm ml-1 mb-1" do %>
+               <i class="fa-solid fa-magnifying-glass"> 検索</i>
+              <% end %>
+            <% end %>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="collapse navbar-collapse" id="mapSearchNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <form class="d-flex align-items-center border border-success rounded p-2 justify-content-center">
+            <input id="address" type="textbox" placeholder="地図検索">
+            <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-2"><i class="fa-solid fa-magnifying-glass"> 検索</i></button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="flash-message-container">
+    <%= render 'layouts/flash_message' %>
+  </div>
+</div>

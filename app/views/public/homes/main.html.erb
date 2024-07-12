@@ -1,34 +1,37 @@
 <div class="col">
-  <div class="flash-message-container">
-    <%= render 'layouts/flash_message' %>
-  </div>
-  <div class="row justify-content-center mb-2">
-    <div class="row p-1 align-items-center border border-success rounded">
-        <div class="font-weight-bold">種類検索：</div>
-      <div id="kinds-box" class="d-flex align-middle ml-1 overflow-auto">
-        <div class="bg-white m-1">
-          <%= link_to "すべて", public_main_path(kind_id: 0), data: {"turbolinks" => false}, id: 0, class: "kind-btn" %>
+  <div id="pc_search_form">
+    <div class="flash-message-container">
+      <%= render 'layouts/flash_message' %>
+    </div>
+    <div class="row justify-content-center mb-2">
+      <div class="row p-1 align-items-center border border-success rounded">
+          <div class="font-weight-bold">種類検索：</div>
+        <div id="kinds-box" class="d-flex align-middle ml-1 overflow-auto">
+          <div class="bg-white m-1">
+            <%= link_to "すべて", public_main_path(kind_id: 0), data: {"turbolinks" => false}, id: 0, class: "kind-btn" %>
+          </div>
+          <% @kinds.each do |kind| %>
+          <div class="bg-white m-1">
+            <%= link_to  kind.name, public_main_path(kind_id: kind.id), data: {"turbolinks" => false}, id: kind.id, class: "kind-btn" %>
+          </div>
+          <% end %>
         </div>
-        <% @kinds.each do |kind| %>
-        <div class="bg-white m-1">
-          <%= link_to  kind.name, public_main_path(kind_id: kind.id), data: {"turbolinks" => false}, id: kind.id, class: "kind-btn" %>
-        </div>
+      </div>
+      <div class="d-flex border border-success rounded p-2 ml-4">
+        <%= form_with url: public_main_path, method: :get do |f| %>
+          <%= f.text_field :key_word,value: @key_word, placeholder: "キーワード検索", class: "mt-1" %>
+          <%= button_tag type: "submit", class: "btn btn-info btn-sm ml-1 mb-1" do %>
+           <i class="fa-solid fa-magnifying-glass"> 検索</i>
+          <% end %>
         <% end %>
       </div>
+      <form class="d-flex align-items-center border border-success rounded p-2 ml-2">
+        <input id="address" type="textbox" placeholder="地図検索">
+        <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-magnifying-glass"> 検索</i></button>
+      </form>
     </div>
-    <div class="d-flex border border-success rounded p-2 ml-4">
-      <%= form_with url: public_main_path, method: :get do |f| %>
-        <%= f.text_field :key_word,value: @key_word, placeholder: "キーワード検索", class: "mt-1" %>
-        <%= button_tag type: "submit", class: "btn btn-info btn-sm ml-1 mb-1" do %>
-         <i class="fa-solid fa-magnifying-glass"> 検索</i>
-        <% end %>
-      <% end %>
-    </div>
-    <form class="d-flex align-items-center border border-success rounded p-2 ml-2">
-      <input id="address" type="textbox" placeholder="地図検索">
-      <button type="button" onclick="codeAddress()" class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-magnifying-glass"> 検索</i></button>
-    </form>
   </div>
+  <%= render 'sp_search_form' %>
 
   <div class="row justify-content-center">
     <div id="spot-info" class="col-2 overflow-auto p-2 bg-white border border-success rounded">
@@ -53,14 +56,16 @@
         <div id="edit-button" class="text-center mb-3"></div>
 
         <p id="font-bold" class="text-center text-success border-top border-success p-2">スポットへのコメント</p>
-        <div id="comments-box" class="overflow-auto text-wrap border border-success" ></div>
+        <div id="comments-box" class="overflow-auto text-wrap border border-success p-1" ></div>
         <div id="comment-button" class="text-center"></div>
     </div>
 
-    <div class="col-9">
+    <div class="col-xl-9">
       <div id="map" class="mt-2"></div>
     </div>
   </div>
+
+  <%= render 'sp_spot_info' %>
 </div>
 
 <script>
@@ -75,7 +80,9 @@
   let infowindow = "";
   let infoWindows = [];
   let spotKindsHtml = "";
-  let changeStyle =false;
+  let changeStyle = false;
+  const spotInfoWindow = document.getElementById("spot-info")
+  const spSpotInfoWindow = document.getElementById("sp-spot-info")
 
   async function initMap() {
     const { Map } = await google.maps.importLibrary("maps");
@@ -125,32 +132,35 @@
         marker.addListener('click', function() {
           closeInfoWindows();
           kindsInfo();
+          let winWidth = $(window).width();
 
-          if (!changeStyle) {
-            document.getElementById('spot-info').style.display = 'block';
-            removeClass = true;
+          if (!changeStyle && winWidth<=1200) {
+            spSpotInfoWindow.style.display = 'block';
+          }else{
+            spotInfoWindow.style.display = 'block';
           }
 
-          $("#spot-name").text("<%= spot.name %>");
-          $("#spot-introduction").text("<%= spot.introduction %>");
-          $("#spot-kinds").html(spotKindsHtml);
-          $("#date").text("登録日：<%= spot.created_at.strftime('%Y/%m/%d') %>");
+          $("#spot-name, #sp-spot-name").text("<%= spot.name %>");
+          $("#spot-introduction, #sp-spot-introduction").text("<%= spot.introduction %>");
+          $("#spot-kinds, #sp-spot-kinds").html(spotKindsHtml);
+          $("#date, #sp-date").text("登録日：<%= spot.created_at.strftime('%Y/%m/%d') %>");
           $("#favorite_form").html('<p>お気に入り登録：</p><div id="favorite_btn_<%= spot.id %>" class="m-auto"></div>');
-          $('#favorite_btn_<%= spot.id %>').html("<%= j(render 'public/favorites/favorite_btn', spot: spot) %>");
+          $("#sp-favorite_form").html('<p>お気に入り登録：</p><div id="sp-favorite_btn_<%= spot.id %>" class="m-auto"></div>');
+          $('#favorite_btn_<%= spot.id %>, #sp-favorite_btn_<%= spot.id %>').html("<%= j(render 'public/favorites/favorite_btn', spot: spot) %>");
           <% if spot.user_id == current_user.id %>
-            $("#edit-button").html('<%= link_to edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" do %><i class="fa-solid fa-pen-to-square"> 編集する</i><% end %>');
+            $("#edit-button, #sp-edit-button").html('<%= link_to edit_public_spot_path(spot.id), data: {"turbolinks" => false}, class:"btn btn-primary" do %><i class="fa-solid fa-pen-to-square"> 編集する</i><% end %>');
           <% else %>
-            $("#edit-button").html('');
+            $("#edit-button, #sp-edit-button").html('');
           <% end %>
           <% if @comments.where(spot_id: spot.id).any? %>
-            $("#comments-box").html('');
+            $("#comments-box, #sp-comments-box").html('');
             <% @comments.where(spot_id: spot.id).each do |comment| %>
-              $("#comments-box").append('<p class="mt-1"><%= User.find(comment.user_id).name %></p><p class="p-1"><%= comment.comment %></p><p class="border-bottom text-right">登録日：<%= comment.created_at.strftime('%Y/%m/%d') %></p>');
+              $("#comments-box, #sp-comments-box").append('<p class="mt-1"><%= User.find(comment.user_id).name %></p><p class="p-1 text-break"><%= comment.comment %></p><p class="border-bottom text-right">登録日：<%= comment.created_at.strftime('%Y/%m/%d') %></p>');
             <% end %>
           <% else %>
-            $("#comments-box").html('<p>コメントはありません</p>');
+            $("#comments-box, #sp-comments-box").html('<p>コメントはありません</p>');
           <% end %>
-          $("#comment-button").html('<%= link_to new_public_comment_path(spot_id: spot.id), data: {"turbolinks" => false}, class:"btn btn-success mt-2" do %><i class="fa-solid fa-comment-dots"> コメントする</i><% end %>');
+          $("#comment-button, #sp-comment-button").html('<%= link_to new_public_comment_path(spot_id: spot.id), data: {"turbolinks" => false}, class:"btn btn-success mt-2" do %><i class="fa-solid fa-comment-dots"> コメントする</i><% end %>');
 
           infowindow.open(map, marker);
           markerIds.push(<%= spot.id %>);
@@ -180,7 +190,6 @@
               "<div class='text-right'>登録日：<%= spot.created_at.strftime('%Y/%m/%d') %></div>"
           });
         }
-
      })();
     <% end %>
   }
@@ -189,19 +198,32 @@
 
   //種類検索タグのスタイル設定
   window.onload = function() {
-    $("#0").addClass("btn btn-outline-secondary");
+    $("#0, #sp0").addClass("btn btn-outline-secondary");
     <% @kinds.each do |kind| %>
-      $("#<%= kind.id %>").addClass("btn btn-outline-secondary");
+      $("#<%= kind.id %>, #sp<%= kind.id %>").addClass("btn btn-outline-secondary");
     <% end %>
-    $("#<%= @kind_id %>").addClass("btn btn-warning");
+    $("#<%= @kind_id %>, #sp<%= @kind_id %>").addClass("btn btn-warning");
   };
 
   //種類検索の横スクロール
   const kindsBox = document.getElementById('kinds-box');
   kindsBox.addEventListener('wheel', function(event) {
     event.preventDefault(); // デフォルトのスクロール動作をキャンセル
-
     const delta = Math.max(-1, Math.min(1, (event.deltaY || -event.wheelDelta || event.detail)));
     kindsBox.scrollLeft += (delta * 50); // 横スクロールの速度を調整するための値を設定
+  });
+
+
+  //スポット情報ウインドウのレスポンシブ切替表示
+  window.addEventListener('resize', function() {
+    if (spotInfoWindow.style.display === 'block' || spSpotInfoWindow.style.display === 'block') {
+      if (window.innerWidth <= 1200) {
+        spotInfoWindow.style.display = 'none';
+        spSpotInfoWindow.style.display = 'block';
+      } else {
+        spotInfoWindow.style.display = 'block';
+        spSpotInfoWindow.style.display = 'none';
+      }
+    }
   });
 </script>
