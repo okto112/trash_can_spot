@@ -85,6 +85,8 @@
     google.maps.event.addListener(marker, 'dragend', function (event) {
       document.getElementById('latitude').value = event.latLng.lat();
       document.getElementById('longitude').value = event.latLng.lng();
+      document.getElementById('sp-latitude').value = event.latLng.lat();
+      document.getElementById('sp-longitude').value = event.latLng.lng();
     });
   }
 
@@ -115,10 +117,14 @@
 
           document.getElementById('latitude').value = results[0].geometry.location.lat();
           document.getElementById('longitude').value = results[0].geometry.location.lng();
+          document.getElementById('sp-latitude').value = results[0].geometry.location.lat();
+          document.getElementById('sp-longitude').value = results[0].geometry.location.lng();
 
           google.maps.event.addListener( marker, 'dragend', function(event){
               document.getElementById('latitude').value = event.latLng.lat();
               document.getElementById('longitude').value = event.latLng.lng();
+              document.getElementById('sp-latitude').value = event.latLng.lat();
+              document.getElementById('sp-longitude').value = event.latLng.lng();
           });
       } else {
         alert('該当する結果がありませんでした：' + status);

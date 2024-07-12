@@ -116,6 +116,24 @@
     });
   }
 
+  function spCodeAddress(){
+    geocoder = new google.maps.Geocoder();
+    let inputAddress = document.getElementById('sp-address').value;
+    geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+      if (status == 'OK') {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center:  {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()},
+          zoom: 15,
+          mapTypeControl: false
+        });
+
+        initSpots()
+      } else {
+        alert('該当する結果がありませんでした：' + status);
+      }
+    });
+  }
+
   //スポットの初期化
   function initSpots(){
     <% @spots.each do |spot|%>
