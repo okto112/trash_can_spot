@@ -44,12 +44,12 @@ RSpec.feature 'Comments', type: :feature do
     end
 
     it '一覧画面から詳細画面への遷移確認' do
-      click_on '表示'
+      click_on '表示', match: :first
       expect(current_path).to eq("/public/comments/#{comment.id}")
     end
 
     it 'コメント削除の確認' do
-      click_on '削除'
+      click_on '削除', match: :first
       expect(current_path).to eq("/public/comments")
     end
   end
