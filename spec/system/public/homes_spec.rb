@@ -40,7 +40,7 @@ RSpec.feature 'homes', type: :feature do
     end
 
     it 'マップのマーカー動作確認' do
-      marker = find("#map", visible: false)
+      marker = find("#map", visible: true)
       marker.click
       expect(page).to have_selector('#spot-info', visible: true)
     end
